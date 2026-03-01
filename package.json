@@ -1,0 +1,13 @@
+{
+  "name": "grails",
+  "version": "1.0.0",
+  "description": "Grails — A New Art Marketplace",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  }
+}
