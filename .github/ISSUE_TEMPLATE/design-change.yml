@@ -1,0 +1,63 @@
+name: "🎨 Design Change"
+description: Suggest a visual or layout change to the site
+labels: ["design", "feedback"]
+body:
+  - type: dropdown
+    id: page
+    attributes:
+      label: Which page?
+      options:
+        - Homepage (index.html)
+        - About
+        - Features
+        - All pages
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: What area?
+      options:
+        - Hero / headline
+        - Navigation
+        - CTA button
+        - Typography / font
+        - Colors
+        - Cards / sections
+        - Modal / form
+        - Footer
+        - Mobile layout
+        - Animations
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: What does it look like now?
+      placeholder: Describe the current state, or paste a screenshot link
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: What should it look like?
+      placeholder: Describe the desired change. Be specific.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - 🔴 Blocking — looks broken
+        - 🟠 High — noticeably off
+        - 🟡 Medium — polish item
+        - 🟢 Low — nice to have
+    validations:
+      required: true

@@ -1,0 +1,67 @@
+name: "🐛 Bug Report"
+description: Something is broken or not working as expected
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: page
+    attributes:
+      label: Which page?
+      options:
+        - Homepage
+        - About
+        - Features
+        - Modal / form
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen instead?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - Desktop
+        - Mobile
+        - Tablet
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Safari
+        - Firefox
+        - Edge
+        - Safari iOS
+        - Chrome Android
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - 🔴 Critical — broken
+        - 🟠 High — major issue
+        - 🟡 Medium — noticeable
+        - 🟢 Low — minor
+    validations:
+      required: true
