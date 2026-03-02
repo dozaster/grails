@@ -24,13 +24,22 @@ body{font-family:'Poppins',sans-serif;background:#060606;color:#fff;height:100vh
 /* NAV */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:50;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(20px,4vw,44px);height:62px;
+  display:flex;align-items:center;justify-content:center;
+  height:64px;
   border-bottom:1px solid transparent;
   transition:border-color .4s,background .4s;
 }
+.nav-inner{
+  width:1200px;
+  max-width:calc(100% - 40px);
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 .nav-logo{
-  font-size:15px;font-weight:600;letter-spacing:-.2px;
+  font-family:'Poppins',sans-serif;
+  font-size:32px;font-weight:700;letter-spacing:-.02em;
   color:var(--white);text-decoration:none;
   opacity:0;animation:fadeUp .6s .1s ease forwards;
   position:relative;z-index:200;
@@ -295,10 +304,12 @@ main{
 <div class="menu-backdrop" id="menuBackdrop" onclick="closeMenu()"></div>
 
 <nav>
-  <a class="nav-logo" href="#">Grails</a>
-  <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
-    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-  </button>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Grails</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
 </nav>
 
 <div class="menu-panel" id="menuPanel" role="dialog" aria-modal="true" aria-label="Site navigation">
