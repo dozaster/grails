@@ -1,0 +1,1 @@
+Changed homepage hero typography to Inter font (Semibold) with -0.06em letter-spacing and 1.2 line-height for both eyebrow and headline, updated hero container padding to 0/24/24/24, and added max-width 1200px container for the hero content. _(Confidence: high)_
