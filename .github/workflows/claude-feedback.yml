@@ -1,0 +1,101 @@
+name: Claude Auto-Action
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  claude-action:
+    if: github.event.label.name == 'claude-action'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Claude action
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
+        run: node .github/scripts/claude-action.js
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: claude/issue-${{ github.event.issue.number }}
+          title: "🤖 Claude: ${{ github.event.issue.title }}"
+          body: |
+            ## Automated changes for issue #${{ github.event.issue.number }}
+
+            **Issue:** ${{ github.event.issue.title }}
+
+            **What Claude changed:**
+            ${{ env.CLAUDE_SUMMARY }}
+
+            ---
+            > This PR was generated automatically by Claude based on the issue feedback.
+            > Review the Vercel preview before merging.
+
+            Closes #${{ github.event.issue.number }}
+          labels: claude-generated, needs-review
+          draft: false
+
+      - name: Read Claude summary
+        if: steps.cpr.outputs.pull-request-number
+        run: |
+          SUMMARY=$(cat .github/claude-summary.txt 2>/dev/null || echo "Changes applied.")
+          echo "CLAUDE_SUMMARY=$SUMMARY" >> $GITHUB_ENV
+
+      - name: Comment on issue
+        if: steps.cpr.outputs.pull-request-number
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = '${{ steps.cpr.outputs.pull-request-number }}';
+            const prUrl = '${{ steps.cpr.outputs.pull-request-url }}';
+            const fs = require('fs');
+            let summary = 'Changes applied.';
+            try { summary = fs.readFileSync('.github/claude-summary.txt', 'utf8').trim(); } catch(e) {}
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 Claude has acted on this feedback
+
+**What was changed:** ${summary}
+
+**Pull Request:** ${prUrl}
+
+A Vercel preview deploy will be available on the PR shortly. Review it and merge when ready, or request further changes by commenting on the PR.`
+            });
+
+      - name: Comment if no changes needed
+        if: "!steps.cpr.outputs.pull-request-number"
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let summary = 'No changes were necessary based on this feedback.';
+            try { summary = fs.readFileSync('.github/claude-summary.txt', 'utf8').trim(); } catch(e) {}
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 Claude reviewed this feedback\n\n${summary}`
+            });
