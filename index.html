@@ -213,15 +213,19 @@ main{
 .modal::-webkit-scrollbar{display:none}
 #modalCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.45;border-radius:22px}
 .modal-inner{position:relative;z-index:1}
+.modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:5px;
+}
 .modal-close{
-  position:absolute;top:15px;right:15px;z-index:2;
   background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:50%;
   width:30px;height:30px;color:var(--muted);font-size:14px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;line-height:1;
   transition:background .2s,color .2s;
+  flex-shrink:0;
 }
 .modal-close:hover{background:rgba(255,255,255,.12);color:var(--white)}
-.modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px}
+.modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em}
 .modal-sub{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:26px}
 
 /* Role toggle */
@@ -353,8 +357,10 @@ main{
   <div class="modal" id="modal">
     <canvas id="modalCanvas"></canvas>
     <div class="modal-inner">
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
-      <h2 class="modal-title">Join the Waitlist</h2>
+      <div class="modal-header">
+        <h2 class="modal-title">Join the Waitlist</h2>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
+      </div>
       <p class="modal-sub">Be among the first to collect or sell on Grails.</p>
       <div class="role-toggle">
         <div class="toggle-pill" id="togglePill"></div>
