@@ -169,7 +169,18 @@ main{
 
 /* BOTTOM PHRASES */
 .bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:10;pointer-events:none;padding:0 clamp(20px,5vw,48px) clamp(22px,3.5vh,34px);height:78px}
-.phrase{position:absolute;bottom:clamp(22px,3.5vh,34px);font-size:clamp(11px,1.1vw,13px);font-weight:400;letter-spacing:.4px;color:var(--muted);opacity:0;transition:opacity .55s ease;white-space:nowrap}
+.phrase{
+  position:absolute;bottom:clamp(22px,3.5vh,34px);
+  font-family:'Inter',sans-serif;
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:-0.06em;
+  line-height:1.3em;
+  color:#F4F4F5;
+  opacity:0;
+  transition:opacity .55s ease;
+  white-space:nowrap;
+}
 .phrase.visible{opacity:1}
 .phrase-l{left:clamp(20px,5vw,48px)}
 .phrase-c{left:50%;transform:translateX(-50%)}
@@ -631,7 +642,7 @@ renderDots('a',1,4);
     cur=(cur+1)%phrases.length;
     setTimeout(function(){phrases[cur].classList.add('visible');},500);
   }
-  setTimeout(function(){phrases[cur].classList.add('visible');setInterval(next,2500);},1600);
+  setTimeout(function(){phrases[cur].classList.add('visible');setInterval(next,3000);},1600);
 })();
 </script>
 </body>
