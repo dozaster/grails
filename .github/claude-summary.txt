@@ -1,0 +1,1 @@
+Updated homepage nav to have a fixed 1200px width container with 64px height and increased logo to 32px bold Poppins font. _(Confidence: high)_
