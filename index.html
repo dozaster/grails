@@ -111,24 +111,35 @@ main{
   position:relative;z-index:1;
   width:100%;height:100vh;height:100dvh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:62px clamp(16px,6vw,60px) 90px;
+  text-align:center;padding:0 24px 24px;
+}
+.hero-container{
+  width:100%;
+  max-width:1200px;
+  height:fit-content;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 .eyebrow{
-  font-size:clamp(10px,1.1vw,12px);font-weight:500;letter-spacing:3.5px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:clamp(20px,3vh,32px);
+  font-family:'Inter',sans-serif;
+  font-size:16px;font-weight:600;letter-spacing:-0.06em;
+  line-height:1.2;
+  color:var(--white);margin-bottom:clamp(20px,3vh,32px);
   opacity:0;animation:fadeUp .7s .38s ease forwards;
 }
 .headline{
-  font-family:'Poppins',sans-serif;
-  font-size:clamp(52px,10.5vw,152px);font-weight:600;line-height:1;
-  letter-spacing:-.03em;color:#fff;
+  font-family:'Inter',sans-serif;
+  font-size:clamp(52px,10.5vw,152px);font-weight:600;line-height:1.2;
+  letter-spacing:-0.06em;color:#fff;
   margin-bottom:clamp(32px,4.5vh,54px);
+  width:100%;
 }
 /* .hl clips vertically to create the slide-up reveal mask.
    padding-bottom on .hl gives descenders (g,y,p) breathing room
    inside that clipping box. margin-bottom cancels layout impact. */
 .hl{display:block;overflow:hidden;padding-bottom:.2em;margin-bottom:-.12em}
-.hli{display:block;transform:translateY(105%);animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards;line-height:1.05}
+.hli{display:block;transform:translateY(105%);animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards;line-height:1.2}
 .hl:nth-child(1) .hli{animation-delay:.42s}
 .hl:nth-child(2) .hli{animation-delay:.58s}
 
@@ -308,14 +319,16 @@ main{
 </div>
 
 <main>
-  <p class="eyebrow">A New Art Marketplace</p>
-  <h1 class="headline">
-    <span class="hl"><span class="hli">Collect Early,</span></span>
-    <span class="hl"><span class="hli">Originals Only.</span></span>
-  </h1>
-  <div class="cta-wrap">
-    <div class="cta-trace"></div>
-    <button class="cta-btn" onclick="openModal()"><span class="cta-arrow">→</span> Claim Your Spot</button>
+  <div class="hero-container">
+    <p class="eyebrow">A New Art Marketplace</p>
+    <h1 class="headline">
+      <span class="hl"><span class="hli">Collect Early,</span></span>
+      <span class="hl"><span class="hli">Originals Only.</span></span>
+    </h1>
+    <div class="cta-wrap">
+      <div class="cta-trace"></div>
+      <button class="cta-btn" onclick="openModal()"><span class="cta-arrow">→</span> Claim Your Spot</button>
+    </div>
   </div>
 </main>
 
