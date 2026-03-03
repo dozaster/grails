@@ -1,2 +1,1 @@
-Moved the modal close button from absolute positioning to inline with the 'Join the Waitlist' title using a flexbox header row, placing the X button on the right corner aligned with the title text. _(Confidence: high)_
-Updated homepage modal to use Inter font throughout, changed toggle pill to white background with black text and #A1A1AA border/inactive text, progress bar steps now use white for active/done and #A1A1AA for inactive, Continue button styled with #E4E4E7 background and black text (hover/press white), Reserve My Spot button uses #0052FF blue, and all CTA blue changed to #0052FF. _(Confidence: high)_
+An error occurred while processing this feedback. Check the Actions log for details.

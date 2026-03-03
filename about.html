@@ -115,53 +115,6 @@ nav{
 .fee-label{font-size:clamp(11px,1vw,13px);font-weight:500;color:var(--muted);margin-top:10px}
 .fee-label.highlight{color:var(--purple)}
 
-/* DARK CTA SECTION */
-.cta-section{
-  background:var(--black);
-  padding:clamp(80px,14vh,140px) clamp(24px,5vw,64px);
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-#ctaCanvas{
-  position:absolute;inset:0;width:100%;height:100%;
-  pointer-events:none;z-index:0;
-}
-.cta-inner{position:relative;z-index:1}
-.cta-coming{
-  font-size:clamp(52px,10vw,120px);
-  font-weight:800;letter-spacing:-.04em;
-  line-height:1;color:#fff;margin-bottom:20px;
-}
-.cta-sub{
-  font-size:16px;font-weight:400;
-  color:rgba(255,255,255,.45);margin-bottom:44px;
-}
-/* THE SAME BUTTON AS HOMEPAGE */
-.cta-wrap{position:relative;display:inline-flex}
-.cta-trace{position:absolute;inset:-4px;border-radius:100px;pointer-events:none;z-index:0}
-.cta-trace::before{
-  content:'';position:absolute;inset:0;border-radius:100px;padding:2px;
-  background:conic-gradient(from var(--a,0deg),transparent 0%,rgba(160,190,255,.85) 18%,rgba(255,255,255,1) 36%,rgba(160,190,255,.75) 52%,transparent 68%);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  animation:traceRot 3s linear infinite;
-}
-@property --a{syntax:'<angle>';initial-value:0deg;inherits:false}
-@keyframes traceRot{to{--a:360deg}}
-.cta-btn{
-  position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;
-  background:var(--blue);color:#fff;font-family:'Poppins',sans-serif;
-  font-size:15px;font-weight:600;letter-spacing:.01em;
-  padding:16px 40px;border-radius:100px;border:none;cursor:pointer;
-  text-decoration:none;
-  transition:background .22s,transform .22s,box-shadow .22s;
-}
-.cta-btn:hover{background:var(--blue-h);transform:translateY(-2px);box-shadow:0 14px 40px rgba(68,97,242,.5)}
-.cta-btn:active{transform:none;box-shadow:none}
-.cta-arrow{transition:transform .22s}
-.cta-btn:hover .cta-arrow{transform:translateX(4px)}
-
 /* FOOTER */
 footer{
   display:flex;align-items:center;justify-content:space-between;
@@ -187,7 +140,7 @@ footer a:hover{color:var(--black)}
   <div class="nav-links">
     <a class="nav-link active" href="about.html">About</a>
     <a class="nav-link" href="features.html">Features</a>
-    <a class="nav-cta" href="#claim">Claim Your Spot</a>
+    <a class="nav-cta" href="index.html">Claim Your Spot</a>
   </div>
 </nav>
 
@@ -245,21 +198,6 @@ footer a:hover{color:var(--black)}
   </div>
 </div>
 
-<!-- DARK CTA -->
-<div class="cta-section" id="claim">
-  <canvas id="ctaCanvas"></canvas>
-  <div class="cta-inner fade-up">
-    <div class="cta-coming">Coming Soon</div>
-    <div class="cta-sub">Launching in 2026.</div>
-    <div class="cta-wrap">
-      <div class="cta-trace"></div>
-      <a class="cta-btn" href="index.html">
-        <span class="cta-arrow">→</span> Claim Your Spot
-      </a>
-    </div>
-  </div>
-</div>
-
 <footer>
   <span>© 2026 Grails</span>
   <div style="display:flex;gap:24px">
@@ -269,34 +207,6 @@ footer a:hover{color:var(--black)}
 </footer>
 
 <script>
-/* CTA canvas orbs — same pattern as homepage */
-(function(){
-  const c=document.getElementById('ctaCanvas'),ctx=c.getContext('2d');
-  let W,H,t=0;
-  const orbs=[
-    {bx:.15,by:.5,r:.7,sx:.00018,ax:.12,p:0,b:55},
-    {bx:.85,by:.5,r:.6,sx:.00013,ax:.10,p:2.4,b:45},
-    {bx:.5,by:.3,r:.5,sx:.00022,ax:.08,p:4.8,b:35},
-  ];
-  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
-  resize();window.addEventListener('resize',resize,{passive:true});
-  function draw(){
-    t++;ctx.clearRect(0,0,W,H);
-    orbs.forEach(o=>{
-      const x=(o.bx+Math.sin(t*o.sx+o.p)*o.ax)*W;
-      const y=(o.by+Math.cos(t*o.sx*.8+o.p)*o.ax)*H;
-      const rad=o.r*Math.max(W,H)*.55;
-      const g=ctx.createRadialGradient(x,y,0,x,y,rad);
-      g.addColorStop(0,`rgba(${o.b},${o.b},${o.b},.55)`);
-      g.addColorStop(.5,`rgba(${Math.round(o.b*.4)},${Math.round(o.b*.4)},${Math.round(o.b*.4)},.2)`);
-      g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.beginPath();ctx.arc(x,y,rad,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
 /* Intersection observer — fade-up + count-up trigger */
 const io=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
