@@ -1,0 +1,87 @@
+name: Claude PR Comment Action
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  claude-pr-comment:
+    if: |
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/claude')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Get PR branch name
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            core.setOutput('branch', pr.data.head.ref);
+            core.setOutput('title', pr.data.title);
+            return pr.data.head.ref;
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.branch }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: React to comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'eyes'
+            });
+
+      - name: Run Claude action
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ISSUE_BODY: ${{ github.event.comment.body }}
+          ISSUE_TITLE: ${{ steps.pr.outputs.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_LABELS: "design,content"
+        run: node .github/scripts/claude-action.js
+
+      - name: Read Claude summary
+        id: summary
+        run: |
+          SUMMARY=$(cat .github/claude-summary.txt 2>/dev/null || echo "Changes applied.")
+          echo "text=$SUMMARY" >> $GITHUB_OUTPUT
+
+      - name: Commit changes to PR branch
+        run: |
+          git config user.name "claude-bot"
+          git config user.email "claude-bot@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "🤖 Claude: ${{ steps.summary.outputs.text }}"
+          git push origin ${{ steps.pr.outputs.branch }}
+
+      - name: Comment result on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 Claude updated this PR\n\n**What changed:** ${{ steps.summary.outputs.text }}\n\nVercel will redeploy the preview automatically.`
+            });
