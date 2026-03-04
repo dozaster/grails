@@ -297,6 +297,57 @@ main{
 .country-opt.no-results{color:rgba(255,255,255,.35);cursor:default}
 .country-opt.no-results:hover{background:transparent}
 
+
+/* CONTACT MODAL */
+.contact-overlay{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.8);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity .28s;
+}
+.contact-overlay.open{opacity:1;pointer-events:all}
+.contact-modal{
+  position:relative;background:#090909;border:1px solid rgba(255,255,255,.1);border-radius:22px;
+  width:100%;max-width:460px;
+  padding:36px 30px 40px;transform:translateY(28px) scale(.96);
+  transition:transform .45s cubic-bezier(.16,1,.3,1);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 40px 80px rgba(0,0,0,.8);
+}
+.contact-overlay.open .contact-modal{transform:none}
+.contact-modal::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);pointer-events:none;}
+.contact-close{
+  position:absolute;top:16px;right:20px;z-index:2;
+  background:none;border:none;color:rgba(255,255,255,.75);font-size:18px;cursor:pointer;
+  padding:4px;transition:color .2s;
+}
+.contact-close:hover{color:#fff}
+.contact-title{font-family:'Poppins',sans-serif;font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px;color:#fff}
+.contact-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:24px}
+.contact-toggle{display:flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:3px;margin-bottom:24px;position:relative}
+.contact-pill{position:absolute;top:3px;left:3px;height:calc(100% - 6px);width:calc(50% - 3px);background:#fff;border-radius:100px;transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:0;}
+.contact-pill.artist{transform:translateX(calc(100% + 3px))}
+.contact-role-btn{flex:1;padding:9px;border:none;background:transparent;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;border-radius:100px;position:relative;z-index:1;cursor:pointer;transition:color .28s;color:rgba(255,255,255,.75)}
+.contact-role-btn.active{color:#000}
+.contact-field{margin-bottom:16px}
+.contact-field label{display:block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:7px}
+.contact-field input,.contact-field textarea{
+  width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:13px 16px;color:#fff;font-family:'Poppins',sans-serif;font-size:14px;
+  outline:none;transition:border-color .2s;resize:none;
+}
+.contact-field input::placeholder,.contact-field textarea::placeholder{color:rgba(255,255,255,.3)}
+.contact-field input:focus,.contact-field textarea:focus{border-color:rgba(255,255,255,.4)}
+.contact-field textarea{height:110px;line-height:1.5}
+.contact-submit{
+  width:100%;padding:15px;background:#0052FF;border:none;border-radius:100px;
+  color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:background .2s;margin-top:8px;letter-spacing:-.01em;
+}
+.contact-submit:hover{background:#0041cc}
+.contact-success{text-align:center;padding:20px 0 8px}
+.contact-success-icon{font-size:40px;margin-bottom:16px}
+.contact-success-title{font-size:20px;font-weight:800;letter-spacing:-.03em;color:#fff;margin-bottom:8px}
+.contact-success-body{font-size:13px;color:rgba(255,255,255,.75);line-height:1.75}
 </style>
 </head>
 <body>
@@ -323,7 +374,7 @@ main{
   <ul class="menu-links">
     <li><a class="menu-link" href="about.html" onclick="closeMenu()">About <span class="menu-link-arr">→</span></a></li>
     <li><a class="menu-link" href="features.html" onclick="closeMenu()">Features <span class="menu-link-arr">→</span></a></li>
-    <li><a class="menu-link" href="about.html#claim" onclick="closeMenu()">Contact <span class="menu-link-arr">→</span></a></li>
+    <li><a class="menu-link" href="#" onclick="closeMenu();openContactModal();return false;">Contact <span class="menu-link-arr">→</span></a></li>
   </ul>
   <div class="menu-footer">Grails — A New Art Marketplace<br>© 2026 All rights reserved.</div>
 </div>
@@ -697,6 +748,73 @@ function pickCountry(prefix,val){
   document.getElementById(prefix+'-country-dd').classList.remove('open');
 }
 
+
+// ── Contact Modal ──────────────────────────────────────────────────────
+var contactRole='collector';
+function openContactModal(){
+  document.getElementById('contactOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  // reset
+  document.getElementById('contactForm').style.display='';
+  document.getElementById('contactSuccess').style.display='none';
+  document.getElementById('contactEmail').value='';
+  document.getElementById('contactMessage').value='';
+  setContactRole('collector');
+}
+function closeContactModal(){
+  document.getElementById('contactOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleContactOverlay(e){if(e.target===document.getElementById('contactOverlay'))closeContactModal();}
+function setContactRole(role){
+  contactRole=role;
+  var pill=document.getElementById('contactPill');
+  var bc=document.getElementById('cRoleCollector');
+  var ba=document.getElementById('cRoleArtist');
+  if(role==='artist'){pill.classList.add('artist');bc.classList.remove('active');ba.classList.add('active');}
+  else{pill.classList.remove('artist');bc.classList.add('active');ba.classList.remove('active');}
+}
+function submitContact(){
+  var email=document.getElementById('contactEmail').value.trim();
+  if(!email||!email.includes('@')){document.getElementById('contactEmail').focus();return;}
+  document.getElementById('contactForm').style.display='none';
+  document.getElementById('contactSuccess').style.display='';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')closeContactModal();
+});
+
 </script>
+
+<!-- CONTACT MODAL -->
+<div class="contact-overlay" id="contactOverlay" onclick="handleContactOverlay(event)">
+  <div class="contact-modal" id="contactModal">
+    <button class="contact-close" onclick="closeContactModal()">✕</button>
+    <div id="contactForm">
+      <div class="contact-title">Get in Touch</div>
+      <p class="contact-sub">We'd love to hear from you — collectors, artists, and collaborators welcome.</p>
+      <div class="contact-toggle">
+        <div class="contact-pill" id="contactPill"></div>
+        <button class="contact-role-btn active" id="cRoleCollector" onclick="setContactRole('collector')">Collector</button>
+        <button class="contact-role-btn" id="cRoleArtist" onclick="setContactRole('artist')">Artist</button>
+      </div>
+      <div class="contact-field">
+        <label>Email</label>
+        <input type="email" id="contactEmail" placeholder="you@example.com">
+      </div>
+      <div class="contact-field">
+        <label>Message</label>
+        <textarea id="contactMessage" placeholder="Tell us about yourself, your work, or what you're looking for..."></textarea>
+      </div>
+      <button class="contact-submit" onclick="submitContact()">Send Message</button>
+    </div>
+    <div id="contactSuccess" class="contact-success" style="display:none">
+      <div class="contact-success-icon">✉️</div>
+      <div class="contact-success-title">Message sent!</div>
+      <p class="contact-success-body">Thanks for reaching out. We'll get back to you soon.</p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

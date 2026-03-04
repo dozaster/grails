@@ -32,7 +32,7 @@ nav{
 .nav-link:hover,.nav-link.active{color:var(--black)}
 .nav-cta{font-size:clamp(11px,1.5vw,13px);font-weight:600;color:var(--white);background:var(--black);padding:8px clamp(12px,2vw,20px);border-radius:100px;text-decoration:none;transition:background .2s;white-space:nowrap;flex-shrink:0;}
 .nav-cta:hover{background:#222}
-@media(max-width:480px){.nav-link{display:none}}
+
 
 /* MAIN — fills height, no scroll */
 .page-content{
@@ -206,6 +206,12 @@ footer a:hover{color:var(--black)}
 .share-btn:hover{color:#fff;border-color:rgba(255,255,255,.22)}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .shake{animation:shake .38s ease}
+
+@media(max-width:480px){
+  .nav-link.active{display:none}
+  .nav-link{font-size:12px;font-weight:600;white-space:nowrap;}
+  .nav-links{gap:clamp(8px,2vw,16px)}
+}
 </style>
 </head>
 <body>
