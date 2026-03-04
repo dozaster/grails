@@ -1,1 +1,1 @@
-Claude was unable to parse the request into actionable changes. Please clarify the feedback.
+An error occurred while processing this feedback. Check the Actions log for details.
