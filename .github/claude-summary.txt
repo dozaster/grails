@@ -1,1 +1,1 @@
-An error occurred while processing this feedback. Check the Actions log for details.
+Changed the logo on index.html to the white version and increased the size from 22px to 28px height. _(Confidence: medium)_
