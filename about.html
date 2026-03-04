@@ -75,7 +75,32 @@ nav{
   font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--black);
   display:flex;align-items:baseline;gap:.1em;white-space:nowrap;
 }
-.fee-num.highlight{color:var(--purple)}
+
+/* SHIMMER — Grails Buyer Fee */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.fee-num.highlight {
+  color: transparent;
+  background: linear-gradient(
+    105deg,
+    #7c5cbf 0%,
+    #7c5cbf 35%,
+    #c9a8ff 48%,
+    #fff    52%,
+    #c9a8ff 56%,
+    #7c5cbf 65%,
+    #7c5cbf 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 3.2s linear infinite;
+}
+/* keep label colour intact */
+.fee-label.highlight { color: var(--purple); }
+
 .fee-sup{font-size:.36em;font-weight:600;align-self:flex-start;padding-top:.1em}
 .fee-plus{font-size:.3em;font-weight:400;color:var(--muted);align-self:flex-start;padding-top:.14em}
 .fee-label{font-size:clamp(11px,1.1vw,14px);font-weight:500;color:var(--muted);margin-top:10px}
