@@ -169,13 +169,13 @@ Use the write_file tool for each file that needs changes, then call set_summary.
     }
 
     if (name === 'set_summary') {
-      summary = input.summary || summary;
-      confidence = input.confidence || confidence;
+      summary = (input && input.summary) ? String(input.summary) : summary;
+      confidence = (input && input.confidence) ? String(input.confidence) : confidence;
     }
   }
 
   const fullSummary = `${summary} _(Confidence: ${confidence})_`;
-  fs.writeFileSync('.github/claude-summary.txt', fullSummary, 'utf8');
+  fs.writeFileSync('.github/claude-summary.txt', String(fullSummary), 'utf8');
 
   console.log(`\n📝 Summary: ${fullSummary}`);
   console.log(`📊 Files changed: ${changedCount}`);
