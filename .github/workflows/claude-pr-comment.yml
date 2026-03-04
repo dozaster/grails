@@ -6,9 +6,8 @@ on:
 
 jobs:
   claude-pr-comment:
-    if: |
-      github.event.issue.pull_request != null &&
-      startsWith(github.event.comment.body, '/claude')
+    # Only run on PR comments (not issue comments) that start with /claude
+    if: "github.event.issue.pull_request != null && startsWith(github.event.comment.body, '/claude')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
