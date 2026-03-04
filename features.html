@@ -26,12 +26,13 @@ nav{
   border-bottom:1px solid var(--border);z-index:50;
 }
 .nav-logo{font-size:15px;font-weight:600;color:var(--black);text-decoration:none;letter-spacing:-.2px}
-.nav-logo-img{height:44px;width:auto;display:block;filter:invert(1);}
-.nav-links{display:flex;align-items:center;gap:32px}
+.nav-logo-img{height:clamp(28px,5vw,44px);width:auto;display:block;filter:invert(1);}
+.nav-links{display:flex;align-items:center;gap:clamp(12px,3vw,32px)}
 .nav-link{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
 .nav-link:hover,.nav-link.active{color:var(--black)}
-.nav-cta{font-size:13px;font-weight:600;color:var(--white);background:var(--black);padding:9px 20px;border-radius:100px;text-decoration:none;transition:background .2s}
+.nav-cta{font-size:clamp(11px,1.5vw,13px);font-weight:600;color:var(--white);background:var(--black);padding:8px clamp(12px,2vw,20px);border-radius:100px;text-decoration:none;transition:background .2s;white-space:nowrap;flex-shrink:0;}
 .nav-cta:hover{background:#222}
+@media(max-width:480px){.nav-link{display:none}}
 
 /* MAIN — fills height, no scroll */
 .page-content{

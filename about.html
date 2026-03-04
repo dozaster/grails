@@ -10,6 +10,11 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased}
+@media(max-width:600px){
+  html,body{overflow:auto;}
+  .page-content{gap:clamp(28px,5vw,48px);}
+}
+
 body{font-family:'Poppins',sans-serif;background:#fff;color:#0a0a0a;display:flex;flex-direction:column;}
 :root{
   --blue:#4461f2;--blue-h:#6070ff;
@@ -26,12 +31,13 @@ nav{
   z-index:50;
 }
 .nav-logo{font-size:15px;font-weight:600;color:var(--black);text-decoration:none;letter-spacing:-.2px}
-.nav-logo-img{height:44px;width:auto;display:block;filter:invert(1);}
-.nav-links{display:flex;align-items:center;gap:32px}
+.nav-logo-img{height:clamp(28px,5vw,44px);width:auto;display:block;filter:invert(1);}
+.nav-links{display:flex;align-items:center;gap:clamp(12px,3vw,32px)}
 .nav-link{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
 .nav-link:hover,.nav-link.active{color:var(--black)}
-.nav-cta{font-size:13px;font-weight:600;color:var(--white);background:var(--black);padding:9px 20px;border-radius:100px;text-decoration:none;transition:background .2s}
+.nav-cta{font-size:clamp(11px,1.5vw,13px);font-weight:600;color:var(--white);background:var(--black);padding:8px clamp(12px,2vw,20px);border-radius:100px;text-decoration:none;transition:background .2s;white-space:nowrap;flex-shrink:0;}
 .nav-cta:hover{background:#222}
+@media(max-width:480px){.nav-link{display:none}}
 
 /* MAIN CONTENT — fills remaining height, no scroll */
 .page-content{
@@ -62,10 +68,10 @@ nav{
 /* FEES — vertically centered in remaining space */
 .fees-row{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;}
 .fees-header{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(16px,3vh,32px)}
-.fees-grid{display:flex;gap:0;width:100%}
-.fee-cell{flex:1;min-width:0}
+.fees-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;width:100%}
+.fee-cell{min-width:0}
 .fee-num{
-  font-size:clamp(40px,7vw,110px);
+  font-size:clamp(28px,5.5vw,110px);
   font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--black);
   display:flex;align-items:baseline;gap:.1em;white-space:nowrap;
 }
@@ -74,6 +80,13 @@ nav{
 .fee-plus{font-size:.3em;font-weight:400;color:var(--muted);align-self:flex-start;padding-top:.14em}
 .fee-label{font-size:clamp(11px,1.1vw,14px);font-weight:500;color:var(--muted);margin-top:10px}
 .fee-label.highlight{color:var(--purple)}
+@media(max-width:600px){
+  .fees-grid{grid-template-columns:repeat(2,1fr);gap:clamp(24px,5vw,40px) 0;}
+  .fee-cell{padding-bottom:clamp(16px,3vw,24px);}
+  .fee-num{font-size:clamp(36px,10vw,64px);}
+  .fee-label{font-size:12px;}
+}
+
 
 /* FOOTER */
 footer{
