@@ -235,8 +235,9 @@ main{
 .step-actions{display:flex;gap:8px;margin-top:4px}
 .btn-next{flex:1;padding:13px;background:#E4E4E7;color:#000000;border:none;border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
 .btn-next:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
-.btn-next.submit-btn{background:#0052FF;color:#ffffff}
-.btn-next.submit-btn:hover{background:#3373ff;box-shadow:0 8px 24px rgba(0,82,255,.4)}
+.btn-next.ready{background:#ffffff;color:#000000}
+.btn-next.submit-btn{background:#ffffff;color:#000000}
+.btn-next.submit-btn:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
 .btn-back{padding:13px 18px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;cursor:pointer;transition:color .2s,border-color .2s}
 .btn-back:hover{color:var(--white);border-color:var(--border-h)}
 
@@ -945,6 +946,34 @@ document.addEventListener('keydown',function(e){
   idleTimer = setTimeout(startSaver, IDLE_MS);
 })();
 
+
+/* ── Field-watch: activate step-1 Continue when inputs are filled ── */
+function watchStep1(){
+  function update(prefix){
+    var btn=document.querySelector('#'+prefix+'-step-1 .btn-next');
+    if(!btn)return;
+    var name=document.getElementById(prefix+'-name').value.trim();
+    var email=document.getElementById(prefix+'-email').value.trim();
+    var country=document.getElementById(prefix+'-country').value.trim();
+    if(name&&email&&country){btn.classList.add('ready');}
+    else{btn.classList.remove('ready');}
+  }
+  ['c-name','c-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('input',function(){update('c');});
+  });
+  ['a-name','a-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('input',function(){update('a');});
+  });
+  // country is set via pickCountry dropdown
+  var origPickCountry=window.pickCountry;
+  window.pickCountry=function(prefix,val){
+    if(origPickCountry)origPickCountry(prefix,val);
+    setTimeout(function(){update(prefix);},10);
+  };
+}
+watchStep1();
 </script>
 
 <!-- CONTACT MODAL -->

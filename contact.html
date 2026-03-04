@@ -31,7 +31,8 @@ nav{
 .nav-links{display:flex;align-items:center;gap:clamp(12px,3vw,32px)}
 .nav-link{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;white-space:nowrap}
 .nav-link:hover{color:var(--black)}
-.nav-link.active{display:none}
+.nav-link.active{color:var(--black);font-weight:600;pointer-events:none}
+@media(max-width:480px){.nav-link.active{display:none}.nav-links{gap:8px}.nav-link{font-size:12px}}
 .nav-cta{font-size:clamp(11px,1.5vw,13px);font-weight:600;color:var(--white);background:var(--black);padding:8px clamp(12px,2vw,20px);border-radius:100px;text-decoration:none;transition:background .2s;white-space:nowrap;flex-shrink:0;}
 .nav-cta:hover{background:#222}
 
@@ -134,6 +135,170 @@ footer a:hover{color:var(--black)}
   html,body{overflow:auto}
   .page-content{gap:24px;padding-bottom:32px}
 }
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.72);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{
+  position:relative;background:#0b0b0a;border:1px solid var(--border);border-radius:22px;
+  width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;
+  padding:36px 30px 40px;transform:translateY(28px) scale(.96);
+  transition:transform .45s cubic-bezier(.16,1,.3,1);scrollbar-width:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 40px 80px rgba(0,0,0,.8);
+}
+.modal-overlay.open .modal{transform:none}
+.modal::-webkit-scrollbar{display:none}
+#modalCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.45;border-radius:22px}
+.modal-inner{position:relative;z-index:1}
+.modal-close{
+  position:absolute;top:16px;right:20px;z-index:2;
+  background:none;border:none;border-radius:0;
+  width:auto;height:auto;color:rgba(255,255,255,.75);font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;line-height:1;padding:4px;
+  transition:color .2s;
+}
+.modal-close:hover{background:none;color:var(--white)}
+.modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px}
+.modal-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:26px}
+
+/* Role toggle */
+.role-toggle{display:flex;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:3px;margin-bottom:26px;position:relative}
+.toggle-pill{
+  position:absolute;top:3px;left:3px;height:calc(100% - 6px);width:calc(50% - 3px);
+  background:#ffffff;border-radius:100px;
+  transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:0;
+  box-shadow:0 2px 12px rgba(255,255,255,.15);
+}
+.toggle-pill.artist{transform:translateX(calc(100% + 3px))}
+.role-btn{flex:1;padding:9px;border:none;background:transparent;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;border-radius:100px;position:relative;z-index:1;cursor:pointer;transition:color .28s;color:rgba(255,255,255,.75)}
+.role-btn.active{color:#000000}
+
+/* Progress */
+.progress-bar{display:flex;gap:4px;margin-bottom:24px}
+.dot{flex:1;height:1px;border-radius:2px;background:rgba(255,255,255,.1);transition:background .38s}
+.dot.done{background:rgba(255,255,255,.55)}
+.dot.active{background:#ffffff}
+
+/* Steps */
+.step{display:none;flex-direction:column}
+.step.active{display:flex;animation:stepIn .34s cubic-bezier(.4,0,.2,1)}
+@keyframes stepIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.step-counter{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px}
+.step-title{font-size:clamp(17px,2.8vw,20px);font-weight:700;letter-spacing:-.025em;margin-bottom:20px;line-height:1.2}
+
+/* Fields */
+.field{margin-bottom:11px}
+.field label{display:block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:7px}
+.field input{width:100%;padding:12px 15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus{border-color:rgba(68,97,242,.55);box-shadow:0 0 0 3px rgba(68,97,242,.1)}
+.field input::placeholder{color:rgba(255,255,255,.18)}
+
+/* Cards */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.opt-card{padding:14px 13px;background:var(--input-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;text-align:left;font-family:'Poppins',sans-serif;transition:border-color .2s,background .2s,transform .18s}
+.opt-card:hover:not(.selected){border-color:var(--border-h);transform:translateY(-1px)}
+.opt-card.selected{border-color:rgba(68,97,242,.7);background:rgba(68,97,242,.1)}
+.opt-icon{font-size:17px;display:block;margin-bottom:9px}
+.opt-label{font-size:13px;font-weight:500;color:var(--white);line-height:1.3}
+.opt-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
+
+/* Actions */
+.step-actions{display:flex;gap:8px;margin-top:4px}
+.btn-next{flex:1;padding:13px;background:#E4E4E7;color:#000000;border:none;border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
+.btn-next:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
+.btn-next.ready{background:#ffffff;color:#000000}
+.btn-next.submit-btn{background:#ffffff;color:#000000}
+.btn-next.submit-btn:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
+.btn-back{padding:13px 18px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;cursor:pointer;transition:color .2s,border-color .2s}
+.btn-back:hover{color:var(--white);border-color:var(--border-h)}
+
+/* Success */
+.success-screen{display:none;flex-direction:column;align-items:flex-start}
+.success-screen.active{display:flex;animation:stepIn .5s ease}
+.success-icon{width:48px;height:44px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;animation:popIn .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 32px rgba(68,97,242,.5)}
+@keyframes popIn{from{transform:scale(0) rotate(-20deg)}to{transform:none}}
+.success-title{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:9px}
+.success-body{font-size:13px;color:rgba(255,255,255,.75);line-height:1.75;margin-bottom:26px}
+.referral-box{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:11px}
+.referral-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:7px}
+.referral-url{font-size:12px;color:var(--accent);word-break:break-all;margin-bottom:11px;font-weight:500}
+.btn-copy{width:100%;padding:10px;background:rgba(255,255,255,.07);color:var(--white);border:1px solid var(--border);border-radius:100px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-copy:hover{background:rgba(255,255,255,.12)}
+.btn-copy.copied{background:#16361f;border-color:#2a5c34;color:#6ee09f}
+.share-row{display:flex;gap:7px;width:100%}
+.share-btn{flex:1;padding:10px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.share-btn:hover{color:var(--white);border-color:var(--border-h)}
+
+.step{display:none;flex-direction:column}
+.step.active{display:flex;animation:stepIn .34s cubic-bezier(.4,0,.2,1)}
+@keyframes stepIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.step-counter{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px}
+.step-title{font-size:clamp(17px,2.8vw,20px);font-weight:700;letter-spacing:-.025em;margin-bottom:20px;line-height:1.2}
+
+/* Fields */
+.field{margin-bottom:11px}
+.field label{display:block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:7px}
+.field input{width:100%;padding:12px 15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus{border-color:rgba(68,97,242,.55);box-shadow:0 0 0 3px rgba(68,97,242,.1)}
+.field input::placeholder{color:rgba(255,255,255,.18)}
+
+/* Cards */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.opt-card{padding:14px 13px;background:var(--input-bg);border:1px solid var(--border);border-radius:12px;cursor:pointer;text-align:left;font-family:'Poppins',sans-serif;transition:border-color .2s,background .2s,transform .18s}
+.opt-card:hover:not(.selected){border-color:var(--border-h);transform:translateY(-1px)}
+.opt-card.selected{border-color:rgba(68,97,242,.7);background:rgba(68,97,242,.1)}
+.opt-icon{font-size:17px;display:block;margin-bottom:9px}
+.opt-label{font-size:13px;font-weight:500;color:var(--white);line-height:1.3}
+.opt-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
+
+/* Actions */
+.step-actions{display:flex;gap:8px;margin-top:4px}
+.btn-next{flex:1;padding:13px;background:#E4E4E7;color:#000000;border:none;border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
+.btn-next:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
+.btn-next.ready{background:#ffffff;color:#000000}
+.btn-next.submit-btn{background:#ffffff;color:#000000}
+.btn-next.submit-btn:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
+.btn-back{padding:13px 18px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;cursor:pointer;transition:color .2s,border-color .2s}
+.btn-back:hover{color:var(--white);border-color:var(--border-h)}
+
+.country-wrap{position:relative}
+.country-input{
+  width:100%;padding:12px 15px;
+  background:var(--input-bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-family:'Inter',sans-serif;font-size:14px;color:var(--white);
+  outline:none;transition:border-color .2s,box-shadow .2s;
+  cursor:pointer;
+}
+.country-input:focus{border-color:rgba(0,82,255,.55);box-shadow:0 0 0 3px rgba(0,82,255,.1)}
+.country-input::placeholder{color:var(--modal-inactive)}
+.country-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:999;
+  background:#1a1a1a;border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;max-height:200px;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent;
+  display:none;
+}
+.country-dropdown.open{display:block}
+.country-opt{
+  padding:10px 15px;font-size:13px;color:rgba(255,255,255,.8);
+  cursor:pointer;transition:background .15s;
+}
+.country-opt:hover,.country-opt.active{background:rgba(0,82,255,.3);color:#fff}
+.country-opt.no-results{color:rgba(255,255,255,.35);cursor:default}
+.country-opt.no-results:hover{background:transparent}
+
+
+
+@keyframes stepIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes popIn{from{transform:scale(0) rotate(-20deg)}to{transform:none}}
+
 </style>
 </head>
 <body>
@@ -144,7 +309,7 @@ footer a:hover{color:var(--black)}
     <a class="nav-link" href="about.html">About</a>
     <a class="nav-link" href="features.html">Features</a>
     <a class="nav-link active" href="contact.html">Contact</a>
-    <a class="nav-cta" href="index.html">Claim Your Spot</a>
+    <a class="nav-cta" href="index.html" onclick="openModal();return false;">Claim Your Spot</a>
   </div>
 </nav>
 
@@ -221,5 +386,387 @@ function handleSubmit() {
 }
 </script>
 
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <canvas id="modalCanvas"></canvas>
+    <div class="modal-inner">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
+      <h2 class="modal-title">Join the Waitlist</h2>
+      <p class="modal-sub">Be among the first to collect or sell on Grails.</p>
+      <div class="role-toggle">
+        <div class="toggle-pill" id="togglePill"></div>
+        <button class="role-btn active" id="btnCollector" onclick="setRole('collector')">Collector</button>
+        <button class="role-btn" id="btnArtist" onclick="setRole('artist')">Artist</button>
+      </div>
+
+      <div id="collectorFlow">
+        <div class="progress-bar" id="c-progress"></div>
+        <div class="step active" id="c-step-1">
+          <div class="step-counter">01 / 03</div>
+          <div class="step-title">The basics.</div>
+          <div class="field"><label>Full Name</label><input type="text" id="c-name" placeholder="Jane Smith" autocomplete="name"></div>
+          <div class="field"><label>Email</label><input type="email" id="c-email" placeholder="jane@example.com" autocomplete="email"></div>
+          <div class="field">
+  <label>Country</label>
+  <div class="country-wrap">
+    <input class="country-input" id="c-country" type="text" placeholder="Search your country..." autocomplete="off" readonly onfocus="openCountry('c')" oninput="filterCountry('c')" onblur="blurCountry('c',event)">
+    <div class="country-dropdown" id="c-country-dd"></div>
+  </div>
+</div>
+          <div class="step-actions"><button class="btn-next" onclick="cNext(1)">Continue &#x2192;</button></div>
+        </div>
+        <div class="step" id="c-step-2">
+          <div class="step-counter">02 / 03</div>
+          <div class="step-title">Collecting budget?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F331;</span><span class="opt-label">Under $1K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F4BC;</span><span class="opt-label">$1K – $5K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">$5K – $20K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$20K+</span></button>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="cBack(2)">&#x2190;</button><button class="btn-next" onclick="cNext(2)">Continue &#x2192;</button></div>
+        </div>
+        <div class="step" id="c-step-3">
+          <div class="step-counter">03 / 03</div>
+          <div class="step-title">What matters most?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F50D;</span><span class="opt-label">Discovering artists</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F4C8;</span><span class="opt-label">Investment & resale</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot &#x2192;</button></div>
+        </div>
+        <div class="success-screen" id="c-success">
+          <div class="success-icon">&#x2736;</div>
+          <div class="success-title">You're on the list.</div>
+          <div class="success-body">We'll be in touch before launch. Share your link — every referral moves you up.</div>
+          <div class="referral-box">
+            <div class="referral-label">Your referral link</div>
+            <div class="referral-url" id="c-ref-url"></div>
+            <button class="btn-copy" id="c-copy-btn" onclick="copyRef('c-ref-url','c-copy-btn')">Copy Link</button>
+          </div>
+          <div class="share-row">
+            <button class="share-btn" onclick="shareX('c-ref-url')">&#x1D54F; Share</button>
+            <button class="share-btn" onclick="shareIG('c-ref-url')">IG Story</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="artistFlow" style="display:none">
+        <div class="progress-bar" id="a-progress"></div>
+        <div class="step active" id="a-step-1">
+          <div class="step-counter">01 / 04</div>
+          <div class="step-title">Tell us about you.</div>
+          <div class="field"><label>Full Name</label><input type="text" id="a-name" placeholder="Your name" autocomplete="name"></div>
+          <div class="field"><label>Email</label><input type="email" id="a-email" placeholder="studio@example.com" autocomplete="email"></div>
+          <div class="field">
+  <label>Country</label>
+  <div class="country-wrap">
+    <input class="country-input" id="a-country" type="text" placeholder="Search your country..." autocomplete="off" readonly onfocus="openCountry('a')" oninput="filterCountry('a')" onblur="blurCountry('a',event)">
+    <div class="country-dropdown" id="a-country-dd"></div>
+  </div>
+</div>
+          <div class="step-actions"><button class="btn-next" onclick="aNext(1)">Continue &#x2192;</button></div>
+        </div>
+        <div class="step" id="a-step-2">
+          <div class="step-counter">02 / 04</div>
+          <div class="step-title">Where are you in your career?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F393;</span><span class="opt-label">Student</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F33F;</span><span class="opt-label">Emerging</span><span class="opt-sub">0–3 yrs selling</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F3A8;</span><span class="opt-label">Mid-career</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">Gallery represented</span></button>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(2)">&#x2190;</button><button class="btn-next" onclick="aNext(2)">Continue &#x2192;</button></div>
+        </div>
+        <div class="step" id="a-step-3">
+          <div class="step-counter">03 / 04</div>
+          <div class="step-title">Average artwork price?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B5;</span><span class="opt-label">Under $1K</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B3;</span><span class="opt-label">$1K – $3K</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B0;</span><span class="opt-label">$3K – $10K</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$10K+</span></button>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(3)">&#x2190;</button><button class="btn-next" onclick="aNext(3)">Continue &#x2192;</button></div>
+        </div>
+        <div class="step" id="a-step-4">
+          <div class="step-counter">04 / 04</div>
+          <div class="step-title">What matters most?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4B8;</span><span class="opt-label">Selling more work</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Building collectors</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x267B;&#xFE0F;</span><span class="opt-label">Resale + royalties</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4CA;</span><span class="opt-label">Analytics + growth</span></button>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot &#x2192;</button></div>
+        </div>
+        <div class="success-screen" id="a-success">
+          <div class="success-icon">&#x2736;</div>
+          <div class="success-title">Welcome to Grails.</div>
+          <div class="success-body">You're in. We'll reach out before launch. Every collector you refer moves you higher.</div>
+          <div class="referral-box">
+            <div class="referral-label">Your referral link</div>
+            <div class="referral-url" id="a-ref-url"></div>
+            <button class="btn-copy" id="a-copy-btn" onclick="copyRef('a-ref-url','a-copy-btn')">Copy Link</button>
+          </div>
+          <div class="share-row">
+            <button class="share-btn" onclick="shareX('a-ref-url')">&#x1D54F; Share</button>
+            <button class="share-btn" onclick="shareIG('a-ref-url')">IG Story</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+/* BG CANVAS */
+(function(){
+  var cv=document.getElementById('bgCanvas'),cx=cv.getContext('2d'),W,H,t=0;
+  var orbs=[
+    {px:.14,py:.46,rr:.56,sx:.000155,sy:.000125,ax:.13,ay:.09,ph:0.0,lum:54},
+    {px:.87,py:.54,rr:.50,sx:.000115,sy:.000165,ax:.10,ay:.12,ph:2.1,lum:46},
+    {px:.50,py:.18,rr:.40,sx:.000195,sy:.000175,ax:.14,ay:.08,ph:4.3,lum:36},
+    {px:.70,py:.78,rr:.34,sx:.000135,sy:.000215,ax:.09,ay:.11,ph:1.1,lum:30},
+  ];
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+  resize();addEventListener('resize',resize);
+  function draw(){
+    t++;cx.fillStyle='#060606';cx.fillRect(0,0,W,H);
+    orbs.forEach(function(o){
+      var ox=(o.px+Math.sin(t*o.sx+o.ph)*o.ax)*W;
+      var oy=(o.py+Math.cos(t*o.sy+o.ph*1.4)*o.ay)*H;
+      var r=o.rr*Math.min(W,H);
+      var g=cx.createRadialGradient(ox,oy,0,ox,oy,r);
+      var l=o.lum;
+      g.addColorStop(0,'rgba('+l+','+l+','+l+',0.58)');
+      g.addColorStop(.42,'rgba('+(l>>1)+','+(l>>1)+','+(l>>1)+',0.22)');
+      g.addColorStop(1,'rgba(6,6,6,0)');
+      cx.beginPath();cx.ellipse(ox,oy,r,r*.78,t*o.sx*.25,0,Math.PI*2);
+      cx.fillStyle=g;cx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* MODAL CANVAS */
+(function(){
+  var cv=document.getElementById('modalCanvas'),cx=cv.getContext('2d');
+  var W,H,t=0,live=false;
+  var orbs=[
+    {px:.08,py:.15,rr:.8,s:.00022,a:.14,ph:0.0,l:36},
+    {px:.92,py:.78,rr:.7,s:.00018,a:.12,ph:2.9,l:30},
+    {px:.50,py:.45,rr:.6,s:.00028,a:.10,ph:5.1,l:26},
+  ];
+  function resize(){var r=cv.parentElement.getBoundingClientRect();W=cv.width=r.width||460;H=cv.height=r.height||540}
+  function draw(){
+    if(!live)return;t++;cx.clearRect(0,0,W,H);
+    orbs.forEach(function(o){
+      var ox=(o.px+Math.sin(t*o.s+o.ph)*o.a)*W;
+      var oy=(o.py+Math.cos(t*o.s*.8+o.ph)*o.a)*H;
+      var r=o.rr*Math.max(W,H)*.55;
+      var g=cx.createRadialGradient(ox,oy,0,ox,oy,r);
+      g.addColorStop(0,'rgba('+o.l+','+o.l+','+o.l+',0.52)');
+      g.addColorStop(.5,'rgba('+(o.l>>1)+','+(o.l>>1)+','+(o.l>>1)+',0.18)');
+      g.addColorStop(1,'rgba(11,11,10,0)');
+      cx.beginPath();cx.arc(ox,oy,r,0,Math.PI*2);cx.fillStyle=g;cx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  var _open=window.openModal;
+  window.openModal=function(){_open();resize();live=true;draw();};
+  var _close=window.closeModal;
+  window.closeModal=function(){_close();live=false;};
+})();
+
+/* MENU */
+var _menuOpen=false;
+function toggleMenu(){
+  _menuOpen=!_menuOpen;
+  document.getElementById('hamburger').classList.toggle('open',_menuOpen);
+  document.getElementById('menuPanel').classList.toggle('open',_menuOpen);
+  document.getElementById('menuBackdrop').classList.toggle('open',_menuOpen);
+  document.body.style.overflow=_menuOpen?'hidden':'';
+}
+function closeMenu(){
+  _menuOpen=false;
+  ['hamburger','menuPanel','menuBackdrop'].forEach(function(id){document.getElementById(id).classList.remove('open');});
+  document.body.style.overflow='';
+}
+
+/* MODAL */
+function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+
+/* ROLE */
+var role='collector';
+function setRole(r){
+  role=r;
+  document.getElementById('togglePill').classList.toggle('artist',r==='artist');
+  document.getElementById('btnCollector').classList.toggle('active',r==='collector');
+  document.getElementById('btnArtist').classList.toggle('active',r==='artist');
+  document.getElementById('collectorFlow').style.display=r==='collector'?'':'none';
+  document.getElementById('artistFlow').style.display=r==='artist'?'':'none';
+}
+
+/* SELECTIONS */
+var sel={};
+function pick(el,group){
+  document.querySelectorAll('[onclick*="'+group+'"]').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');
+  sel[group]=el.querySelector('.opt-label').textContent;
+}
+function renderDots(prefix,current,total){
+  var bar=document.getElementById(prefix+'-progress');
+  if(!bar)return;
+  var html='';
+  for(var i=0;i<total;i++){
+    var c=i+1<current?'done':i+1===current?'active':'';
+    html+='<div class="dot '+c+'"></div>';
+  }
+  bar.innerHTML=html;
+}
+function goStep(prefix,from,to,total){
+  var f=document.getElementById(prefix+'-step-'+from);
+  var t=document.getElementById(prefix+'-step-'+to);
+  if(f)f.classList.remove('active');
+  if(t){t.classList.add('active');renderDots(prefix,to,total);}
+}
+function shake(id){
+  var el=document.getElementById(id);
+  el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');
+  el.addEventListener('animationend',function(){el.classList.remove('shake');},{once:true});
+}
+function cNext(s){
+  if(s===1&&(!document.getElementById('c-name').value.trim()||!document.getElementById('c-email').value.trim()||!document.getElementById('c-country').value.trim())){shake('c-step-1');return;}
+  if(s===2&&!sel['c-budget']){shake('c-step-2');return;}
+  goStep('c',s,s+1,3);
+}
+function cBack(s){goStep('c',s,s-1,3);}
+function aNext(s){
+  if(s===1&&(!document.getElementById('a-name').value.trim()||!document.getElementById('a-email').value.trim()||!document.getElementById('a-country').value.trim())){shake('a-step-1');return;}
+  if(s===2&&!sel['a-stage']){shake('a-step-2');return;}
+  if(s===3&&!sel['a-price']){shake('a-step-3');return;}
+  goStep('a',s,s+1,4);
+}
+function aBack(s){goStep('a',s,s-1,4);}
+
+/* SUBMIT */
+async function submitForm(r){
+  var p=r==='artist'?'a':'c',last=r==='artist'?4:3,pk=r==='artist'?'a-priority':'c-priority';
+  if(!sel[pk]){shake(p+'-step-'+last);return;}
+  var name=document.getElementById(p+'-name').value.trim();
+  var email=document.getElementById(p+'-email').value.trim();
+  var country=document.getElementById(p+'-country').value.trim();
+  var code=name.toLowerCase().replace(/\s+/g,'').slice(0,8)+Math.random().toString(36).slice(2,6);
+  var refUrl=location.origin+location.pathname+'?ref='+code;
+  var payload={name:name,email:email,country:country,role:r,referral_code:code,referred_by:new URLSearchParams(location.search).get('ref')||null,submitted_at:new Date().toISOString()};
+  if(r==='collector'){payload.budget=sel['c-budget'];payload.priority=sel['c-priority'];}
+  else{payload.stage=sel['a-stage'];payload.price_range=sel['a-price'];payload.priority=sel['a-priority'];}
+  try{await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}
+  catch(e){console.warn('API:',e);}
+  document.getElementById(p+'-step-'+last).classList.remove('active');
+  document.getElementById(p+'-success').classList.add('active');
+  document.getElementById(p+'-ref-url').textContent=refUrl;
+}
+
+/* COPY / SHARE */
+function copyRef(urlId,btnId){
+  navigator.clipboard.writeText(document.getElementById(urlId).textContent).then(function(){
+    var btn=document.getElementById(btnId),orig=btn.textContent;
+    btn.textContent='&#x2713; Copied!';btn.classList.add('copied');
+    setTimeout(function(){btn.textContent=orig;btn.classList.remove('copied');},2500);
+  });
+}
+function shareX(urlId){
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('Just joined the Grails waitlist — a new marketplace for original art →')+'&url='+encodeURIComponent(document.getElementById(urlId).textContent),'_blank');
+}
+function shareIG(urlId){
+  navigator.clipboard.writeText(document.getElementById(urlId).textContent);
+  alert('Link copied — paste it into your Instagram Story!');
+}
+
+/* INIT */
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMenu();closeModal();}});
+renderDots('c',1,3);
+renderDots('a',1,4);
+(function(){
+  var phrases=['Artist Royalties','Zero Seller Fees','Provenance'];
+  var cur=0;
+  var el=document.getElementById('phrase-1');
+  function next(){
+    el.classList.remove('visible');
+    cur=(cur+1)%phrases.length;
+    setTimeout(function(){el.textContent=phrases[cur];el.classList.add('visible');},500);
+  }
+  setTimeout(function(){el.classList.add('visible');setInterval(next,2500);},1600);
+})();
+
+const COUNTRIES=["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
+
+function renderCountry(prefix,filter){
+  const dd=document.getElementById(prefix+'-country-dd');
+  const q=(filter||'').toLowerCase();
+  const matches=COUNTRIES.filter(c=>c.toLowerCase().includes(q));
+  if(!matches.length){dd.innerHTML='<div class="country-opt no-results">No results</div>';return;}
+  dd.innerHTML=matches.map(c=>`<div class="country-opt" onmousedown="pickCountry('${prefix}','${c}')">${c}</div>`).join('');
+}
+function openCountry(prefix){
+  const inp=document.getElementById(prefix+'-country');
+  inp.removeAttribute('readonly');
+  inp.select();
+  const dd=document.getElementById(prefix+'-country-dd');
+  dd.classList.add('open');
+  renderCountry(prefix,inp.value);
+}
+function filterCountry(prefix){
+  renderCountry(prefix,document.getElementById(prefix+'-country').value);
+}
+function blurCountry(prefix,e){
+  setTimeout(()=>{
+    const dd=document.getElementById(prefix+'-country-dd');
+    dd.classList.remove('open');
+    document.getElementById(prefix+'-country').setAttribute('readonly','');
+  },150);
+}
+function pickCountry(prefix,val){
+  document.getElementById(prefix+'-country').value=val;
+  document.getElementById(prefix+'-country-dd').classList.remove('open');
+}
+
+
+
+
+/* ── Field-watch: activate step-1 Continue when inputs are filled ── */
+function watchStep1(){
+  function update(prefix){
+    var btn=document.querySelector('#'+prefix+'-step-1 .btn-next');
+    if(!btn)return;
+    var name=document.getElementById(prefix+'-name').value.trim();
+    var email=document.getElementById(prefix+'-email').value.trim();
+    var country=document.getElementById(prefix+'-country').value.trim();
+    if(name&&email&&country){btn.classList.add('ready');}
+    else{btn.classList.remove('ready');}
+  }
+  ['c-name','c-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('input',function(){update('c');});
+  });
+  ['a-name','a-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.addEventListener('input',function(){update('a');});
+  });
+  var origPickCountry=window.pickCountry;
+  window.pickCountry=function(prefix,val){
+    if(origPickCountry)origPickCountry(prefix,val);
+    setTimeout(function(){update(prefix);},10);
+  };
+}
+watchStep1();
+</script>
 </body>
 </html>
