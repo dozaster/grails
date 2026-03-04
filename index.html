@@ -128,7 +128,7 @@ main{
    padding-bottom on .hl gives descenders (g,y,p) breathing room
    inside that clipping box. margin-bottom cancels layout impact. */
 .hl{display:block;overflow:hidden;padding-bottom:.2em;margin-bottom:-.12em}
-.hli{display:block;transform:translateY(105%);animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards;line-height:1.05}
+.hli{display:block;transform:translateY(110%);animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards;line-height:1.05}
 .hl:nth-child(1) .hli{animation-delay:.42s}
 .hl:nth-child(2) .hli{animation-delay:.58s}
 
@@ -158,11 +158,8 @@ main{
 
 /* BOTTOM PHRASES */
 .bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:10;pointer-events:none;padding:0 clamp(20px,5vw,48px) clamp(22px,3.5vh,34px);height:44px}
-.phrase{position:absolute;bottom:clamp(22px,3.5vh,34px);font-family:\'Poppins\',sans-serif;font-size:20px;font-weight:500;letter-spacing:-0.02em;color:#ffffff;opacity:0;transition:opacity .55s ease;white-space:nowrap}
+.phrase{position:absolute;bottom:clamp(22px,3.5vh,34px);left:50%;transform:translateX(-50%);font-family:'Poppins',sans-serif;font-size:20px;font-weight:500;letter-spacing:-0.02em;color:#ffffff;opacity:0;transition:opacity .55s ease;white-space:nowrap;text-align:center;}
 .phrase.visible{opacity:1}
-.phrase-l{left:clamp(20px,5vw,48px)}
-.phrase-c{left:50%;transform:translateX(-50%)}
-.phrase-r{right:clamp(20px,5vw,48px)}
 
 /* MODAL */
 .modal-overlay{
@@ -408,7 +405,7 @@ main{
   <ul class="menu-links">
     <li><a class="menu-link" href="about.html" onclick="closeMenu()">About <span class="menu-link-arr">→</span></a></li>
     <li><a class="menu-link" href="features.html" onclick="closeMenu()">Features <span class="menu-link-arr">→</span></a></li>
-    <li><a class="menu-link" href="#" onclick="closeMenu();openContactModal();return false;">Contact <span class="menu-link-arr">→</span></a></li>
+    <li><a class="menu-link" href="contact.html" onclick="closeMenu()">Contact <span class="menu-link-arr">→</span></a></li>
   </ul>
   <div class="menu-footer">Grails — A New Art Marketplace<br>© 2026 All rights reserved.</div>
 </div>
@@ -426,9 +423,7 @@ main{
 </main>
 
 <div class="bottom-bar" aria-live="polite">
-  <span class="phrase phrase-l" id="phrase-1">Artist Royalties</span>
-  <span class="phrase phrase-c" id="phrase-2">Zero Seller Fees</span>
-  <span class="phrase phrase-r" id="phrase-3">Provenance</span>
+  <span class="phrase" id="phrase-1">Artist Royalties</span>
 </div>
 
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
@@ -740,14 +735,15 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMenu()
 renderDots('c',1,3);
 renderDots('a',1,4);
 (function(){
-  var phrases=['phrase-1','phrase-2','phrase-3'].map(function(id){return document.getElementById(id);});
+  var phrases=['Artist Royalties','Zero Seller Fees','Provenance'];
   var cur=0;
+  var el=document.getElementById('phrase-1');
   function next(){
-    phrases[cur].classList.remove('visible');
+    el.classList.remove('visible');
     cur=(cur+1)%phrases.length;
-    setTimeout(function(){phrases[cur].classList.add('visible');},500);
+    setTimeout(function(){el.textContent=phrases[cur];el.classList.add('visible');},500);
   }
-  setTimeout(function(){phrases[cur].classList.add('visible');setInterval(next,2500);},1600);
+  setTimeout(function(){el.classList.add('visible');setInterval(next,2500);},1600);
 })();
 
 const COUNTRIES=["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
