@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"app/page.tsx -> @/components/MovingBackground\":{\"id\":\"app/page.tsx -> @/components/MovingBackground\",\"files\":[\"static/chunks/_app-pages-browser_components_MovingBackground_tsx.js\"]}}"
