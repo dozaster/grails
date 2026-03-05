@@ -322,29 +322,33 @@ footer a:hover{color:var(--black)}
 /* ── Mobile accordion for feat-cards ─────────────────────────────── */
 @media(max-width:700px){
   .cards-grid{gap:6px}
+
+  /* Default: white card, slightly dimmed for inactive hierarchy */
   .feat-card{
-    background:#161616;
-    border:1px solid rgba(255,255,255,.10);
+    background:#ffffff;
+    border:1px solid rgba(0,0,0,.08);
     border-radius:14px;
     padding:18px 20px;
     gap:0;
     cursor:pointer;
     user-select:none;
-    transition:background .25s, border-color .25s;
     overflow:hidden;
+    opacity:0.55;
+    transition:background .28s, border-color .28s, opacity .28s, box-shadow .28s;
   }
   .feat-card .feat-card-num{
-    color:rgba(255,255,255,.30);
+    color:rgba(0,0,0,.45);
     font-size:10px;
     margin-bottom:4px;
   }
   .feat-card .feat-card-title{
-    color:rgba(255,255,255,.75);
+    color:#000000;
     font-size:16px;
+    font-weight:700;
     transition:color .2s;
   }
   .feat-card .feat-card-body{
-    color:rgba(255,255,255,.55);
+    color:rgba(255,255,255,.70);
     font-size:14px;
     line-height:1.6;
     max-height:0;
@@ -355,13 +359,19 @@ footer a:hover{color:var(--black)}
   }
   .feat-card .feat-card-wave,
   .feat-card .feat-card-cta{ display:none }
-  /* Active state */
+
+  /* Active / open state: black card, white text */
   .feat-card.open{
-    background:#000;
-    border-color:rgba(255,255,255,.22);
+    background:#000000;
+    border-color:rgba(255,255,255,.15);
+    opacity:1;
+    box-shadow:0 4px 24px rgba(0,0,0,.3);
+  }
+  .feat-card.open .feat-card-num{
+    color:rgba(255,255,255,.35);
   }
   .feat-card.open .feat-card-title{
-    color:#fff;
+    color:#ffffff;
   }
   .feat-card.open .feat-card-body{
     max-height:160px;
