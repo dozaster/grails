@@ -274,7 +274,7 @@ footer a:hover{color:var(--black)}
   font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
   color:rgba(255,255,255,.75);margin-bottom:28px;
 }
-.menu-links{list-style:none;display:flex;flex-direction:column;gap:0;flex:1}
+.menu-links{list-style:none;display:flex;flex-direction:column;gap:0}
 .menu-links li{
   opacity:0;transform:translateX(14px);border-bottom:1px solid rgba(255,255,255,.07);
   transition:opacity .35s,transform .35s;
@@ -291,7 +291,7 @@ footer a:hover{color:var(--black)}
 .menu-link:hover{color:#fff}
 .menu-link-arr{display:none}
 .menu-cta{
-  display:inline-flex;align-items:center;justify-content:center;margin-top:8px;
+  display:inline-flex;align-items:center;justify-content:center;margin-top:40px;margin-bottom:8px;
   padding:13px 28px;background:#0052FF;color:#fff;border:none;border-radius:100px;
   font-family:'Google Sans Flex','Google Sans',sans-serif;font-size:20px;font-weight:900;
   letter-spacing:.01em;text-decoration:none;cursor:pointer;
@@ -302,7 +302,7 @@ footer a:hover{color:var(--black)}
 .menu-cta:hover{background:#1a6aff;transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,82,255,.5),0 0 0 1px rgba(0,82,255,.3)}
 .menu-cta:active{transform:none;box-shadow:none}
 .menu-panel.open .menu-cta{opacity:1}
-.menu-social{display:flex;gap:12px;margin-top:24px;opacity:0;transition:opacity .4s .36s}
+.menu-social{display:flex;gap:12px;margin-top:0;margin-bottom:16px;opacity:0;transition:opacity .4s .36s}
 .menu-panel.open .menu-social{opacity:1}
 .social-link{
   display:flex;align-items:center;justify-content:center;
@@ -313,10 +313,62 @@ footer a:hover{color:var(--black)}
 }
 .social-link:hover{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.07)}
 .social-link svg{width:16px;height:16px;fill:currentColor}
+.menu-bottom{margin-top:auto;display:flex;flex-direction:column;gap:0}
 .menu-footer{margin-top:20px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.75;opacity:0;transition:opacity .4s .38s}
-.menu-panel.open .menu-footer{opacity:1}
+.menu-footer{opacity:1}
 @media(max-width:600px){.menu-panel{width:100%;border-left:none}}
 
+
+/* ── Mobile accordion for feat-cards ─────────────────────────────── */
+@media(max-width:700px){
+  .cards-grid{gap:6px}
+  .feat-card{
+    background:#161616;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:14px;
+    padding:18px 20px;
+    gap:0;
+    cursor:pointer;
+    user-select:none;
+    transition:background .25s, border-color .25s;
+    overflow:hidden;
+  }
+  .feat-card .feat-card-num{
+    color:rgba(255,255,255,.30);
+    font-size:10px;
+    margin-bottom:4px;
+  }
+  .feat-card .feat-card-title{
+    color:rgba(255,255,255,.75);
+    font-size:16px;
+    transition:color .2s;
+  }
+  .feat-card .feat-card-body{
+    color:rgba(255,255,255,.55);
+    font-size:14px;
+    line-height:1.6;
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    margin-top:0;
+    transition:max-height .38s cubic-bezier(.4,0,.2,1), opacity .28s ease, margin-top .28s ease;
+  }
+  .feat-card .feat-card-wave,
+  .feat-card .feat-card-cta{ display:none }
+  /* Active state */
+  .feat-card.open{
+    background:#000;
+    border-color:rgba(255,255,255,.22);
+  }
+  .feat-card.open .feat-card-title{
+    color:#fff;
+  }
+  .feat-card.open .feat-card-body{
+    max-height:160px;
+    opacity:1;
+    margin-top:12px;
+  }
+}
 </style>
 </head>
 <body>
@@ -337,11 +389,11 @@ footer a:hover{color:var(--black)}
     <li><a class="menu-link" href="contact.html" onclick="closeMenu()">Contact <span class="menu-link-arr">→</span></a></li>
   </ul>
   <a class="menu-cta" href="index.html" onclick="if(typeof openModal==='function'){openModal();return false;}">Claim Your Spot</a>
-  <div class="menu-social">
+  <div class="menu-bottom"><div class="menu-social">
     <a class="social-link" href="https://www.instagram.com/grails.hq/" target="_blank" rel="noopener" aria-label="Grails on Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
     <a class="social-link" href="https://x.com/GrailsHQ" target="_blank" rel="noopener" aria-label="Grails on X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.256 5.622 5.908-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
   </div>
-  <div class="menu-footer">Grails — A New Art Marketplace<br>© 2026 All rights reserved.</div>
+  <div class="menu-footer">Grails — A New Art Marketplace<br>© 2026 All rights reserved.</div></div>
 </div>
 
 <nav>
@@ -790,6 +842,28 @@ function closeMenu(){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+</script>
+<script>
+(function(){
+  function initAccordion(){
+    var cards = document.querySelectorAll('.feat-card');
+    cards.forEach(function(card){
+      card.addEventListener('click', function(){
+        if(window.innerWidth > 700) return;
+        var isOpen = card.classList.contains('open');
+        // Close all
+        cards.forEach(function(c){ c.classList.remove('open'); });
+        // Open clicked if it wasn't already open
+        if(!isOpen) card.classList.add('open');
+      });
+    });
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAccordion);
+  } else {
+    initAccordion();
+  }
+})();
 </script>
 </body>
 </html>
