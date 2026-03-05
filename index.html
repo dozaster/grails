@@ -145,8 +145,8 @@ main{
 /* .hl clips vertically to create the slide-up reveal mask.
    padding-bottom on .hl gives descenders (g,y,p) breathing room
    inside that clipping box. margin-bottom cancels layout impact. */
-.hl{display:block;overflow:hidden;padding-bottom:.2em;margin-bottom:-.12em}
-.hli{display:block;transform:translateY(110%);animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards;line-height:1.05}
+.hl{display:block;overflow:hidden;padding-bottom:.25em;margin-bottom:-.25em;padding-top:.15em}
+.hli{display:block;transform:translateY(120%);animation:slideUp 1s cubic-bezier(.16,1,.3,1) forwards;line-height:1.05}
 .hl:nth-child(1) .hli{animation-delay:.42s}
 .hl:nth-child(2) .hli{animation-delay:.58s}
 
@@ -193,7 +193,7 @@ main{
 }
 .modal-overlay.open .modal{transform:none}
 .modal::-webkit-scrollbar{display:none}
-#modalCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.45;border-radius:22px}
+
 .modal-inner{position:relative;z-index:1}
 .modal-close{
   position:absolute;top:16px;right:20px;z-index:2;
@@ -276,7 +276,7 @@ main{
 
 /* KEYFRAMES */
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes slideUp{from{transform:translateY(110%)}to{transform:none}}
+@keyframes slideUp{from{transform:translateY(120%)}to{transform:none}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .shake{animation:shake .38s ease}
 @media(max-width:480px){.modal{padding:28px 18px 32px}}
@@ -451,7 +451,7 @@ main{
 
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
-    <canvas id="modalCanvas"></canvas>
+    <div id="modalVanta" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;border-radius:22px;overflow:hidden;pointer-events:none;opacity:.7"></div>
     <div class="modal-inner">
       <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
       <h2 class="modal-title">Join the Waitlist</h2>
@@ -587,34 +587,35 @@ main{
 <script>
 
 
-/* MODAL CANVAS */
+/* MODAL VANTA */
+var _modalVanta = null;
 (function(){
-  var cv=document.getElementById('modalCanvas'),cx=cv.getContext('2d');
-  var W,H,t=0,live=false;
-  var orbs=[
-    {px:.08,py:.15,rr:.8,s:.00022,a:.14,ph:0.0,l:36},
-    {px:.92,py:.78,rr:.7,s:.00018,a:.12,ph:2.9,l:30},
-    {px:.50,py:.45,rr:.6,s:.00028,a:.10,ph:5.1,l:26},
-  ];
-  function resize(){var r=cv.parentElement.getBoundingClientRect();W=cv.width=r.width||460;H=cv.height=r.height||540}
-  function draw(){
-    if(!live)return;t++;cx.clearRect(0,0,W,H);
-    orbs.forEach(function(o){
-      var ox=(o.px+Math.sin(t*o.s+o.ph)*o.a)*W;
-      var oy=(o.py+Math.cos(t*o.s*.8+o.ph)*o.a)*H;
-      var r=o.rr*Math.max(W,H)*.55;
-      var g=cx.createRadialGradient(ox,oy,0,ox,oy,r);
-      g.addColorStop(0,'rgba('+o.l+','+o.l+','+o.l+',0.52)');
-      g.addColorStop(.5,'rgba('+(o.l>>1)+','+(o.l>>1)+','+(o.l>>1)+',0.18)');
-      g.addColorStop(1,'rgba(11,11,10,0)');
-      cx.beginPath();cx.arc(ox,oy,r,0,Math.PI*2);cx.fillStyle=g;cx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  var _open=window.openModal;
-  window.openModal=function(){_open();resize();live=true;draw();};
-  var _close=window.closeModal;
-  window.closeModal=function(){_close();live=false;};
+  var _open = window.openModal;
+  window.openModal = function(){
+    _open();
+    if(!_modalVanta && window.VANTA){
+      _modalVanta = VANTA.FOG({
+        el: '#modalVanta',
+        mouseControls: false,
+        touchControls: false,
+        gyroControls: false,
+        minHeight: 200,
+        minWidth: 200,
+        highlightColor: 0x0,
+        midtoneColor: 0x555566,
+        lowlightColor: 0x0,
+        baseColor: 0x0,
+        blurFactor: 0.90,
+        speed: 1.80,
+        zoom: 0.60,
+      });
+    }
+  };
+  var _close = window.closeModal;
+  window.closeModal = function(){
+    _close();
+    if(_modalVanta){ _modalVanta.destroy(); _modalVanta = null; }
+  };
 })();
 
 /* MENU */
@@ -1015,10 +1016,10 @@ VANTA.FOG({
   minHeight: 200,
   minWidth: 200,
   highlightColor: 0x0,
-  midtoneColor: 0x5f5a5a,
+  midtoneColor: 0x555566,
   lowlightColor: 0x0,
   baseColor: 0x0,
-  blurFactor: 0.80,
+  blurFactor: 0.90,
   speed: 1.80,
   zoom: 0.60,
 });
