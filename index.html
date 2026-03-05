@@ -97,8 +97,7 @@ nav{
   color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;
 }
 .menu-link:hover{color:var(--white)}
-.menu-link-arr{font-size:18px;opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .2s}
-.menu-link:hover .menu-link-arr{opacity:1;transform:none}
+.menu-link-arr{display:none}
 
 /* SOCIAL LINKS */
 .menu-social{display:flex;gap:12px;margin-top:24px;opacity:0;transition:opacity .4s .36s}
@@ -166,7 +165,7 @@ main{
 .cta-btn{
   position:relative;z-index:1;display:inline-flex;align-items:center;
   background:#0052FF;color:var(--white);font-family:'Google Sans Flex','Google Sans',sans-serif;
-  font-size:20px;font-weight:700;letter-spacing:.01em;
+  font-size:20px;font-weight:900;letter-spacing:.01em;
   padding:clamp(14px,2vh,18px) clamp(28px,3vw,42px);border-radius:100px;border:none;cursor:pointer;
   transition:background .22s,transform .22s,box-shadow .22s;
 }
