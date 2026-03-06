@@ -65,6 +65,7 @@ footer a:hover{color:var(--black)}
 .feat-card-wave{font-size:28px;color:var(--muted)}
 .feat-card-cta{font-size:13px;font-weight:600;color:var(--black);text-decoration:none;margin-top:auto}
 .feat-card-cta:hover{color:var(--blue)}
+.feat-chevron{display:none}
 
 /* MODAL */
 .modal-overlay{
@@ -323,10 +324,10 @@ footer a:hover{color:var(--black)}
 @media(max-width:700px){
   .cards-grid{gap:6px}
 
-  /* Default: white card, slightly dimmed for inactive hierarchy */
+  /* Inactive: grey bg matching desktop, slightly dimmed */
   .feat-card{
-    background:#ffffff;
-    border:1px solid rgba(0,0,0,.08);
+    background:#f7f7f7;
+    border:1px solid rgba(0,0,0,.06);
     border-radius:14px;
     padding:18px 20px;
     gap:0;
@@ -336,10 +337,13 @@ footer a:hover{color:var(--black)}
     opacity:0.55;
     transition:background .28s, border-color .28s, opacity .28s, box-shadow .28s;
   }
+  .feat-card-header{
+    display:flex;align-items:center;justify-content:space-between;
+  }
   .feat-card .feat-card-num{
-    color:rgba(0,0,0,.45);
+    color:rgba(0,0,0,.40);
     font-size:10px;
-    margin-bottom:4px;
+    margin-bottom:6px;
   }
   .feat-card .feat-card-title{
     color:#000000;
@@ -347,8 +351,15 @@ footer a:hover{color:var(--black)}
     font-weight:700;
     transition:color .2s;
   }
+  .feat-chevron{
+    color:rgba(0,0,0,.35);
+    flex-shrink:0;
+    margin-left:8px;
+    transition:opacity .22s ease, transform .22s ease;
+    display:flex;align-items:center;
+  }
   .feat-card .feat-card-body{
-    color:rgba(255,255,255,.70);
+    color:#444;
     font-size:14px;
     line-height:1.6;
     max-height:0;
@@ -360,12 +371,12 @@ footer a:hover{color:var(--black)}
   .feat-card .feat-card-wave,
   .feat-card .feat-card-cta{ display:none }
 
-  /* Active / open state: black card, white text */
+  /* Active / open: black card, all white text, chevron fades out */
   .feat-card.open{
     background:#000000;
-    border-color:rgba(255,255,255,.15);
+    border-color:rgba(255,255,255,.12);
     opacity:1;
-    box-shadow:0 4px 24px rgba(0,0,0,.3);
+    box-shadow:0 4px 24px rgba(0,0,0,.25);
   }
   .feat-card.open .feat-card-num{
     color:rgba(255,255,255,.35);
@@ -373,7 +384,12 @@ footer a:hover{color:var(--black)}
   .feat-card.open .feat-card-title{
     color:#ffffff;
   }
+  .feat-card.open .feat-chevron{
+    opacity:0;
+    transform:translateY(-4px);
+  }
   .feat-card.open .feat-card-body{
+    color:rgba(255,255,255,.75);
     max-height:160px;
     opacity:1;
     margin-top:12px;
@@ -428,17 +444,17 @@ footer a:hover{color:var(--black)}
     <div class="cards-grid">
       <div class="feat-card">
         <div class="feat-card-num">01</div>
-        <div class="feat-card-title">Artist Royalties</div>
+        <div class="feat-card-header"><div class="feat-card-title">Artist Royalties</div><span class="feat-chevron"><svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="feat-card-body">Every resale includes a <strong>4% Royalty</strong> — paid to the artist from the platform fee shown.</div>
       </div>
       <div class="feat-card">
         <div class="feat-card-num">02</div>
-        <div class="feat-card-title">Zero Seller Fees</div>
+        <div class="feat-card-header"><div class="feat-card-title">Zero Seller Fees</div><span class="feat-chevron"><svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="feat-card-body">Sellers keep what they list for — buyers pay a platform fee included in the displayed price.</div>
       </div>
       <div class="feat-card">
         <div class="feat-card-num">03</div>
-        <div class="feat-card-title">Provenance</div>
+        <div class="feat-card-header"><div class="feat-card-title">Provenance</div><span class="feat-chevron"><svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="8"><path d="M1 1L6 7L11 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         <div class="feat-card-body"><strong>Verified provenance</strong> from <strong>artist</strong> to <strong>collector</strong> — clarity you can see and trust.</div>
       </div>
     </div>
