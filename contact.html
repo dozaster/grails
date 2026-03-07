@@ -70,17 +70,8 @@ nav{
 
 
 /* ── Terms drawer (inline, no fixed positioning) ── */
-.terms-drawer{
-  position:absolute;inset:0;
-  background:rgba(8,8,10,.98);
-  border-radius:inherit;
-  z-index:50;
-  display:flex;flex-direction:column;
-  transform:translateY(100%);
-  transition:transform .3s cubic-bezier(.16,1,.3,1);
-  overflow:hidden;
-}
-.terms-drawer.open{transform:translateY(0)}
+.terms-drawer{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;background:rgba(8,8,10,.98);opacity:0;pointer-events:none;transition:opacity .2s ease}
+.terms-drawer.open{opacity:1;pointer-events:all}
 .terms-tabs{display:flex;gap:6px;padding:14px 18px 0;flex-shrink:0}
 .terms-tab{flex:1;padding:8px 4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.45);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Poppins',sans-serif;touch-action:manipulation}
 .terms-tab.active{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
@@ -525,7 +516,7 @@ footer a:hover{color:var(--black)}
       </div>
       <div class="form-actions" style="margin-top:clamp(12px,2vh,20px);">
         <button class="submit-btn" onclick="handleSubmit()">
-          <span>→</span> Send Message
+          Send Message
         </button>
         <span class="submit-note">We typically reply within 24 hours.</span>
       </div>
@@ -623,7 +614,7 @@ async function handleSubmit() {
             <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
             <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="c-success">
           <div class="success-icon">&#x2736;</div>
@@ -688,7 +679,7 @@ async function handleSubmit() {
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x267B;&#xFE0F;</span><span class="opt-label">Resale + royalties</span></button>
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4CA;</span><span class="opt-label">Analytics + growth</span></button>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="a-success">
           <div class="success-icon">&#x2736;</div>

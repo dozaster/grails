@@ -538,7 +538,7 @@ main{
             <button class="consent-toggle" id="c-consent" onclick="toggleConsent('c')" aria-label="I agree to the terms"></button>
             <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="c-success">
           <div class="success-icon">&#x2736;</div>
@@ -607,7 +607,7 @@ main{
             <button class="consent-toggle" id="a-consent" onclick="toggleConsent('a')" aria-label="I agree to the terms"></button>
             <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="a-success">
           <div class="success-icon">&#x2736;</div>
@@ -898,6 +898,7 @@ function setContactRole(role){
 function submitContact(){
   var email=document.getElementById('contactEmail').value.trim();
   if(!email||!email.includes('@')){document.getElementById('contactEmail').focus();return;}
+  if(!document.getElementById('contact-consent').classList.contains('on')){document.getElementById('consent-row-contact').style.outline='2px solid rgba(255,80,80,.7)';document.getElementById('consent-row-contact').scrollIntoView({behavior:'smooth',block:'nearest'});return;}
   document.getElementById('contactForm').style.display='none';
   document.getElementById('contactSuccess').style.display='';
 }
@@ -1085,6 +1086,10 @@ watchStep1();
       <div class="contact-field">
         <label>Message</label>
         <textarea id="contactMessage" placeholder="Tell us about yourself, your work, or what you're looking for..."></textarea>
+      </div>
+      <div class="consent-row consent-row--dark" id="consent-row-contact" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,0,.1)">
+        <button class="consent-toggle" id="contact-consent" onclick="toggleConsent('contact')" aria-label="I agree to the terms" style="background:rgba(0,0,0,.15)"></button>
+        <span class="consent-label" style="color:rgba(0,0,0,.55);font-size:11px;line-height:1.65">By sending a message, you agree to receive a response and accept our <button class="consent-link" style="color:rgba(0,0,0,.75);font-size:11px" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" style="color:rgba(0,0,0,.75);font-size:11px" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
       </div>
       <button class="contact-submit" onclick="submitContact()">Send Message</button>
     </div>
