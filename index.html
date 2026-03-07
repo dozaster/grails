@@ -123,6 +123,42 @@ nav{
 .menu-cta:hover{background:#1a6aff}
 .menu-footer{margin-top:20px;font-size:12px;color:rgba(255,255,255,.65);line-height:1.75;opacity:0;transition:opacity .4s .32s}
 .menu-panel.open .menu-footer{opacity:1}
+
+
+
+
+
+
+
+/* ── Terms drawer ── */
+.terms-drawer{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;background:rgba(8,8,10,.98);opacity:0;pointer-events:none;transition:opacity .2s ease}
+.terms-drawer.open{opacity:1;pointer-events:all}
+.terms-tabs{display:flex;gap:6px;padding:14px 18px 0;flex-shrink:0}
+.terms-tab{flex:1;padding:9px 4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.45);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Poppins',sans-serif}
+.terms-tab.active{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+.terms-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.terms-header-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.terms-close-btn{background:rgba(255,255,255,.08);border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;padding:8px 18px;border-radius:20px;font-family:'Poppins',sans-serif;letter-spacing:.5px}
+.terms-body{overflow-y:auto;padding:16px 18px 24px;flex:1;-webkit-overflow-scrolling:touch}
+.terms-body h3{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;margin:16px 0 4px}
+.terms-body h3:first-child{margin-top:0}
+.terms-body p{font-size:13px;line-height:1.75;color:rgba(255,255,255,.65);margin:0 0 8px}
+/* ── Consent toggle ── */
+.consent-row{display:flex;align-items:flex-start;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+.consent-toggle{position:relative;width:44px;min-width:44px;height:26px;flex-shrink:0;cursor:pointer;background:rgba(255,255,255,.15);border:none;border-radius:13px;transition:background .2s;padding:0;margin-top:1px}
+.consent-toggle.on{background:#4461f2}
+.consent-toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.consent-toggle.on::after{transform:translateX(18px)}
+.consent-label{font-size:11px;line-height:1.65;color:rgba(255,255,255,.55)}
+.consent-link{color:rgba(255,255,255,.9);text-decoration:underline;text-underline-offset:2px;cursor:pointer;background:none;border:none;font:inherit;font-size:11px;padding:0;display:inline}
+.consent-link:active{opacity:.7}
+/* dark variant for light-bg pages */
+.consent-row--dark{border-top:1px solid rgba(0,0,0,.1)}
+.consent-row--dark .consent-label{color:rgba(0,0,0,.6)}
+.consent-row--dark .consent-toggle{background:rgba(0,0,0,.15)}
+.consent-row--dark .consent-toggle.on{background:#4461f2}
+.consent-row--dark .consent-link{color:rgba(0,0,0,.8)}
+
 @media(max-width:600px){.menu-panel{width:100%;border-left:none}}
 
 /* HERO */
@@ -262,7 +298,7 @@ main{
 .success-screen.active{display:flex;animation:stepIn .5s ease}
 .success-icon{width:48px;height:44px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;animation:popIn .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 32px rgba(68,97,242,.5)}
 @keyframes popIn{from{transform:scale(0) rotate(-20deg)}to{transform:none}}
-.success-title{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:9px}
+.success-title{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:9px;color:#fff}
 .success-body{font-size:13px;color:rgba(255,255,255,.75);line-height:1.75;margin-bottom:26px}
 .referral-box{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:11px}
 .referral-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:7px}
@@ -498,6 +534,10 @@ main{
             <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
             <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
           </div>
+          <div class="consent-row" id="consent-row-c">
+            <button class="consent-toggle" id="c-consent" onclick="toggleConsent('c')" aria-label="I agree to the terms"></button>
+            <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
+          </div>
           <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot &#x2192;</button></div>
         </div>
         <div class="success-screen" id="c-success">
@@ -563,6 +603,10 @@ main{
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x267B;&#xFE0F;</span><span class="opt-label">Resale + royalties</span></button>
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4CA;</span><span class="opt-label">Analytics + growth</span></button>
           </div>
+          <div class="consent-row" id="consent-row-a">
+            <button class="consent-toggle" id="a-consent" onclick="toggleConsent('a')" aria-label="I agree to the terms"></button>
+            <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
+          </div>
           <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot &#x2192;</button></div>
         </div>
         <div class="success-screen" id="a-success">
@@ -579,7 +623,6 @@ main{
             <button class="share-btn" onclick="shareIG('a-ref-url')">IG Story</button>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </div>
@@ -695,12 +738,13 @@ function aBack(s){goStep('a',s,s-1,4);}
 async function submitForm(r){
   var p=r==='artist'?'a':'c',last=r==='artist'?4:3,pk=r==='artist'?'a-priority':'c-priority';
   if(!sel[pk]){shake(p+'-step-'+last);return;}
+  if(!document.getElementById(p+'-consent').classList.contains('on')){document.getElementById('consent-row-'+p).style.outline='2px solid rgba(255,80,80,.7)';document.getElementById('consent-row-'+p).scrollIntoView({behavior:'smooth',block:'nearest'});return;}
   var full_name=document.getElementById(p+'-name').value.trim();
   var email=document.getElementById(p+'-email').value.trim();
   var country=document.getElementById(p+'-country').value.trim();
   var referred_by=new URLSearchParams(location.search).get('ref')||null;
   var source_page=location.pathname.replace('/','').replace('.html','')||'index';
-  var payload={role:r,full_name:full_name,email:email,country:country,referred_by:referred_by,source_page:source_page};
+  var payload={role:r,full_name:full_name,email:email,country:country,referred_by:referred_by,source_page:source_page,terms_accepted_at:new Date().toISOString()};
   if(r==='collector'){payload.budget=sel['c-budget']||null;payload.collector_priority=sel['c-priority']||null;}
   else{payload.career_stage=sel['a-stage']||null;payload.artwork_price=sel['a-price']||null;payload.artist_priority=sel['a-priority']||null;}
   var referral_code=null;
@@ -735,6 +779,47 @@ function shareIG(urlId){
   navigator.clipboard.writeText(document.getElementById(urlId).textContent);
   alert('Link copied — paste it into your Instagram Story!');
 }
+
+
+
+
+
+/* ── Terms drawer ── */
+var TERMS_HTML={
+  terms:[
+    '<h3>Waitlist Access</h3><p>Joining the waitlist does not guarantee access to the product or service. Invitations may be sent at our sole discretion.</p>',
+    '<h3>Product Development</h3><p>Grails is currently in development. Features, timelines, and availability may change, be delayed, or be discontinued at any time.</p>',
+    '<h3>Email Communications</h3><p>By signing up, you agree to receive occasional emails about product updates, launches, and announcements. You may unsubscribe at any time.</p>',
+    '<h3>Acceptable Use</h3><p>You agree not to misuse the website or attempt to interfere with its normal operation.</p>',
+    '<h3>Limitation of Liability</h3><p>This website and waitlist are provided "as is" without warranties of any kind.</p>',
+    '<h3>Contact</h3><p>Questions: <a href="mailto:hello@get-grails.com" style="color:rgba(255,255,255,.8)">hello@get-grails.com</a></p>'
+  ].join(''),
+  privacy:[
+    '<h3>Information We Collect</h3><p>When you join the waitlist, we may collect your email address and limited technical information such as IP address, browser type, device type, and basic analytics data.</p>',
+    '<h3>How We Use Information</h3><p>We use information to manage the Grails waitlist, send product updates and launch announcements, improve the website and user experience, and monitor site performance and security.</p>',
+    '<h3>Sharing of Information</h3><p>We do not sell your personal information. We may share limited information with trusted service providers for email delivery, analytics, and hosting.</p>',
+    '<h3>Data Retention</h3><p>We retain your information only as long as necessary. You may request deletion at any time.</p>',
+    '<h3>Your Rights</h3><p>You may request access to or deletion of your information, or unsubscribe from communications at any time.</p>',
+    '<h3>Contact</h3><p>Questions: <a href="mailto:hello@get-grails.com" style="color:rgba(255,255,255,.8)">hello@get-grails.com</a></p>'
+  ].join('')
+};
+function toggleConsent(p){
+  var el=document.getElementById(p+'-consent');
+  el.classList.toggle('on');
+  document.getElementById('consent-row-'+p).style.outline='none';
+}
+function openTerms(tab){
+  var t=tab||'terms';
+  document.getElementById('tabTerms').classList.toggle('active',t==='terms');
+  document.getElementById('tabPrivacy').classList.toggle('active',t==='privacy');
+  document.getElementById('termsHeaderTitle').textContent=t==='terms'?'Terms of Service':'Privacy Policy';
+  document.getElementById('termsBody').innerHTML='<p style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:12px">Last updated: March 2026</p>'+TERMS_HTML[t];
+  document.getElementById('termsOverlay').classList.add('open');
+}
+function closeTerms(){document.getElementById('termsOverlay').classList.remove('open');}
+
+
+
 
 /* INIT */
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMenu();closeModal();}});
@@ -1034,5 +1119,18 @@ VANTA.FOG({
   zoom: 0.60,
 });
 </script>
+<!-- ── Terms drawer ── -->
+<div class="terms-drawer" id="termsOverlay">
+  <div class="terms-tabs">
+    <button class="terms-tab active" id="tabTerms" onclick="openTerms('terms')">Terms of Service</button>
+    <button class="terms-tab" id="tabPrivacy" onclick="openTerms('privacy')">Privacy Policy</button>
+  </div>
+  <div class="terms-header">
+    <span class="terms-header-title" id="termsHeaderTitle">Terms of Service</span>
+    <button class="terms-close-btn" onclick="closeTerms()">Done</button>
+  </div>
+  <div class="terms-body" id="termsBody"></div>
+</div>
+
 </body>
 </html>
