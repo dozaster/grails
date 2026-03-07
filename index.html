@@ -510,7 +510,47 @@ main{
 </div>
           <div class="step-actions"><button class="btn-next" onclick="cNext(1)">Continue</button></div>
         </div>
+                <div class="step" id="c-step-2">
+          <div class="step-counter">02 / 03</div>
+          <div class="step-title">Collecting budget?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F331;</span><span class="opt-label">Under $1K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F4BC;</span><span class="opt-label">$1K – $5K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">$5K – $20K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$20K+</span></button>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="cBack(2)">&#x2190;</button><button class="btn-next" onclick="cNext(2)">Continue</button></div>
         </div>
+        <div class="step" id="c-step-3">
+          <div class="step-counter">03 / 03</div>
+          <div class="step-title">What matters most?</div>
+          <div class="options">
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F50D;</span><span class="opt-label">Discovering artists</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F4C8;</span><span class="opt-label">Investment & resale</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
+          </div>
+          <div class="consent-row" id="consent-row-c">
+            <button class="consent-toggle" id="c-consent" onclick="toggleConsent('c')" aria-label="I agree to the terms"></button>
+            <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
+          </div>
+          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" id="c-reserve-btn" onclick="submitForm('collector')">Reserve My Spot</button></div>
+        </div>
+        <div class="success-screen" id="c-success">
+          <div class="success-icon">&#x2736;</div>
+          <div class="success-title">You're on the list.</div>
+          <div class="success-body">We'll be in touch before launch. Share your link — every referral moves you up.</div>
+          <div class="referral-box">
+            <div class="referral-label">Your referral link</div>
+            <div class="referral-url" id="c-ref-url"></div>
+            <button class="btn-copy" id="c-copy-btn" onclick="copyRef('c-ref-url','c-copy-btn')">Copy Link</button>
+          </div>
+          <div class="share-row">
+            <button class="share-btn" onclick="shareX('c-ref-url')">&#x1D54F; Share</button>
+            <button class="share-btn" onclick="shareIG('c-ref-url')">IG Story</button>
+          </div>
+        </div>
+      
 
       <div id="artistFlow" style="display:none">
         <div class="progress-bar" id="a-progress"></div>

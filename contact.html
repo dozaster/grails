@@ -609,6 +609,10 @@ async function handleSubmit() {
             <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
             <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
           </div>
+          <div class="consent-row" id="consent-row-c">
+            <button class="consent-toggle" id="c-consent" onclick="toggleConsent('c')" aria-label="I agree to the terms"></button>
+            <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
+          </div>
           <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" id="c-reserve-btn" onclick="submitForm('collector')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="c-success">
@@ -670,6 +674,10 @@ async function handleSubmit() {
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Building collectors</span></button>
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x267B;&#xFE0F;</span><span class="opt-label">Resale + royalties</span></button>
             <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4CA;</span><span class="opt-label">Analytics + growth</span></button>
+          </div>
+          <div class="consent-row" id="consent-row-a">
+            <button class="consent-toggle" id="a-consent" onclick="toggleConsent('a')" aria-label="I agree to the terms"></button>
+            <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
           </div>
           <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" id="a-reserve-btn" onclick="submitForm('artist')">Reserve My Spot</button></div>
         </div>
