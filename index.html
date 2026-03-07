@@ -131,15 +131,14 @@ nav{
 
 
 /* ── Terms drawer ── */
-.terms-drawer{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;background:rgba(8,8,10,.98);opacity:0;pointer-events:none;transition:opacity .2s ease}
-.terms-drawer.open{opacity:1;pointer-events:all}
+
 .terms-tabs{display:flex;gap:6px;padding:14px 18px 0;flex-shrink:0}
 .terms-tab{flex:1;padding:9px 4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.45);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Poppins',sans-serif}
 .terms-tab.active{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
 .terms-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .terms-header-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.8)}
 .terms-close-btn{background:rgba(255,255,255,.08);border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;padding:8px 18px;border-radius:20px;font-family:'Poppins',sans-serif;letter-spacing:.5px}
-.terms-body{overflow-y:auto;padding:16px 18px 24px;flex:1;-webkit-overflow-scrolling:touch}
+.terms-body{color:#fff;overflow-y:auto;padding:16px 18px 24px;flex:1;-webkit-overflow-scrolling:touch}
 .terms-body h3{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;margin:16px 0 4px}
 .terms-body h3:first-child{margin-top:0}
 .terms-body p{font-size:13px;line-height:1.75;color:rgba(255,255,255,.65);margin:0 0 8px}
@@ -159,6 +158,8 @@ nav{
 .consent-row--dark .consent-toggle.on{background:#4461f2}
 .consent-row--dark .consent-link{color:rgba(0,0,0,.8)}
 
+.terms-drawer{position:fixed;inset:0;z-index:10000;display:none;flex-direction:column;background:rgba(8,8,10,.98)}
+.terms-drawer.open{display:flex!important}
 @media(max-width:600px){.menu-panel{width:100%;border-left:none}}
 
 /* HERO */
@@ -231,13 +232,7 @@ main{
 .modal::-webkit-scrollbar{display:none}
 
 .modal-inner{position:relative;z-index:1}
-.modal-close{
-  position:absolute;top:16px;right:20px;z-index:2;
-  background:none;border:none;border-radius:0;
-  width:auto;height:auto;color:rgba(255,255,255,.75);font-size:18px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;line-height:1;padding:4px;
-  transition:color .2s;
-}
+.modal-close{position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.08);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;transition:all .2s;line-height:1;padding:0}
 .modal-close:hover{background:none;color:var(--white)}
 .modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px}
 .modal-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:26px}
@@ -286,6 +281,7 @@ main{
 /* Actions */
 .step-actions{display:flex;gap:8px;margin-top:24px}
 .btn-next{flex:1;padding:13px;background:#E4E4E7;color:#000000;border:none;border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
+.btn-next.consent-active{background:#0052FF!important;color:#fff!important;box-shadow:0 0 0 3px rgba(0,82,255,.25)}
 .btn-next:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
 .btn-next.ready{background:#ffffff;color:#000000}
 .btn-next.submit-btn{background:#ffffff;color:#000000}
@@ -512,49 +508,9 @@ main{
     <div class="country-dropdown" id="c-country-dd"></div>
   </div>
 </div>
-          <div class="step-actions"><button class="btn-next" onclick="cNext(1)">Continue &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-next" onclick="cNext(1)">Continue</button></div>
         </div>
-        <div class="step" id="c-step-2">
-          <div class="step-counter">02 / 03</div>
-          <div class="step-title">Collecting budget?</div>
-          <div class="options">
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F331;</span><span class="opt-label">Under $1K</span></button>
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F4BC;</span><span class="opt-label">$1K – $5K</span></button>
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">$5K – $20K</span></button>
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$20K+</span></button>
-          </div>
-          <div class="step-actions"><button class="btn-back" onclick="cBack(2)">&#x2190;</button><button class="btn-next" onclick="cNext(2)">Continue &#x2192;</button></div>
         </div>
-        <div class="step" id="c-step-3">
-          <div class="step-counter">03 / 03</div>
-          <div class="step-title">What matters most?</div>
-          <div class="options">
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F50D;</span><span class="opt-label">Discovering artists</span></button>
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F4C8;</span><span class="opt-label">Investment & resale</span></button>
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
-          </div>
-          <div class="consent-row" id="consent-row-c">
-            <button class="consent-toggle" id="c-consent" onclick="toggleConsent('c')" aria-label="I agree to the terms"></button>
-            <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
-          </div>
-          <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" onclick="submitForm('collector')">Reserve My Spot</button></div>
-        </div>
-        <div class="success-screen" id="c-success">
-          <div class="success-icon">&#x2736;</div>
-          <div class="success-title">You're on the list.</div>
-          <div class="success-body">We'll be in touch before launch. Share your link — every referral moves you up.</div>
-          <div class="referral-box">
-            <div class="referral-label">Your referral link</div>
-            <div class="referral-url" id="c-ref-url"></div>
-            <button class="btn-copy" id="c-copy-btn" onclick="copyRef('c-ref-url','c-copy-btn')">Copy Link</button>
-          </div>
-          <div class="share-row">
-            <button class="share-btn" onclick="shareX('c-ref-url')">&#x1D54F; Share</button>
-            <button class="share-btn" onclick="shareIG('c-ref-url')">IG Story</button>
-          </div>
-        </div>
-      </div>
 
       <div id="artistFlow" style="display:none">
         <div class="progress-bar" id="a-progress"></div>
@@ -564,13 +520,10 @@ main{
           <div class="field"><label>Full Name</label><input type="text" id="a-name" placeholder="Your name" autocomplete="name"></div>
           <div class="field"><label>Email</label><input type="email" id="a-email" placeholder="studio@example.com" autocomplete="email"></div>
           <div class="field">
-  <label>Country</label>
-  <div class="country-wrap">
-    <input class="country-input" id="a-country" type="text" placeholder="Search your country..." autocomplete="off" readonly onfocus="openCountry('a')" oninput="filterCountry('a')" onblur="blurCountry('a',event)">
-    <div class="country-dropdown" id="a-country-dd"></div>
-  </div>
+  <label>Instagram / Website</label>
+  <input class="field-input" id="a-social" type="text" placeholder="@username or https://yoursite.com" autocomplete="off" oninput="watchStep1()">
 </div>
-          <div class="step-actions"><button class="btn-next" onclick="aNext(1)">Continue &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-next" onclick="aNext(1)">Continue</button></div>
         </div>
         <div class="step" id="a-step-2">
           <div class="step-counter">02 / 04</div>
@@ -581,7 +534,7 @@ main{
             <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F3A8;</span><span class="opt-label">Mid-career</span></button>
             <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">Gallery represented</span></button>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="aBack(2)">&#x2190;</button><button class="btn-next" onclick="aNext(2)">Continue &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(2)">&#x2190;</button><button class="btn-next" onclick="aNext(2)">Continue</button></div>
         </div>
         <div class="step" id="a-step-3">
           <div class="step-counter">03 / 04</div>
@@ -592,7 +545,7 @@ main{
             <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B0;</span><span class="opt-label">$3K – $10K</span></button>
             <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$10K+</span></button>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="aBack(3)">&#x2190;</button><button class="btn-next" onclick="aNext(3)">Continue &#x2192;</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(3)">&#x2190;</button><button class="btn-next" onclick="aNext(3)">Continue</button></div>
         </div>
         <div class="step" id="a-step-4">
           <div class="step-counter">04 / 04</div>
@@ -607,7 +560,7 @@ main{
             <button class="consent-toggle" id="a-consent" onclick="toggleConsent('a')" aria-label="I agree to the terms"></button>
             <span class="consent-label">By joining the waitlist, you agree to receive product updates and accept our <button class="consent-link" onclick="openTerms('terms')">Terms</button> and <button class="consent-link" onclick="openTerms('privacy')">Privacy Policy</button>. You can unsubscribe anytime.</span>
           </div>
-          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" onclick="submitForm('artist')">Reserve My Spot</button></div>
+          <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" id="a-reserve-btn" onclick="submitForm('artist')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="a-success">
           <div class="success-icon">&#x2736;</div>
@@ -727,7 +680,7 @@ function cNext(s){
 }
 function cBack(s){goStep('c',s,s-1,3);}
 function aNext(s){
-  if(s===1&&(!document.getElementById('a-name').value.trim()||!document.getElementById('a-email').value.trim()||!document.getElementById('a-country').value.trim())){shake('a-step-1');return;}
+  if(s===1&&(!document.getElementById('a-name').value.trim()||!document.getElementById('a-email').value.trim()||!document.getElementById('a-social').value.trim())){shake('a-step-1');return;}
   if(s===2&&!sel['a-stage']){shake('a-step-2');return;}
   if(s===3&&!sel['a-price']){shake('a-step-3');return;}
   goStep('a',s,s+1,4);
@@ -741,7 +694,8 @@ async function submitForm(r){
   if(!document.getElementById(p+'-consent').classList.contains('on')){document.getElementById('consent-row-'+p).style.outline='2px solid rgba(255,80,80,.7)';document.getElementById('consent-row-'+p).scrollIntoView({behavior:'smooth',block:'nearest'});return;}
   var full_name=document.getElementById(p+'-name').value.trim();
   var email=document.getElementById(p+'-email').value.trim();
-  var country=document.getElementById(p+'-country').value.trim();
+  var social=document.getElementById(p+'-social')?document.getElementById(p+'-social').value.trim():'';
+  var country=document.getElementById(p+'-country')?document.getElementById(p+'-country').value.trim():'';
   var referred_by=new URLSearchParams(location.search).get('ref')||null;
   var source_page=location.pathname.replace('/','').replace('.html','')||'index';
   var payload={role:r,full_name:full_name,email:email,country:country,referred_by:referred_by,source_page:source_page,terms_accepted_at:new Date().toISOString()};
@@ -807,6 +761,11 @@ function toggleConsent(p){
   var el=document.getElementById(p+'-consent');
   el.classList.toggle('on');
   document.getElementById('consent-row-'+p).style.outline='none';
+  var reserveBtn=document.getElementById(p+'-reserve-btn');
+  if(reserveBtn){
+    if(el.classList.contains('on')){reserveBtn.classList.add('consent-active');}
+    else{reserveBtn.classList.remove('consent-active');}
+  }
 }
 function openTerms(tab){
   var t=tab||'terms';
@@ -1045,8 +1004,8 @@ function watchStep1(){
     if(!btn)return;
     var name=document.getElementById(prefix+'-name').value.trim();
     var email=document.getElementById(prefix+'-email').value.trim();
-    var country=document.getElementById(prefix+'-country').value.trim();
-    if(name&&email&&country){btn.classList.add('ready');}
+    var social_or_country=document.getElementById(prefix+'-social')?document.getElementById(prefix+'-social').value.trim():(document.getElementById(prefix+'-country')?document.getElementById(prefix+'-country').value.trim():'');
+    if(name&&email&&social_or_country){btn.classList.add('ready');}
     else{btn.classList.remove('ready');}
   }
   ['c-name','c-email'].forEach(function(id){
@@ -1123,7 +1082,9 @@ VANTA.FOG({
   speed: 1.80,
   zoom: 0.60,
 });
-</script>
+</script></div>
+
+
 <!-- ── Terms drawer ── -->
 <div class="terms-drawer" id="termsOverlay">
   <div class="terms-tabs">
