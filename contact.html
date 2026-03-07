@@ -737,16 +737,26 @@ function aBack(s){goStep('a',s,s-1,4);}
 async function submitForm(r){
   var p=r==='artist'?'a':'c',last=r==='artist'?4:3,pk=r==='artist'?'a-priority':'c-priority';
   if(!sel[pk]){shake(p+'-step-'+last);return;}
-  var name=document.getElementById(p+'-name').value.trim();
+  var full_name=document.getElementById(p+'-name').value.trim();
   var email=document.getElementById(p+'-email').value.trim();
   var country=document.getElementById(p+'-country').value.trim();
-  var code=name.toLowerCase().replace(/\s+/g,'').slice(0,8)+Math.random().toString(36).slice(2,6);
-  var refUrl=location.origin+location.pathname+'?ref='+code;
-  var payload={name:name,email:email,country:country,role:r,referral_code:code,referred_by:new URLSearchParams(location.search).get('ref')||null,submitted_at:new Date().toISOString()};
-  if(r==='collector'){payload.budget=sel['c-budget'];payload.priority=sel['c-priority'];}
-  else{payload.stage=sel['a-stage'];payload.price_range=sel['a-price'];payload.priority=sel['a-priority'];}
-  try{await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}
-  catch(e){console.warn('API:',e);}
+  var referred_by=new URLSearchParams(location.search).get('ref')||null;
+  var source_page=location.pathname.replace('/','').replace('.html','')||'index';
+  var payload={role:r,full_name:full_name,email:email,country:country,referred_by:referred_by,source_page:source_page};
+  if(r==='collector'){payload.budget=sel['c-budget']||null;payload.collector_priority=sel['c-priority']||null;}
+  else{payload.career_stage=sel['a-stage']||null;payload.artwork_price=sel['a-price']||null;payload.artist_priority=sel['a-priority']||null;}
+  var referral_code=null;
+  try{
+    var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation'},
+      body:JSON.stringify(payload)
+    });
+    var data=await res.json();
+    if(data&&data[0])referral_code=data[0].referral_code;
+  }catch(e){console.warn('Submit error:',e);}
+  if(!referral_code)referral_code='grails-'+Math.random().toString(36).slice(2,10);
+  var refUrl=location.origin+'/?ref='+referral_code;
   document.getElementById(p+'-step-'+last).classList.remove('active');
   document.getElementById(p+'-success').classList.add('active');
   document.getElementById(p+'-ref-url').textContent=refUrl;
