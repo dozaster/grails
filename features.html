@@ -935,6 +935,30 @@ function closeMenu(){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+
+/* ── Feature card accordion (mobile only) ── */
+(function(){
+  function initAccordion(){
+    var cards = document.querySelectorAll('.feat-card');
+    if(!cards.length) return;
+    cards.forEach(function(card){
+      card.addEventListener('click', function(){
+        var isMobile = window.matchMedia('(max-width:700px)').matches;
+        if(!isMobile) return;
+        var isOpen = card.classList.contains('open');
+        // Close all cards first
+        cards.forEach(function(c){ c.classList.remove('open'); });
+        // Toggle clicked card
+        if(!isOpen){ card.classList.add('open'); }
+      });
+    });
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initAccordion);
+  } else {
+    initAccordion();
+  }
+})();
 </script></div>
 
       <!-- ── Terms drawer ── -->
