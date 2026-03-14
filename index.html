@@ -817,6 +817,11 @@ function closeModal(){
     renderDots('c',1,3);
     renderDots('a',1,4);
     renderDots('g',1,4);
+    // Clear all multi-select .selected states and gSel data
+    document.querySelectorAll('.opt-card.selected').forEach(function(b){ b.classList.remove('selected'); });
+    gSel = {};
+    // Clear single-select sel data for gallery keys
+    delete sel['g-size'];
   }, 300);
 }
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
@@ -1232,7 +1237,8 @@ watchStep1();
 var gSel = {};
 function multiPick(el, group){
   el.classList.toggle('selected');
-  var selected = Array.from(document.querySelectorAll('[onclick*="'+group+'"].selected'))
+  var container = el.closest('.options') || el.parentNode;
+  var selected = Array.from(container.querySelectorAll('.opt-card.selected'))
     .map(function(b){ return b.querySelector('.opt-label').textContent; });
   gSel[group] = selected;
 }
