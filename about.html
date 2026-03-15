@@ -136,7 +136,7 @@ footer a:hover{color:var(--black)}
 .modal::-webkit-scrollbar{display:none}
 #modalVanta{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.7;border-radius:22px;overflow:hidden}
 .modal-inner{position:relative;z-index:1}
-.modal-close{position:absolute;top:14px;right:16px;z-index:10;background:rgba(255,255,255,.08);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;transition:all .2s;line-height:1;padding:0}
+.modal-close{position:absolute;top:20px;right:20px;z-index:10;background:rgba(255,255,255,.08);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;transition:all .2s;line-height:1;padding:0}
 .modal-close:hover{background:none;color:var(--white)}
 .modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px;color:#fff}
 .modal-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:26px}
@@ -505,8 +505,8 @@ document.querySelectorAll('.counting').forEach(countUp);
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
     <div id="modalVanta"></div>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
     <div class="modal-inner">
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
       <h2 class="modal-title">Join the Waitlist</h2>
       <p class="modal-sub">Be among the first to collect or sell on Grails.</p>
       <div class="role-toggle">
