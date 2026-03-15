@@ -1066,14 +1066,14 @@ function gNext(s){
     if(!name||!email){shake('g-step-1');return;}
   }
   if(s===2){
-    // Double-check by scanning DOM directly — gSel may be stale
     var step2=document.getElementById('g-step-2');
-    var picked = step2 ? Array.from(step2.querySelectorAll('.opt-card.selected')) : [];
+    var picked=step2?Array.from(step2.querySelectorAll('.opt-card.selected')):[];
     if(!picked.length){shake('g-step-2');return;}
-    window.gSel['g-artist-type']=picked.map(function(b){return b.querySelector('.opt-label').textContent;});
   }
   if(s===3){
-    if(!sel['g-size']){shake('g-step-3');return;}
+    var step3=document.getElementById('g-step-3');
+    var pickedSize=step3?step3.querySelector('.opt-card.selected'):null;
+    if(!pickedSize){shake('g-step-3');return;}
   }
   goStep('g',s,s+1,4);
 }
@@ -1096,8 +1096,8 @@ function submitGallery(){
     email:email,
     social_handle:web,
     gallery_focus:note||null,
-    gallery_artist_types:(window.gSel['g-artist-type']||[]).join(', ')||null,
-    gallery_size:sel['g-size']||null,
+    gallery_artist_types:(function(){var s=document.getElementById('g-step-2');return s?Array.from(s.querySelectorAll('.opt-card.selected')).map(function(b){return b.querySelector('.opt-label').textContent;}).join(', '):'';})(),
+    gallery_size:(function(){var s=document.getElementById('g-step-3');var b=s?s.querySelector('.opt-card.selected'):null;return b?b.querySelector('.opt-label').textContent:null;})(),
     referred_by:referred_by,
     source_page:source_page,
     terms_accepted_at:new Date().toISOString()
