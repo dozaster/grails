@@ -806,7 +806,7 @@ function closeModal(){
     renderDots('g',1,4);
     // Clear all multi-select .selected states and gSel data
     document.querySelectorAll('.opt-card.selected').forEach(function(b){ b.classList.remove('selected'); });
-    gSel = {};
+    window.gSel = {};
     // Clear single-select sel data for gallery keys
     delete sel['g-size'];
   }, 300);
@@ -1051,13 +1051,13 @@ function watchStep1(){
 watchStep1();
 
 /* ── Gallery flow helpers ── */
-var gSel = {};
+window.gSel = window.gSel || {};
 function multiPick(el, group){
   el.classList.toggle('selected');
   var container = el.closest('.options') || el.parentNode;
   var selected = Array.from(container.querySelectorAll('.opt-card.selected'))
     .map(function(b){ return b.querySelector('.opt-label').textContent; });
-  gSel[group] = selected;
+  window.gSel[group] = selected;
 }
 function gNext(s){
   if(s===1){
@@ -1070,7 +1070,7 @@ function gNext(s){
     var step2=document.getElementById('g-step-2');
     var picked = step2 ? Array.from(step2.querySelectorAll('.opt-card.selected')) : [];
     if(!picked.length){shake('g-step-2');return;}
-    gSel['g-artist-type']=picked.map(function(b){return b.querySelector('.opt-label').textContent;});
+    window.gSel['g-artist-type']=picked.map(function(b){return b.querySelector('.opt-label').textContent;});
   }
   if(s===3){
     if(!sel['g-size']){shake('g-step-3');return;}
@@ -1096,7 +1096,7 @@ function submitGallery(){
     email:email,
     social_handle:web,
     gallery_focus:note||null,
-    gallery_artist_types:(gSel['g-artist-type']||[]).join(', ')||null,
+    gallery_artist_types:(window.gSel['g-artist-type']||[]).join(', ')||null,
     gallery_size:sel['g-size']||null,
     referred_by:referred_by,
     source_page:source_page,
