@@ -1158,17 +1158,16 @@ function gNext(s){
     if(!name||!email){shake('g-step-1');return;}
   }
   if(s===2){
-    if(!gSel['g-artist-type']||!gSel['g-artist-type'].length){shake('g-step-2');return;}
+    // Double-check by scanning DOM directly — gSel may be stale
+    var step2=document.getElementById('g-step-2');
+    var picked = step2 ? Array.from(step2.querySelectorAll('.opt-card.selected')) : [];
+    if(!picked.length){shake('g-step-2');return;}
+    gSel['g-artist-type']=picked.map(function(b){return b.querySelector('.opt-label').textContent;});
   }
   if(s===3){
     if(!sel['g-size']){shake('g-step-3');return;}
   }
   goStep('g',s,s+1,4);
-  // Step 4: note is optional so pre-activate the submit button
-  if(s===3){
-    var btn=document.getElementById('g-reserve-btn');
-    if(btn) btn.classList.add('consent-active');
-  }
 }
 function gBack(s){ goStep('g',s,s-1,4); }
 function submitGallery(){
