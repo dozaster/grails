@@ -462,9 +462,13 @@ main{
 /* step-sub helper */
 .step-sub{font-size:13px;color:rgba(255,255,255,.5);margin:-10px 0 8px;padding:0;}
 
+
 </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+  
+  
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
 </head>
 <body id="vanta-bg">
 
@@ -913,7 +917,7 @@ async function submitForm(r){
   try{
     var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation'},
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
       body:JSON.stringify(payload)
     });
     var data=await res.json();
@@ -1290,7 +1294,7 @@ function submitGallery(){
     try{
       var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation'},
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
         body:JSON.stringify(payload)
       });
       var data=await res.json();
@@ -1303,6 +1307,7 @@ function submitGallery(){
     document.getElementById('g-ref-url').textContent=refUrl;
   })();
 }
+
 
 </script>
 
@@ -1362,6 +1367,7 @@ VANTA.FOG({
   speed: 1.80,
   zoom: 0.60,
 });
+
 </script></div>
 
 
