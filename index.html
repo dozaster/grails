@@ -727,28 +727,8 @@ main{
 <script>
 
 
-/* MODAL VANTA — shader canvas */
-(function(){
-  var _modalRaf = null;
-  var _open = window.openModal;
-  window.openModal = function(){
-    _open();
-    var container = document.getElementById('modalVanta');
-    if(container && !container.querySelector('canvas')){
-      var mc = document.createElement('canvas');
-      mc.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;display:block;';
-      container.appendChild(mc);
-      _modalRaf = startShader(mc, true);
-    }
-  };
-  var _close = window.closeModal;
-  window.closeModal = function(){
-    _close();
-    if(_modalRaf){ cancelAnimationFrame(_modalRaf._id); _modalRaf = null; }
-    var container = document.getElementById('modalVanta');
-    if(container){ var c = container.querySelector('canvas'); if(c) c.remove(); }
-  };
-})();
+/* MODAL — plain dark background, no shader */
+(function(){})();
 
 /* MENU */
 var _menuOpen=false;
