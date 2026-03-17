@@ -467,10 +467,9 @@ main{
   
   
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
 </head>
 <body id="vanta-bg">
+<canvas id="bg-canvas" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
 
 
 <div class="menu-backdrop" id="menuBackdrop" onclick="closeMenu()"></div>
@@ -728,34 +727,26 @@ main{
 <script>
 
 
-/* MODAL VANTA */
-var _modalVanta = null;
+/* MODAL VANTA — shader canvas */
 (function(){
+  var _modalRaf = null;
   var _open = window.openModal;
   window.openModal = function(){
     _open();
-    if(!_modalVanta && window.VANTA){
-      _modalVanta = VANTA.FOG({
-        el: '#modalVanta',
-        mouseControls: false,
-        touchControls: false,
-        gyroControls: false,
-        minHeight: 200,
-        minWidth: 200,
-        highlightColor: 0x0,
-        midtoneColor: 0x555566,
-        lowlightColor: 0x0,
-        baseColor: 0x0,
-        blurFactor: 0.90,
-        speed: 1.80,
-        zoom: 0.60,
-      });
+    var container = document.getElementById('modalVanta');
+    if(container && !container.querySelector('canvas')){
+      var mc = document.createElement('canvas');
+      mc.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;display:block;';
+      container.appendChild(mc);
+      _modalRaf = startShader(mc, true);
     }
   };
   var _close = window.closeModal;
   window.closeModal = function(){
     _close();
-    if(_modalVanta){ _modalVanta.destroy(); _modalVanta = null; }
+    if(_modalRaf){ cancelAnimationFrame(_modalRaf._id); _modalRaf = null; }
+    var container = document.getElementById('modalVanta');
+    if(container){ var c = container.querySelector('canvas'); if(c) c.remove(); }
   };
 })();
 
@@ -1309,6 +1300,8 @@ function submitGallery(){
 }
 
 
+
+
 </script>
 
 <!-- CONTACT MODAL -->
@@ -1350,25 +1343,7 @@ function submitGallery(){
 <div id="logoScreensaver">
   <img id="bouncingLogo" src="" alt="">
 </div>
-
-<script>
-VANTA.FOG({
-  el: "#vanta-bg",
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 200,
-  minWidth: 200,
-  highlightColor: 0x0,
-  midtoneColor: 0x555566,
-  lowlightColor: 0x0,
-  baseColor: 0x0,
-  blurFactor: 0.90,
-  speed: 1.80,
-  zoom: 0.60,
-});
-
-</script></div>
+</div>
 
 
 <!-- ── Terms drawer ── -->
@@ -1383,6 +1358,156 @@ VANTA.FOG({
   </div>
   <div class="terms-body" id="termsBody"></div>
 </div>
+
+
+<script>
+/* ── Shader-art background (port of codepen WNpGKpz) ── */
+(function(){
+
+var VERT = [
+  'precision highp float;',
+  'attribute vec4 position;',
+  'attribute vec2 uv;',
+  'varying vec2 vUv;',
+  'void main(){vUv=uv;gl_Position=position;}'
+].join('\n');
+
+var FRAG = [
+  'precision highp float;',
+  'varying vec2 vUv;',
+  'uniform float time,scale;',
+  'uniform vec2 resolution;',
+  'uniform vec3 color1,color2,color3,color4;',
+  'uniform float ax,ay,az,aw,bx,by;',
+  'float cheapNoise(vec3 stp){',
+  '  vec3 p=vec3(stp.st,stp.p);',
+  '  vec4 a=vec4(ax,ay,az,aw);',
+  '  return mix(',
+  '    sin(p.z+p.x*a.x+cos(p.x*a.x-p.z))*cos(p.z+p.y*a.y+cos(p.y*a.x+p.z)),',
+  '    sin(1.+p.x*a.z+p.z+cos(p.y*a.w-p.z))*cos(1.+p.y*a.w+p.z+cos(p.x*a.x+p.z)),',
+  '    .436);',
+  '}',
+  'void main(){',
+  '  vec2 aR=vec2(resolution.x/resolution.y,1.);',
+  '  vec2 st=vUv*aR*scale;',
+  '  float S=sin(time*.005),C=cos(time*.005);',
+  '  vec2 v1=vec2(cheapNoise(vec3(st,2.)),cheapNoise(vec3(st,1.)));',
+  '  vec2 v2=vec2(',
+  '    cheapNoise(vec3(st+bx*v1+vec2(C*1.7,S*9.2),.15*time)),',
+  '    cheapNoise(vec3(st+by*v1+vec2(S*8.3,C*2.8),.126*time)));',
+  '  float n=.5+.5*cheapNoise(vec3(st+v2,0.));',
+  '  vec3 color=mix(color1,color2,clamp((n*n)*8.,0.,1.));',
+  '  color=mix(color,color3,clamp(length(v1),0.,1.));',
+  '  color=mix(color,color4,clamp(length(v2.x),0.,1.));',
+  '  color/=n*n+n*7.;',
+  '  gl_FragColor=vec4(color,1.);',
+  '}'
+].join('\n');
+
+function hexToRgb(h){
+  var r=parseInt(h.slice(1,3),16)/255;
+  var g=parseInt(h.slice(3,5),16)/255;
+  var b=parseInt(h.slice(5,7),16)/255;
+  return [r,g,b];
+}
+
+function startShader(canvas, isModal){
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if(!gl) return null;
+
+  function mkShader(type, src){
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+      console.warn('Shader error:', gl.getShaderInfoLog(s));
+    }
+    return s;
+  }
+
+  var prog = gl.createProgram();
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, VERT));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FRAG));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  // Position buffer
+  var pb = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,-1,-1,1,1,1,1,-1,-1,1,-1]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(prog,'position');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+
+  // UV buffer
+  var ub = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, ub);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0,0,0,1,1,0,1,0,0,1,1,1]), gl.STATIC_DRAW);
+  var aUv = gl.getAttribLocation(prog,'uv');
+  gl.enableVertexAttribArray(aUv);
+  gl.vertexAttribPointer(aUv,2,gl.FLOAT,false,0,0);
+
+  // Uniforms — exact values from codepen
+  var u = function(n){ return gl.getUniformLocation(prog,n); };
+  gl.uniform1f(u('scale'), 0.4);
+  gl.uniform1f(u('ax'), 5.0);
+  gl.uniform1f(u('ay'), 7.0);
+  gl.uniform1f(u('az'), 9.0);
+  gl.uniform1f(u('aw'), 13.0);
+  gl.uniform1f(u('bx'), 1.0);
+  gl.uniform1f(u('by'), 1.0);
+  var c1=hexToRgb('#525661'); gl.uniform3f(u('color1'),c1[0],c1[1],c1[2]);
+  var c2=hexToRgb('#000000'); gl.uniform3f(u('color2'),c2[0],c2[1],c2[2]);
+  var c3=hexToRgb('#000000'); gl.uniform3f(u('color3'),c3[0],c3[1],c3[2]);
+  var c4=hexToRgb('#000000'); gl.uniform3f(u('color4'),c4[0],c4[1],c4[2]);
+
+  var uTime = u('time');
+  var uRes  = u('resolution');
+  var start = performance.now();
+  var rafId;
+
+  function resize(){
+    var w = isModal ? (canvas.parentElement ? canvas.parentElement.offsetWidth  : 460) : window.innerWidth;
+    var h = isModal ? (canvas.parentElement ? canvas.parentElement.offsetHeight : 600) : window.innerHeight;
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width  = w * dpr;
+    canvas.height = h * dpr;
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+
+  function render(){
+    rafId = requestAnimationFrame(render);
+    gl.uniform1f(uTime, (performance.now() - start) * 0.001);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
+
+  resize();
+  if(!isModal) window.addEventListener('resize', resize);
+  render();
+
+  var handle = { _id: rafId };
+  // Keep rafId updated
+  var _origRender = render;
+  handle._cancel = function(){ cancelAnimationFrame(rafId); };
+  return handle;
+}
+
+window.startShader = startShader;
+
+// Init page bg — wrapped for safety
+function initBg(){
+  var bg = document.getElementById('bg-canvas');
+  if(bg) startShader(bg, false);
+}
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', initBg);
+} else {
+  initBg();
+}
+
+})();
+</script>
 
 </body>
 </html>
