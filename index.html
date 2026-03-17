@@ -646,7 +646,7 @@ main{
         </div>
         <div class="success-screen" id="a-success">
           <div class="success-icon">&#x2736;</div>
-          <div class="success-title">Welcome to Grails.</div>
+          <div class="success-title">Artist Registered.</div>
           <div class="success-body">You're in. We'll reach out before launch. Every collector you refer moves you higher.</div>
           <div class="referral-box">
             <div class="referral-label">Your referral link</div>
@@ -708,7 +708,7 @@ main{
         </div>
         <div class="success-screen" id="g-success">
           <div class="success-icon">&#x2736;</div>
-          <div class="success-title">Gallery registered.</div>
+          <div class="success-title">Gallery Registered.</div>
           <div class="success-body">We'll be in touch before launch. Share your link to grow your position.</div>
           <div class="referral-box">
             <div class="referral-label">Your referral link</div>
@@ -819,11 +819,19 @@ function setRole(r){
   if(r==='gallery') renderDots('g',1,4);
   // Update modal subtitle copy per role
   var sub = document.querySelector('.modal-sub');
+  var title = document.querySelector('.modal-title');
   if(sub){
     if(r==='gallery'){
       sub.textContent = 'Connect with collectors and sell with verified provenance and low fees.';
     } else {
       sub.textContent = 'Be among the first to collect or sell on Grails.';
+    }
+  }
+  if(title){
+    if(r==='artist'||r==='gallery'){
+      title.textContent = 'Apply for Access';
+    } else {
+      title.textContent = 'Join the Waitlist';
     }
   }
 }
