@@ -1,7 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" }
+  "routes": [
+    { "src": "^/$", "dest": "/index.html" },
+    { "src": "^/about$", "dest": "/about.html" },
+    { "src": "^/features$", "dest": "/features.html" },
+    { "src": "^/contact$", "dest": "/contact.html" }
   ]
 }
