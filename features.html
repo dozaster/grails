@@ -490,7 +490,7 @@ footer a:hover{color:var(--black)}
       <div class="feat-card" onclick="toggleFeatCard(this)">
         <div class="feat-card-num">01</div>
         <div class="feat-card-header"><div class="feat-card-title">Artist Royalties</div><span class="feat-chevron"></span></div>
-        <div class="feat-card-body">Every resale includes a <strong>4% royalty</strong> paid directly to the artist.</div>
+        <div class="feat-card-body">Every resale includes a <strong>4% royalty</strong> paid directly to the artist from the platform fee.</div>
       </div>
       <div class="feat-card" onclick="toggleFeatCard(this)">
         <div class="feat-card-num">02</div>
@@ -923,7 +923,7 @@ async function submitForm(r){
   try{
     var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
       body:JSON.stringify(payload)
     });
     var data=await res.json();
@@ -1139,7 +1139,7 @@ function submitGallery(){
     try{
       var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
         body:JSON.stringify(payload)
       });
       var data=await res.json();
