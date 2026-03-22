@@ -3,7 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contact — Grails</title>
+<title>Contact | Grails</title>
+<!-- Favicon -->
+<link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABAAEADASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAUEBgMI/8QAKhAAAQQBAwIGAQUAAAAAAAAAAQACAwQFESExEmEGIjJBUXEUocHR4fH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAYEQEBAQEBAAAAAAAAAAAAAAAAARExIf/aAAwDAQACEQMRAD8A+MkREBFbwuDFyAWLEjmRu16Wt5PdZc5jHY6ZvS4vif6XEb/RVxNTkVHB4x2Rmd1OLImepw5+gtWZwf4dc2IJXPjb6mu5HdMNRERFFERdHicBDNTjnsvk6pB1BrSAAPZWTR7+ErokrGm86Pj3b3aT/KpZWm29SfAdA7lh+Heyz1MJUq2GTwvmD2nbzf0qa3OMVkxVNtGkyAaFw3efkqb4tuiOsKbD55d3dmg/uVdUu3g6lqy+eWScvedTo4afXCXhHGIukyuArw05J6z5A6NpcQ4gggcrm1izG9F0WL8QQwU44LEUpdG3pBYAdQOOSFzqJLhjsamdq2rDIIoLJe86Dyjbvyqyg+EqQjrm68Avk2Z2AO/6qnlbjaNJ850LhswfJW5z1itak287Vq2HwSwWA9h0OjRoe43WvFXG3qTJxp1cPA9ne6meLaQkri4weePZ/dv+peEeGU8QQz05IK0UodI3pLn6DQHnglc6iLFutiIigt4TNilX/Hnjc+NpJaW8jssubybsjM3RpZEz0tJ3+ypyK6mKODybsdM7qaXwv9TRz9ha81nBcrmtXicyN3qc/k9lDRNMERFFf//Z">
+<link rel="apple-touch-icon" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABAAEADASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAUEBgMI/8QAKhAAAQQBAwIGAQUAAAAAAAAAAQACAwQFESExEmEGIjJBUXEUocHR4fH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAYEQEBAQEBAAAAAAAAAAAAAAAAARExIf/aAAwDAQACEQMRAD8A+MkREBFbwuDFyAWLEjmRu16Wt5PdZc5jHY6ZvS4vif6XEb/RVxNTkVHB4x2Rmd1OLImepw5+gtWZwf4dc2IJXPjb6mu5HdMNRERFFERdHicBDNTjnsvk6pB1BrSAAPZWTR7+ErokrGm86Pj3b3aT/KpZWm29SfAdA7lh+Heyz1MJUq2GTwvmD2nbzf0qa3OMVkxVNtGkyAaFw3efkqb4tuiOsKbD55d3dmg/uVdUu3g6lqy+eWScvedTo4afXCXhHGIukyuArw05J6z5A6NpcQ4gggcrm1izG9F0WL8QQwU44LEUpdG3pBYAdQOOSFzqJLhjsamdq2rDIIoLJe86Dyjbvyqyg+EqQjrm68Avk2Z2AO/6qnlbjaNJ850LhswfJW5z1itak287Vq2HwSwWA9h0OjRoe43WvFXG3qTJxp1cPA9ne6meLaQkri4weePZ/dv+peEeGU8QQz05IK0UodI3pLn6DQHnglc6iLFutiIigt4TNilX/Hnjc+NpJaW8jssubybsjM3RpZEz0tJ3+ypyK6mKODybsdM7qaXwv9TRz9ha81nBcrmtXicyN3qc/k9lDRNMERFFf//Z">
+
+<!-- SEO -->
+<meta name="description" content="Grails is a marketplace for original art with artist royalties, verified provenance, and seamless resale. Join early access.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://get-grails.vercel.app/contact">
+
+<!-- Open Graph / Social Preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://get-grails.vercel.app/contact">
+<meta property="og:title" content="Grails | Buy, Own, and Resell Original Art">
+<meta property="og:description" content="Grails is a marketplace for original art with artist royalties, verified provenance, and seamless resale. Join early access.">
+<meta property="og:image" content="https://get-grails.vercel.app/og-image.png">
+<meta property="og:image:width" content="1533">
+<meta property="og:image:height" content="767">
+<meta property="og:site_name" content="Grails">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Grails | Buy, Own, and Resell Original Art">
+<meta name="twitter:description" content="Grails is a marketplace for original art with artist royalties, verified provenance, and seamless resale. Join early access.">
+<meta name="twitter:image" content="https://get-grails.vercel.app/og-image.png">
+
+<!-- Google / Structured Data -->
+<meta itemprop="name" content="Grails | Buy, Own, and Resell Original Art">
+<meta itemprop="description" content="Grails is a marketplace for buying, owning, and reselling original artworks. Collectors can purchase works from galleries and artists with verified provenance, transparent pricing, and built-in artist royalties. Every artwork maintains its ownership history, allowing collectors to resell with confidence while artists continue to benefit from future sales.">
+<meta itemprop="image" content="https://get-grails.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Google+Sans+Flex&display=swap" rel="stylesheet">
