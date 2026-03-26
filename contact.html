@@ -66,17 +66,17 @@ nav{
 
 /* HERO TITLE */
 .page-title{
-  font-size:clamp(56px,10vw,130px);
+  font-size:clamp(48px,8vw,100px);
   font-weight:800;letter-spacing:-.04em;line-height:.92;
   color:var(--black);
   flex-shrink:0}
 
 /* CONTACT STATEMENT ROW */
-.contact-row{flex-shrink:0}
+.contact-row{flex-shrink:0;margin:0;padding:0}
 .section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);padding-top:6px}
 .contact-text{
   font-size:clamp(18px,2.8vw,32px);
-  font-weight:600;line-height:1.3;letter-spacing:-.02em;color:var(--black)}
+  font-weight:600;line-height:1.3;letter-spacing:-.02em;color:var(--black);margin:0;padding:0}
 .contact-text .dim{color:#aaa}
 
 /* FORM SECTION */
@@ -518,11 +518,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
   <h1 class="page-title">Contact</h1>
 
   <div class="contact-row">
-    <div>
-      <p class="contact-text">
-        <span class="dim">Questions, partnerships, or press — </span>we want to hear from you.
-      </p>
-    </div>
+    <p class="contact-text"><span class="dim">Questions, partnerships, or press — </span>we want to hear from you.</p>
   </div>
 
   <div class="form-row">

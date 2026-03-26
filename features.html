@@ -98,7 +98,7 @@ nav{
   padding:clamp(32px,5vh,64px) clamp(24px,5vw,64px) clamp(24px,4vh,48px);
   gap:clamp(24px,4vh,48px)}
 .page-title{
-  font-size:clamp(56px,10vw,130px);
+  font-size:clamp(48px,8vw,100px);
   font-weight:800;letter-spacing:-.04em;line-height:.92;
   color:var(--black);flex-shrink:0}
 .section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);padding-top:6px}
@@ -112,8 +112,8 @@ footer a{color:var(--muted);text-decoration:none;transition:color .2s}
 footer a:hover{color:var(--black)}
 @media(max-width:600px){html,body{overflow:auto}.page-content{gap:24px;padding-bottom:32px}}
 
-.intro-row{flex-shrink:0}
-.feature-intro{font-size:clamp(18px,2.8vw,32px);font-weight:600;line-height:1.3;letter-spacing:-.02em;color:var(--black)}
+.intro-row{flex-shrink:0;margin:0;padding:0}
+.feature-intro{font-size:clamp(18px,2.8vw,32px);font-weight:600;line-height:1.3;letter-spacing:-.02em;color:var(--black);margin:0;padding:0}
 .feature-intro .dim{color:#aaa}
 .cards-row{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-end}
 /* ── Feature accordion ── */
@@ -131,7 +131,7 @@ footer a:hover{color:var(--black)}
     overflow:visible;
     padding-bottom:48px}
   .cards-row{flex:none}
-  .feature-intro{padding-right:0}
+  .feature-intro{padding-right:0;margin:0;padding:0}
 }
 .feat-card{
   background:#F7F7F7;
@@ -485,11 +485,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
   <h1 class="page-title">Features</h1>
 
   <div class="intro-row">
-    <div>
-      <p class="feature-intro">
-        <span class="dim">Everything you need to </span><strong>collect</strong><span class="dim">, </span><strong>hold</strong><span class="dim">, and </span><strong>resell art</strong><span class="dim"> in one place.</span>
-      </p>
-    </div>
+    <p class="feature-intro"><span class="dim">Everything you need to </span>collect<span class="dim">, </span>hold<span class="dim">, and </span>resell art<span class="dim"> in one place.</span></p>
   </div>
 
   <div class="cards-row">
