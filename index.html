@@ -5,35 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Grails | Buy, Own, and Resell Original Art</title>
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABQ0lEQVR4nO2ZQQ6DMAwEQ9VfcOj/n8Uh76CHSqgC4kTeNSbEc0KghF3biUs6reuaeublLQAlDHgTBrwJA96EAW+6N/DGp5jnz+8i58VuSIkJ+S206dhoEaQbVUJfQkcdpZv4KAGlAeGV9Ecy3S9iEwP0OhGIDBTYxdso/EltQLddghOeckUJVZ0gfYDcyHT4NDLwxaxJht+FwPjhORw+AwmIImUJ1Xchux7UQtVkJQO+6lsEdLAGZA+SAffwt9BBBmTCgDeSAco+jSPLeHQG0g2SUBUAfQ9s6DZcSnSeXkItqPsdpVGiBkARuIexS4hSA+AkthnIeaGfIO0gH6//c00P4R+vHzF1YlVCO9FVD/H/AJXTeBsV0qgZEMJJfySjz4CuTujVxTydbtShG1WC8z3gyKiL+D6EAW/CgDdhwJsw4M0XJGGIwvh58ccAAAAASUVORK5CYII=">
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABQ0lEQVR4nO2ZQQ6DMAwEQ9VfcOj/n8Uh76CHSqgC4kTeNSbEc0KghF3biUs6reuaeublLQAlDHgTBrwJA96EAW+6N/DGp5jnz+8i58VuSIkJ+S206dhoEaQbVUJfQkcdpZv4KAGlAeGV9Ecy3S9iEwP0OhGIDBTYxdso/EltQLddghOeckUJVZ0gfYDcyHT4NDLwxaxJht+FwPjhORw+AwmIImUJ1Xchux7UQtVkJQO+6lsEdLAGZA+SAffwt9BBBmTCgDeSAco+jSPLeHQG0g2SUBUAfQ9s6DZcSnSeXkItqPsdpVGiBkARuIexS4hSA+AkthnIeaGfIO0gH6//c00P4R+vHzF1YlVCO9FVD/H/AJXTeBsV0qgZEMJJfySjz4CuTujVxTydbtShG1WC8z3gyKiL+D6EAW/CgDdhwJsw4M0XJGGIwvh58ccAAAAASUVORK5CYII=">
+<link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABAAEADASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAUEBgMI/8QAKhAAAQQBAwIGAQUAAAAAAAAAAQACAwQFESExEmEGIjJBUXEUocHR4fH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAYEQEBAQEBAAAAAAAAAAAAAAAAARExIf/aAAwDAQACEQMRAD8A+MkREBFbwuDFyAWLEjmRu16Wt5PdZc5jHY6ZvS4vif6XEb/RVxNTkVHB4x2Rmd1OLImepw5+gtWZwf4dc2IJXPjb6mu5HdMNRERFFERdHicBDNTjnsvk6pB1BrSAAPZWTR7+ErokrGm86Pj3b3aT/KpZWm29SfAdA7lh+Heyz1MJUq2GTwvmD2nbzf0qa3OMVkxVNtGkyAaFw3efkqb4tuiOsKbD55d3dmg/uVdUu3g6lqy+eWScvedTo4afXCXhHGIukyuArw05J6z5A6NpcQ4gggcrm1izG9F0WL8QQwU44LEUpdG3pBYAdQOOSFzqJLhjsamdq2rDIIoLJe86Dyjbvyqyg+EqQjrm68Avk2Z2AO/6qnlbjaNJ850LhswfJW5z1itak287Vq2HwSwWA9h0OjRoe43WvFXG3qTJxp1cPA9ne6meLaQkri4weePZ/dv+peEeGU8QQz05IK0UodI3pLn6DQHnglc6iLFutiIigt4TNilX/Hnjc+NpJaW8jssubybsjM3RpZEz0tJ3+ypyK6mKODybsdM7qaXwv9TRz9ha81nBcrmtXicyN3qc/k9lDRNMERFFf//Z">
+<link rel="apple-touch-icon" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABAAEADASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAUEBgMI/8QAKhAAAQQBAwIGAQUAAAAAAAAAAQACAwQFESExEmEGIjJBUXEUocHR4fH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAYEQEBAQEBAAAAAAAAAAAAAAAAARExIf/aAAwDAQACEQMRAD8A+MkREBFbwuDFyAWLEjmRu16Wt5PdZc5jHY6ZvS4vif6XEb/RVxNTkVHB4x2Rmd1OLImepw5+gtWZwf4dc2IJXPjb6mu5HdMNRERFFERdHicBDNTjnsvk6pB1BrSAAPZWTR7+ErokrGm86Pj3b3aT/KpZWm29SfAdA7lh+Heyz1MJUq2GTwvmD2nbzf0qa3OMVkxVNtGkyAaFw3efkqb4tuiOsKbD55d3dmg/uVdUu3g6lqy+eWScvedTo4afXCXhHGIukyuArw05J6z5A6NpcQ4gggcrm1izG9F0WL8QQwU44LEUpdG3pBYAdQOOSFzqJLhjsamdq2rDIIoLJe86Dyjbvyqyg+EqQjrm68Avk2Z2AO/6qnlbjaNJ850LhswfJW5z1itak287Vq2HwSwWA9h0OjRoe43WvFXG3qTJxp1cPA9ne6meLaQkri4weePZ/dv+peEeGU8QQz05IK0UodI3pLn6DQHnglc6iLFutiIigt4TNilX/Hnjc+NpJaW8jssubybsjM3RpZEz0tJ3+ypyK6mKODybsdM7qaXwv9TRz9ha81nBcrmtXicyN3qc/k9lDRNMERFFf//Z">
+
 <!-- SEO -->
 <meta name="description" content="Grails is a marketplace for original art with artist royalties, verified provenance, and seamless resale. Join early access.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://get-grails.vercel.app/">
-<!-- Open Graph -->
+
+<!-- Open Graph / Social Preview -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://get-grails.vercel.app/">
 <meta property="og:title" content="Grails | Buy, Own, and Resell Original Art">
 <meta property="og:description" content="Grails is a marketplace for original art with artist royalties, verified provenance, and seamless resale. Join early access.">
 <meta property="og:image" content="https://get-grails.vercel.app/og-image.png">
+<meta property="og:image:width" content="1533">
+<meta property="og:image:height" content="767">
 <meta property="og:site_name" content="Grails">
+
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Grails | Buy, Own, and Resell Original Art">
 <meta name="twitter:description" content="Grails is a marketplace for original art with artist royalties, verified provenance, and seamless resale. Join early access.">
 <meta name="twitter:image" content="https://get-grails.vercel.app/og-image.png">
-<!-- Google -->
+
+<!-- Google / Structured Data -->
 <meta itemprop="name" content="Grails | Buy, Own, and Resell Original Art">
 <meta itemprop="description" content="Grails is a marketplace for buying, owning, and reselling original artworks. Collectors can purchase works from galleries and artists with verified provenance, transparent pricing, and built-in artist royalties. Every artwork maintains its ownership history, allowing collectors to resell with confidence while artists continue to benefit from future sales.">
 <meta itemprop="image" content="https://get-grails.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Google+Sans+Flex&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{height:100%;-webkit-font-smoothing:antialiased}
-body{font-family:'Google Sans Flex','Google Sans',sans-serif;background:#060606;color:#fff;height:100vh;height:100dvh;overflow:hidden;position:relative}
+body{font-family:'Inter','Google Sans Flex',sans-serif;background:#060606;color:#fff;height:100vh;height:100dvh;overflow:hidden;position:relative}
 :root{
   --bg:#060606;--white:#ffffff;--blue:#4461f2;--blue-h:#6070ff;
   --border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.15);
@@ -156,10 +162,11 @@ nav{
 /* ── Terms drawer ── */
 
 .terms-tabs{display:flex;gap:6px;padding:14px 18px 0;flex-shrink:0}
-.terms-tab{flex:1;padding:9px 4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.45);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;border-color:rgba(255,255,255,.3);color:#fff}
+.terms-tab{flex:1;padding:9px 4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.45);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Poppins',sans-serif}
+.terms-tab.active{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
 .terms-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .terms-header-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.8)}
-.terms-close-btn{background:rgba(255,255,255,.08);border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;padding:8px 18px;border-radius:20px;letter-spacing:.5px}
+.terms-close-btn{background:rgba(255,255,255,.08);border:none;color:#fff;font-size:13px;font-weight:600;cursor:pointer;padding:8px 18px;border-radius:20px;font-family:'Poppins',sans-serif;letter-spacing:.5px}
 .terms-body{color:#fff;overflow-y:auto;padding:16px 18px 24px;flex:1;-webkit-overflow-scrolling:touch}
 .terms-body h3{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;margin:16px 0 4px}
 .terms-body h3:first-child{margin-top:0}
@@ -196,7 +203,7 @@ main{
   opacity:0;animation:fadeUp .7s .38s ease forwards;
 }
 .headline{
-  
+  font-family:'Poppins',sans-serif;
   font-size:clamp(52px,10.5vw,152px);font-weight:600;line-height:1;
   letter-spacing:-.03em;color:#fff;
   margin-bottom:clamp(32px,4.5vh,54px);
@@ -233,7 +240,7 @@ main{
 
 /* BOTTOM PHRASES */
 .bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:10;pointer-events:none;padding:0 clamp(20px,5vw,48px) clamp(22px,3.5vh,34px);height:44px}
-.phrase{position:absolute;bottom:clamp(22px,3.5vh,34px);left:50%;transform:translateX(-50%);font-size:20px;font-weight:500;letter-spacing:-0.02em;color:#ffffff;opacity:0;transition:opacity .55s ease;white-space:nowrap;text-align:center;}
+.phrase{position:absolute;bottom:clamp(22px,3.5vh,34px);left:50%;transform:translateX(-50%);font-family:'Poppins',sans-serif;font-size:20px;font-weight:500;letter-spacing:-0.02em;color:#ffffff;opacity:0;transition:opacity .55s ease;white-space:nowrap;text-align:center;}
 .phrase.visible{opacity:1}
 
 /* MODAL */
@@ -244,7 +251,7 @@ main{
 }
 .modal-overlay.open{opacity:1;pointer-events:all}
 .modal{
-  position:relative;background:#0b0b0a;border:1px solid var(--border);border-radius:22px;
+  position:relative;background:#0b0b0a;border:1px solid rgba(255,255,255,.25);border-radius:22px;
   width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;
   padding:36px 30px 40px;transform:translateY(28px) scale(.96);
   transition:transform .45s cubic-bezier(.16,1,.3,1);scrollbar-width:none;
@@ -254,9 +261,9 @@ main{
 .modal::-webkit-scrollbar{display:none}
 
 .modal-inner{position:relative;z-index:1}
-.modal-close{position:absolute;top:20px;right:20px;z-index:10;background:rgba(255,255,255,.08);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;transition:all .2s;line-height:1;padding:0}
+.modal-close{position:absolute;top:16px;right:16px;z-index:10;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:16px;cursor:pointer;transition:all .2s;line-height:1;padding:0}
 .modal-close:hover{background:none;color:var(--white)}
-.modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px}
+.modal-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px;color:#fff}
 .modal-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:26px}
 
 /* Role toggle */
@@ -268,7 +275,7 @@ main{
   box-shadow:0 2px 12px rgba(255,255,255,.15);
 }
 .toggle-pill.artist{transform:translateX(calc(100% + 3px))}
-.role-btn{flex:1;padding:9px;border:none;background:transparent;font-size:13px;font-weight:600;border-radius:100px;position:relative;z-index:1;cursor:pointer;transition:color .28s;color:rgba(255,255,255,.75)}
+.role-btn{flex:1;padding:9px;border:none;background:transparent;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;border-radius:100px;position:relative;z-index:1;cursor:pointer;transition:color .28s;color:rgba(255,255,255,.75)}
 .role-btn.active{color:#000000}
 
 /* Progress */
@@ -282,33 +289,33 @@ main{
 .step.active{display:flex;animation:stepIn .34s cubic-bezier(.4,0,.2,1)}
 @keyframes stepIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
 .step-counter{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px}
-.step-title{font-size:clamp(17px,2.8vw,20px);font-weight:700;letter-spacing:-.025em;margin-bottom:20px;line-height:1.2}
+.step-title{font-size:clamp(17px,2.8vw,20px);font-weight:700;letter-spacing:-.025em;margin-bottom:20px;line-height:1.2;color:#fff}
 
 /* Fields */
 .field{margin-bottom:11px}
 .field label{display:block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:7px}
-.field input{width:100%;padding:12px 15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-size:14px;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
+.field input{width:100%;padding:12px 15px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
 .field input:focus{border-color:rgba(68,97,242,.55);box-shadow:0 0 0 3px rgba(68,97,242,.1)}
 .field input::placeholder{color:rgba(255,255,255,.18)}
 
 /* Cards */
 .options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
-.opt-card{padding:14px 13px;background:var(--input-bg);border:1px solid rgba(255,255,255,0.12);border-radius:12px;cursor:pointer;text-align:left;transition:border-color .2s,background .2s,transform .18s;outline:none}
+.opt-card{padding:14px 13px;background:var(--input-bg);border:1px solid rgba(255,255,255,0.12);border-radius:12px;cursor:pointer;text-align:left;font-family:'Poppins',sans-serif;transition:border-color .2s,background .2s,transform .18s;outline:none}
 .opt-card:hover:not(.selected){border-color:var(--border-h);transform:translateY(-1px)}
 .opt-card.selected{border-color:rgba(68,97,242,.95);background:rgba(68,97,242,.18);box-shadow:0 0 0 1px rgba(68,97,242,.4)}
-.opt-icon{font-size:17px;display:block;margin-bottom:9px}
+.opt-icon{display:block;margin-bottom:9px;width:22px;height:22px;flex-shrink:0}
 .opt-label{font-size:13px;font-weight:500;color:var(--white);line-height:1.3}
 .opt-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
 
 /* Actions */
 .step-actions{display:flex;gap:8px;margin-top:24px}
-.btn-next{flex:1;padding:13px;background:#E4E4E7;color:#000000;border:none;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
+.btn-next{flex:1;padding:13px;background:#E4E4E7;color:#000000;border:none;border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
 .btn-next.consent-active{background:#0052FF!important;color:#fff!important;box-shadow:0 0 0 3px rgba(0,82,255,.25)}
 .btn-next:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
 .btn-next.ready{background:#ffffff;color:#000000}
 .btn-next.submit-btn{background:#ffffff;color:#000000}
 .btn-next.submit-btn:hover{background:#ffffff;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.15)}
-.btn-back{padding:13px 18px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);border-radius:100px;font-size:14px;cursor:pointer;transition:color .2s,border-color .2s}
+.btn-back{padding:13px 18px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);border-radius:100px;font-family:'Poppins',sans-serif;font-size:14px;cursor:pointer;transition:color .2s,border-color .2s}
 .btn-back:hover{color:var(--white);border-color:var(--border-h)}
 
 /* Success */
@@ -321,11 +328,11 @@ main{
 .referral-box{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:11px}
 .referral-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:7px}
 .referral-url{font-size:12px;color:var(--accent);word-break:break-all;margin-bottom:11px;font-weight:500}
-.btn-copy{width:100%;padding:10px;background:rgba(255,255,255,.07);color:var(--white);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-copy{width:100%;padding:10px;background:rgba(255,255,255,.07);color:var(--white);border:1px solid var(--border);border-radius:100px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
 .btn-copy:hover{background:rgba(255,255,255,.12)}
 .btn-copy.copied{background:#16361f;border-color:#2a5c34;color:#6ee09f}
 .share-row{display:flex;gap:7px;width:100%}
-.share-btn{flex:1;padding:10px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.share-btn{flex:1;padding:10px;background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
 .share-btn:hover{color:var(--white);border-color:var(--border-h)}
 
 /* KEYFRAMES */
@@ -343,7 +350,7 @@ main{
   background:var(--input-bg);
   border:1px solid var(--border);
   border-radius:10px;
-  font-size:14px;color:var(--white);
+  font-family:'Inter',sans-serif;font-size:14px;color:var(--white);
   outline:none;transition:border-color .2s,box-shadow .2s;
   cursor:pointer;
 }
@@ -389,18 +396,18 @@ main{
   padding:4px;transition:color .2s;
 }
 .contact-close:hover{color:#fff}
-.contact-title{font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px;color:#fff}
+.contact-title{font-family:'Poppins',sans-serif;font-size:clamp(21px,3.5vw,26px);font-weight:800;letter-spacing:-.04em;margin-bottom:5px;color:#fff}
 .contact-sub{font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:24px}
 .contact-toggle{display:flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:3px;margin-bottom:24px;position:relative}
 .contact-pill{position:absolute;top:3px;left:3px;height:calc(100% - 6px);width:calc(50% - 3px);background:#fff;border-radius:100px;transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:0;}
 .contact-pill.artist{transform:translateX(calc(100% + 3px))}
-.contact-role-btn{flex:1;padding:9px;border:none;background:transparent;font-size:13px;font-weight:600;border-radius:100px;position:relative;z-index:1;cursor:pointer;transition:color .28s;color:rgba(255,255,255,.75)}
+.contact-role-btn{flex:1;padding:9px;border:none;background:transparent;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;border-radius:100px;position:relative;z-index:1;cursor:pointer;transition:color .28s;color:rgba(255,255,255,.75)}
 .contact-role-btn.active{color:#000}
 .contact-field{margin-bottom:16px}
 .contact-field label{display:block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:7px}
 .contact-field input,.contact-field textarea{
   width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;padding:13px 16px;color:#fff;font-size:14px;
+  border-radius:12px;padding:13px 16px;color:#fff;font-family:'Poppins',sans-serif;font-size:14px;
   outline:none;transition:border-color .2s;resize:none;
 }
 .contact-field input::placeholder,.contact-field textarea::placeholder{color:rgba(255,255,255,.3)}
@@ -408,7 +415,7 @@ main{
 .contact-field textarea{height:110px;line-height:1.5}
 .contact-submit{
   width:100%;padding:15px;background:#0052FF;border:none;border-radius:100px;
-  color:#fff;font-size:15px;font-weight:700;
+  color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;
   cursor:pointer;transition:background .2s;margin-top:8px;letter-spacing:-.01em;
 }
 .contact-submit:hover{background:#0041cc}
@@ -418,6 +425,38 @@ main{
 .contact-success-body{font-size:13px;color:rgba(255,255,255,.75);line-height:1.75}
 
 /* ── LOGO SCREENSAVER ─────────────────────────────────────── */
+#logoScreensaver {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+#logoScreensaver.active {
+  display: block;
+}
+.logo-ghost {
+  position: absolute;
+  pointer-events: none;
+  will-change: opacity;
+  filter: invert(1);
+  animation: ghostFade 1.4s ease-out forwards;
+}
+@keyframes ghostFade {
+  0%   { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+#bouncingLogo {
+  position: absolute;
+  filter: invert(1);
+  pointer-events: none;
+  will-change: transform;
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
 
 /* ── Gallery waitlist link row ── */
 .gallery-link-row{
@@ -453,12 +492,15 @@ main{
 .step-sub{font-size:13px;color:rgba(255,255,255,.5);margin:-10px 0 8px;padding:0;}
 
 
+
+/* ── Accessibility: keyboard focus ── */
+:focus-visible{outline:2px solid #4461f2;outline-offset:2px;}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #4461f2;outline-offset:2px;}
+
 </style>
   
   
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
 </head>
 <body id="vanta-bg">
 <canvas id="bg-canvas" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
@@ -548,10 +590,10 @@ main{
           <div class="step-counter">02 / 03</div>
           <div class="step-title">Collecting budget?</div>
           <div class="options">
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F331;</span><span class="opt-label">Under $1K</span></button>
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F4BC;</span><span class="opt-label">$1K – $5K</span></button>
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">$5K – $20K</span></button>
-            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$20K+</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon"><svg width="22" height="22" viewBox="73 104 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M86.1506 105.725C86.0756 105.35 85.8506 105.012 85.5131 104.825C85.1756 104.637 84.8006 104.6 84.4256 104.712C83.6381 104.975 82.1006 105.537 80.4506 106.55C80.3006 106.662 79.9631 106.85 79.8131 107.862C78.8756 107.637 78.5381 107.937 78.3881 108.087C77.3756 108.987 76.5506 109.962 75.9506 111.012C73.1756 115.812 74.8256 121.85 74.9006 122.075V122.112C74.5631 123.012 74.2631 123.912 73.9631 124.887C73.8131 125.3 73.7006 125.75 73.5131 126.237C73.3631 126.687 73.5881 127.175 74.0381 127.287C74.1131 127.325 74.2256 127.325 74.3006 127.325C74.6381 127.325 74.9756 127.1 75.0881 126.762C75.2381 126.275 75.3881 125.825 75.5381 125.412C75.8756 124.362 76.1756 123.425 76.5506 122.487C78.2381 121.925 82.6631 120.162 84.9131 116.225C87.2006 112.287 86.5256 107.562 86.1506 105.725ZM83.4881 115.362C82.0631 117.875 79.5131 119.375 77.6756 120.2C78.2006 119.3 78.8381 118.287 79.7381 117.05C80.0006 116.675 79.9256 116.15 79.5506 115.887C79.1756 115.625 78.6506 115.7 78.3881 116.075C77.4131 117.387 76.7006 118.512 76.1381 119.487C75.9131 117.462 75.9131 114.387 77.4131 111.837C77.9006 111.012 78.5381 110.225 79.3256 109.475C79.5506 109.512 79.8881 109.662 80.1881 109.775C80.4506 109.887 80.7506 109.887 81.0131 109.737C81.2756 109.587 81.3881 109.325 81.3881 109.025C81.3881 108.612 81.4256 108.125 81.5006 107.862C82.7006 107.15 83.8256 106.662 84.5756 106.4C84.8756 108.087 85.3256 112.137 83.4881 115.362Z" fill="#ffffff"/></svg></span><span class="opt-label">Under $1K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon"><svg width="22" height="22" viewBox="133 106 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M154.375 111.459H149.436V110.532C149.43 109.54 149.033 108.589 148.331 107.887C147.629 107.185 146.679 106.788 145.686 106.782H144.332C143.337 106.788 142.383 107.188 141.681 107.894C140.978 108.6 140.583 109.555 140.582 110.551V111.477H135.625C135.028 111.477 134.456 111.715 134.034 112.136C133.612 112.558 133.375 113.131 133.375 113.727V122.986C133.375 123.583 133.612 124.155 134.034 124.577C134.456 124.999 135.028 125.236 135.625 125.236H154.375C154.972 125.236 155.544 124.999 155.966 124.577C156.388 124.155 156.625 123.583 156.625 122.986V113.709C156.625 113.112 156.388 112.54 155.966 112.118C155.544 111.696 154.972 111.459 154.375 111.459ZM142.064 110.532C142.064 109.934 142.3 109.36 142.722 108.935C143.143 108.51 143.715 108.269 144.314 108.264H145.649C146.247 108.269 146.819 108.51 147.241 108.935C147.662 109.36 147.899 109.934 147.899 110.532V111.459H142.064V110.532ZM135.625 112.959H154.375C154.574 112.959 154.765 113.038 154.905 113.178C155.046 113.319 155.125 113.51 155.125 113.709V116.064H152.571V115.186C152.571 114.987 152.492 114.797 152.352 114.656C152.211 114.515 152.02 114.436 151.821 114.436C151.622 114.436 151.432 114.515 151.291 114.656C151.15 114.797 151.071 114.987 151.071 115.186V116.064H138.929V115.186C138.929 114.987 138.85 114.797 138.709 114.656C138.568 114.515 138.378 114.436 138.179 114.436C137.98 114.436 137.789 114.515 137.648 114.656C137.508 114.797 137.429 114.987 137.429 115.186V116.064H134.875V113.709C134.875 113.51 134.954 113.319 135.095 113.178C135.235 113.038 135.426 112.959 135.625 112.959ZM154.375 123.736H135.625C135.426 123.736 135.235 123.657 135.095 123.517C134.954 123.376 134.875 123.185 134.875 122.986V117.564H137.429V118.437C137.429 118.636 137.508 118.827 137.648 118.968C137.789 119.108 137.98 119.187 138.179 119.187C138.378 119.187 138.568 119.108 138.709 118.968C138.85 118.827 138.929 118.636 138.929 118.437V117.564H151.071V118.437C151.071 118.636 151.15 118.827 151.291 118.968C151.432 119.108 151.622 119.187 151.821 119.187C152.02 119.187 152.211 119.108 152.352 118.968C152.492 118.827 152.571 118.636 152.571 118.437V117.564H155.125V122.986C155.125 123.185 155.046 123.376 154.905 123.517C154.765 123.657 154.574 123.736 154.375 123.736Z" fill="#ffffff"/></svg></span><span class="opt-label">$1K – $5K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon"><svg width="22" height="22" viewBox="68.0 163.0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M90.9502 169.938L81.1252 163.938C80.4502 163.525 79.5877 163.525 78.9127 163.938L69.0877 169.938C68.7502 170.125 68.6002 170.538 68.6752 170.875C68.7877 171.25 69.1252 171.513 69.5002 171.513H70.4752V184.675H70.0252C69.5752 184.675 69.1627 185.05 69.1627 185.538C69.1627 186.025 69.5377 186.4 70.0252 186.4H76.9627C77.4127 186.4 77.8252 186.025 77.8252 185.538C77.8252 185.05 77.4502 184.675 76.9627 184.675H76.4752V171.513H83.4877V184.675H82.9252C82.4752 184.675 82.0627 185.05 82.0627 185.538C82.0627 186.025 82.4377 186.4 82.9252 186.4H89.8627C90.3127 186.4 90.7252 186.025 90.7252 185.538C90.7252 185.05 90.3502 184.675 89.8627 184.675H89.4877V171.513H90.5002C90.8752 171.513 91.2127 171.25 91.3252 170.913C91.4002 170.538 91.2502 170.125 90.9502 169.938ZM79.7752 165.4C79.9252 165.325 80.1127 165.325 80.2252 165.4L87.5002 169.825H72.5002L79.7752 165.4ZM74.7877 184.675H72.1627V171.513H74.7877V184.675ZM87.8002 184.675H85.1752V171.513H87.8002V184.675Z" fill="#ffffff"/></svg></span><span class="opt-label">$5K – $20K</span></button>
+            <button class="opt-card" onclick="pick(this,'c-budget')"><span class="opt-icon"><svg width="22" height="22" viewBox="134.0 163.0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M157.212 172.075L153.949 164.613C153.799 164.238 153.499 163.975 153.162 163.825C153.087 163.788 153.049 163.75 152.974 163.713C152.862 163.675 152.749 163.675 152.599 163.675C152.562 163.675 152.524 163.675 152.524 163.675H139.512C138.912 163.675 138.349 164.05 138.087 164.613L134.787 172.075C134.562 172.6 134.637 173.2 134.974 173.65L144.762 185.725C145.024 186.063 145.399 186.288 145.812 186.325C145.887 186.325 145.924 186.363 145.999 186.363C146.487 186.363 146.937 186.138 147.237 185.763L157.024 173.725L157.062 173.688C157.362 173.2 157.437 172.6 157.212 172.075ZM155.449 172.263H150.987L152.899 166.488L155.449 172.263ZM149.674 170.838L147.124 165.325H151.512L149.674 170.838ZM145.999 166.938L148.474 172.263H143.524L145.999 166.938ZM142.249 170.95L140.149 165.325H144.874L142.249 170.95ZM148.699 173.95L145.999 182.65L143.337 173.95H148.699ZM144.124 182.275L137.374 173.95H141.574L144.124 182.275ZM150.462 173.95H154.624L147.874 182.238L150.462 173.95ZM138.912 166.863L140.974 172.225H136.549L138.912 166.863Z" fill="#ffffff"/></svg></span><span class="opt-label">$20K+</span></button>
           </div>
           <div class="step-actions"><button class="btn-back" onclick="cBack(2)">&#x2190;</button><button class="btn-next" onclick="cNext(2)">Continue</button></div>
         </div>
@@ -559,10 +601,10 @@ main{
           <div class="step-counter">03 / 03</div>
           <div class="step-title">What matters most?</div>
           <div class="options">
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F50D;</span><span class="opt-label">Discovering artists</span></button>
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F4C8;</span><span class="opt-label">Investment & resale</span></button>
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Supporting artists</span></button>
-            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon">&#x1F3C6;</span><span class="opt-label">Building a collection</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="70.0 105.0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M92.5379 123.563L88.6754 119.7C88.1504 119.175 87.4379 118.875 86.6879 118.875C86.2379 118.875 85.7879 118.988 85.4129 119.175L83.4629 117.225C85.6754 114.413 85.4879 110.325 82.9004 107.7C80.1254 104.963 75.5504 104.963 72.7754 107.775C69.9629 110.588 69.9629 115.125 72.7754 117.938C74.1629 119.288 76.0004 120 77.8379 120C79.4129 120 80.9879 119.475 82.2629 118.463L84.2129 120.413C84.0254 120.788 83.9129 121.238 83.9129 121.688C83.9129 122.438 84.2129 123.15 84.7379 123.675L88.6004 127.538C89.1629 128.1 89.8754 128.363 90.5879 128.363C91.3004 128.363 92.0129 128.1 92.5754 127.538C93.6254 126.45 93.6254 124.65 92.5379 123.563ZM73.9379 116.7C71.8004 114.563 71.8004 111.075 73.9379 108.938C75.0254 107.85 76.4129 107.325 77.8004 107.325C79.1879 107.325 80.6129 107.85 81.7004 108.938C83.8379 111.075 83.8379 114.563 81.7004 116.7C79.5629 118.838 76.0754 118.838 73.9379 116.7ZM91.3379 126.338C90.9254 126.75 90.2129 126.788 89.7629 126.338L85.9004 122.475C85.6754 122.25 85.5629 121.988 85.5629 121.688C85.5629 121.388 85.6754 121.125 85.9004 120.9C86.1254 120.675 86.3879 120.563 86.6879 120.563C86.9879 120.563 87.2504 120.675 87.4754 120.9L91.3379 124.763C91.7504 125.213 91.7504 125.888 91.3379 126.338Z" fill="#ffffff"/></svg></span><span class="opt-label">Discovering artists</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="132.0 105.0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M154.501 126.675H134.363V106.5C134.363 106.05 133.988 105.637 133.501 105.637C133.013 105.637 132.676 106.05 132.676 106.5V126.787C132.676 127.65 133.388 128.362 134.251 128.362H154.501C154.951 128.362 155.363 127.987 155.363 127.5C155.363 127.012 154.951 126.675 154.501 126.675Z" fill="#ffffff"/><path d="M154.125 113.287H149.738C149.288 113.287 148.875 113.662 148.875 114.15C148.875 114.637 149.25 115.012 149.738 115.012H152.288L150.3 116.737H145.388C145.125 116.737 144.863 116.85 144.713 117.075L142.05 120.562H138.112C137.662 120.562 137.25 120.937 137.25 121.425C137.25 121.912 137.625 122.287 138.112 122.287H142.463C142.725 122.287 142.988 122.175 143.138 121.95L145.8 118.462H150.638C150.825 118.462 151.05 118.387 151.2 118.237L153.675 116.062V118.95C153.675 119.4 154.05 119.812 154.538 119.812C155.025 119.812 155.4 119.437 155.4 118.95V114.487C155.363 113.85 154.8 113.287 154.125 113.287Z" fill="#ffffff"/></svg></span><span class="opt-label">Investment & resale</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="74 160 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M96.875 176.32H95.9975C95.7013 176.32 95.45 175.975 95.45 175.57V169.9C95.45 169.484 95.72 169.12 96.0275 169.12H96.875C97.0739 169.12 97.2647 169.041 97.4053 168.9C97.546 168.76 97.625 168.569 97.625 168.37C97.625 168.171 97.546 167.98 97.4053 167.84C97.2647 167.699 97.0739 167.62 96.875 167.62H96.0275C95.6608 167.625 95.3022 167.728 94.9894 167.92C94.6766 168.111 94.4212 168.383 94.25 168.707H89.3412L88.625 168.081C87.9878 167.51 87.2217 167.102 86.3923 166.892C85.5629 166.681 84.6948 166.675 83.8625 166.874C81.7625 167.406 80.375 169.097 79.8913 169.795H79.1413C79.1497 169.238 78.9411 168.7 78.5597 168.294C78.1782 167.888 77.6539 167.646 77.0975 167.62H75.125C74.9261 167.62 74.7353 167.699 74.5947 167.84C74.454 167.98 74.375 168.171 74.375 168.37C74.375 168.569 74.454 168.76 74.5947 168.9C74.7353 169.041 74.9261 169.12 75.125 169.12H77.09C77.3863 169.12 77.6375 169.461 77.6375 169.87V175.536C77.6375 175.952 77.3675 176.32 77.06 176.32H75.125C74.9261 176.32 74.7353 176.399 74.5947 176.54C74.454 176.68 74.375 176.871 74.375 177.07C74.375 177.269 74.454 177.46 74.5947 177.6C74.7353 177.741 74.9261 177.82 75.125 177.82H77.06C77.4246 177.812 77.7805 177.708 78.091 177.516C78.4015 177.325 78.6554 177.055 78.8263 176.732H79.0887C79.3738 176.733 79.654 176.807 79.9025 176.946C79.8835 177.048 79.8857 177.152 79.9089 177.253C79.9321 177.353 79.9759 177.448 80.0375 177.531L80.9037 178.69C81.0057 178.822 81.1478 178.918 81.3088 178.964L82.4562 179.271L82.97 180.366C83.016 180.464 83.0827 180.551 83.1656 180.621C83.2484 180.691 83.3455 180.742 83.45 180.771L84.6575 181.101L85.4412 182.346C85.5401 182.503 85.6938 182.618 85.8725 182.669L87.9613 183.25C88.0271 183.269 88.0952 183.279 88.1637 183.28C88.2866 183.28 88.4076 183.25 88.5162 183.193C88.6247 183.135 88.7175 183.052 88.7863 182.95L92.705 177.13C92.7394 177.079 92.7858 177.037 92.84 177.009C92.8943 176.98 92.9548 176.965 93.0163 176.965H94.3925C94.5729 177.225 94.8126 177.438 95.0917 177.586C95.3708 177.735 95.6813 177.815 95.9975 177.82H96.875C97.0739 177.82 97.2647 177.741 97.4053 177.6C97.546 177.46 97.625 177.269 97.625 177.07C97.625 176.871 97.546 176.68 97.4053 176.54C97.2647 176.399 97.0739 176.32 96.875 176.32ZM81.1025 170.665C81.5038 170.099 82.6025 168.737 84.23 168.325C84.8275 168.187 85.4494 168.195 86.0429 168.35C86.6364 168.504 87.1839 168.799 87.6388 169.21L89.1725 170.545C89.3592 170.688 89.4829 170.898 89.5175 171.13C89.5204 171.188 89.5113 171.247 89.4906 171.302C89.47 171.357 89.4383 171.407 89.3975 171.449L88.76 172.131C88.598 172.307 88.3764 172.415 88.1386 172.436C87.9008 172.457 87.6638 172.388 87.4738 172.244L87.3237 172.131C86.8596 171.78 86.284 171.609 85.7035 171.65C85.123 171.691 84.5769 171.94 84.1663 172.352L80.855 175.776C80.3477 175.431 79.7508 175.242 79.1375 175.232V171.295H79.8875C80.1255 171.294 80.3598 171.236 80.571 171.127C80.7823 171.017 80.9645 170.859 81.1025 170.665ZM91.4637 176.29L87.845 181.66L86.555 181.285L85.7712 180.04C85.6715 179.882 85.5164 179.767 85.3363 179.717L84.1812 179.402L83.6637 178.304C83.6178 178.206 83.551 178.118 83.4682 178.049C83.3853 177.979 83.2883 177.928 83.1838 177.899L81.95 177.569L81.62 177.13L85.2275 173.38C85.3838 173.226 85.5902 173.133 85.8091 173.119C86.028 173.105 86.2448 173.169 86.42 173.301L86.57 173.414C87.0567 173.781 87.6624 173.955 88.2699 173.902C88.8774 173.848 89.4435 173.572 89.8588 173.125L90.5 172.472C90.6783 172.283 90.8164 172.059 90.906 171.815C90.9956 171.571 91.0348 171.311 91.0212 171.051C91.0056 170.756 90.9263 170.469 90.7887 170.207H93.95V175.457H93.0163C92.7091 175.458 92.4069 175.535 92.1361 175.68C91.8654 175.825 91.6345 176.035 91.4637 176.29Z" fill="#ffffff"/></svg></span><span class="opt-label">Supporting artists</span></button>
+            <button class="opt-card" onclick="pick(this,'c-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="134 160 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M151.424 173.913C151.424 172.038 150.712 170.313 149.549 169V166.038C149.549 164.725 148.499 163.675 147.187 163.675H140.812C139.499 163.675 138.449 164.725 138.449 166.038V169C137.287 170.313 136.574 172.038 136.574 173.913C136.574 175.788 137.287 177.513 138.449 178.825V185.163C138.449 185.575 138.674 185.95 139.012 186.175C139.199 186.288 139.387 186.325 139.612 186.325C139.799 186.325 139.987 186.288 140.137 186.175L143.924 184.225C143.962 184.188 143.999 184.188 144.037 184.225L147.824 186.175C148.199 186.363 148.612 186.363 148.949 186.138C149.287 185.913 149.512 185.538 149.512 185.125V178.825C150.712 177.513 151.424 175.788 151.424 173.913ZM140.812 165.363H147.149C147.524 165.363 147.824 165.663 147.824 166.038V167.575C146.699 166.9 145.387 166.488 143.962 166.488C142.537 166.488 141.224 166.9 140.099 167.575V166.038C140.137 165.663 140.437 165.363 140.812 165.363ZM143.999 168.175C147.149 168.175 149.737 170.763 149.737 173.913C149.737 177.063 147.149 179.65 143.999 179.65C140.849 179.65 138.262 177.063 138.262 173.913C138.262 170.763 140.849 168.175 143.999 168.175ZM144.787 182.763C144.262 182.5 143.699 182.5 143.174 182.763L140.137 184.338V180.25C141.262 180.925 142.574 181.338 143.999 181.338C145.424 181.338 146.737 180.925 147.862 180.25V184.3L144.787 182.763Z" fill="#ffffff"/><path d="M140.811 174.7L141.073 174.888C141.111 174.888 141.111 174.925 141.111 174.963L140.998 175.225C140.773 175.975 140.998 176.725 141.636 177.175C142.273 177.625 143.061 177.625 143.698 177.175L143.961 176.988C143.998 176.988 144.036 176.988 144.036 176.988L144.298 177.175C144.598 177.4 144.973 177.513 145.348 177.513C145.723 177.513 146.061 177.4 146.398 177.175C147.036 176.725 147.261 175.938 147.036 175.225L146.923 174.925C146.923 174.888 146.923 174.85 146.961 174.85L147.223 174.663C147.861 174.213 148.086 173.425 147.861 172.713C147.636 172 146.961 171.513 146.173 171.513H145.873C145.836 171.513 145.836 171.475 145.798 171.475L145.686 171.175C145.461 170.425 144.786 169.975 143.998 169.975C143.211 169.975 142.573 170.463 142.311 171.175L142.198 171.475C142.198 171.513 142.161 171.513 142.123 171.513H141.823C141.036 171.513 140.398 172 140.136 172.713C139.948 173.463 140.211 174.213 140.811 174.7ZM141.786 173.238C141.786 173.2 141.823 173.2 141.861 173.2H142.161C142.911 173.2 143.586 172.713 143.848 172L143.961 171.7C143.961 171.663 143.961 171.663 144.036 171.663C144.111 171.663 144.111 171.7 144.111 171.7L144.223 172C144.448 172.713 145.123 173.2 145.911 173.2H146.211C146.248 173.2 146.248 173.2 146.286 173.238C146.323 173.275 146.286 173.313 146.248 173.313L145.948 173.5C145.348 173.95 145.086 174.738 145.311 175.45L145.423 175.75C145.423 175.788 145.423 175.788 145.386 175.825C145.348 175.863 145.311 175.825 145.311 175.825L145.048 175.638C144.748 175.413 144.373 175.3 143.998 175.3C143.623 175.3 143.286 175.413 142.948 175.638L142.686 175.825C142.648 175.825 142.648 175.863 142.611 175.825C142.573 175.788 142.573 175.788 142.573 175.75L142.686 175.45C142.911 174.738 142.648 173.95 142.048 173.5L141.786 173.313C141.786 173.313 141.786 173.275 141.786 173.238Z" fill="#ffffff"/></svg></span><span class="opt-label">Building a collection</span></button>
           </div>
           <div class="consent-row" id="consent-row-c">
             <button class="consent-toggle" id="c-consent" onclick="toggleConsent('c')" aria-label="I agree to the terms"></button>
@@ -571,7 +613,7 @@ main{
           <div class="step-actions"><button class="btn-back" onclick="cBack(3)">&#x2190;</button><button class="btn-next" id="c-reserve-btn" onclick="submitForm('collector')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="c-success">
-          <div class="success-icon">&#x2736;</div>
+          <div class="success-icon">&#x2713;</div>
           <div class="success-title">You're on the list.</div>
           <div class="success-body">We'll be in touch before launch. Share your link — every referral moves you up.</div>
           <div class="referral-box">
@@ -603,10 +645,10 @@ main{
           <div class="step-counter">02 / 04</div>
           <div class="step-title">Where are you in your career?</div>
           <div class="options">
-            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F393;</span><span class="opt-label">Student</span></button>
-            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F33F;</span><span class="opt-label">Emerging</span><span class="opt-sub">0–3 yrs selling</span></button>
-            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F3A8;</span><span class="opt-label">Mid-career</span></button>
-            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon">&#x1F3DB;&#xFE0F;</span><span class="opt-label">Gallery represented</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon"><svg width="22" height="22" viewBox="69 107 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M92.0633 118.75L90.4883 117.138V115.713C90.7133 115.45 90.8633 115.113 90.8633 114.738C90.8633 114.175 90.5633 113.688 90.0383 113.463L80.8508 109.338C80.5133 109.188 80.1008 109.188 79.7258 109.338L70.5008 113.425C70.0133 113.65 69.6758 114.138 69.6758 114.7C69.6758 115.263 70.0133 115.75 70.5008 115.975L73.6508 117.4V121.825C73.6508 124.563 75.8633 126.775 78.5633 126.775H81.9758C84.7133 126.775 86.8883 124.563 86.8883 121.825V117.475L88.6883 116.65L88.8008 116.613V117.213L87.3008 118.75C86.8883 119.163 86.8883 119.8 87.3008 120.213L88.9133 121.9C89.1008 122.088 89.3633 122.2 89.6633 122.2C89.9258 122.2 90.2258 122.088 90.4133 121.9L92.0258 120.213C92.4383 119.8 92.4383 119.163 92.0633 118.75ZM85.2008 121.825C85.2008 123.625 83.7383 125.088 81.9758 125.088H78.5633C76.7633 125.088 75.3383 123.625 75.3383 121.825V118.188L79.8008 120.213C79.9883 120.288 80.1758 120.325 80.3633 120.325C80.5508 120.325 80.7383 120.288 80.9258 120.213L85.2008 118.3V121.825V121.825ZM80.3633 118.563L71.7758 114.7L80.2883 110.95L88.7633 114.775L80.3633 118.563ZM89.6633 120.25L88.9133 119.5L89.6633 118.75L90.4133 119.5L89.6633 120.25Z" fill="#ffffff"/></svg></span><span class="opt-label">Student</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon"><svg width="22" height="22" viewBox="143 104 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M158.151 107.725C158.076 107.35 157.851 107.012 157.513 106.825C157.176 106.637 156.801 106.6 156.426 106.712C155.638 106.975 154.101 107.537 152.451 108.55C152.301 108.662 151.963 108.85 151.813 109.862C150.876 109.637 150.538 109.937 150.388 110.087C149.376 110.987 148.551 111.962 147.951 113.012C145.176 117.812 146.826 123.85 146.901 124.075V124.112C146.563 125.012 146.263 125.912 145.963 126.887C145.813 127.3 145.701 127.75 145.513 128.237C145.363 128.687 145.588 129.175 146.038 129.287C146.113 129.325 146.226 129.325 146.301 129.325C146.638 129.325 146.976 129.1 147.088 128.762C147.238 128.275 147.388 127.825 147.538 127.412C147.876 126.362 148.176 125.425 148.551 124.487C150.238 123.925 154.663 122.162 156.913 118.225C159.201 114.287 158.526 109.562 158.151 107.725ZM155.488 117.362C154.063 119.875 151.513 121.375 149.676 122.2C150.201 121.3 150.838 120.287 151.738 119.05C152.001 118.675 151.926 118.15 151.551 117.887C151.176 117.625 150.651 117.7 150.388 118.075C149.413 119.387 148.701 120.512 148.138 121.487C147.913 119.462 147.913 116.387 149.413 113.837C149.901 113.012 150.538 112.225 151.326 111.475C151.551 111.512 151.888 111.662 152.188 111.775C152.451 111.887 152.751 111.887 153.013 111.737C153.276 111.587 153.388 111.325 153.388 111.025C153.388 110.612 153.426 110.125 153.501 109.862C154.701 109.15 155.826 108.662 156.576 108.4C156.876 110.087 157.326 114.137 155.488 117.362Z" fill="#ffffff"/></svg></span><span class="opt-label">Emerging</span> <span class="opt-sub">0–3 yrs selling</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon"><svg width="22" height="22" viewBox="73 159 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M94.6258 161.175H77.3758C75.8758 161.175 74.6758 162.375 74.6758 163.875V171.263C74.6758 172.725 75.8383 173.888 77.3008 173.963C77.7133 174.975 78.7633 175.725 80.0008 175.725C81.2008 175.725 82.2508 175.013 82.7008 173.963H89.4508C89.8633 174.975 90.9133 175.725 92.1508 175.725C93.3508 175.725 94.4008 174.975 94.8508 173.963C96.3133 173.925 97.4758 172.725 97.4758 171.263V163.875C97.3633 162.375 96.1258 161.175 94.6258 161.175ZM79.9633 174.038C79.2883 174.038 78.7633 173.55 78.7633 172.95C78.7633 172.35 79.2883 171.863 79.9633 171.863C80.6383 171.863 81.1633 172.35 81.1633 172.95C81.1633 173.513 80.6008 174.038 79.9633 174.038ZM92.0383 174.038C91.3633 174.038 90.8383 173.55 90.8383 172.95C90.8383 172.35 91.3633 171.863 92.0383 171.863C92.7133 171.863 93.2383 172.35 93.2383 172.95C93.2383 173.513 92.7133 174.038 92.0383 174.038ZM95.6758 171.263C95.6758 171.75 95.3383 172.163 94.8883 172.238C94.5883 171.038 93.4258 170.138 92.0758 170.138C90.7258 170.138 89.5633 171.038 89.2633 172.275H82.7383C82.4383 171.038 81.2758 170.138 79.9258 170.138C78.5758 170.138 77.4508 171.038 77.1133 172.238C76.6633 172.125 76.2883 171.75 76.2883 171.263V163.875C76.2883 163.313 76.7383 162.863 77.3008 162.863H94.5508C95.1133 162.863 95.5633 163.313 95.5633 163.875V171.263H95.6758Z" fill="#ffffff"/><path d="M79.9627 176.738C77.8627 176.738 75.8752 177.788 74.7877 179.513C74.5252 179.888 74.6377 180.413 75.0502 180.675C75.4627 180.938 75.9502 180.825 76.2127 180.413C77.0002 179.175 78.4252 178.425 79.9627 178.425C81.5002 178.425 82.9252 179.175 83.7127 180.413C83.8627 180.675 84.1627 180.788 84.4252 180.788C84.5752 180.788 84.7252 180.75 84.8752 180.675C85.2502 180.413 85.4002 179.888 85.1377 179.513C84.0127 177.788 82.0627 176.738 79.9627 176.738Z" fill="#ffffff"/><path d="M92.0369 176.738C89.9369 176.738 87.9494 177.788 86.8619 179.513C86.5994 179.925 86.7119 180.413 87.1244 180.675C87.2744 180.75 87.4244 180.788 87.5744 180.788C87.8369 180.788 88.1369 180.638 88.2869 180.413C89.0744 179.175 90.4994 178.425 92.0369 178.425C93.5744 178.425 94.9994 179.175 95.7869 180.413C96.0494 180.788 96.5744 180.938 96.9494 180.675C97.3244 180.413 97.4744 179.888 97.2119 179.513C96.1244 177.788 94.1744 176.738 92.0369 176.738Z" fill="#ffffff"/></svg></span><span class="opt-label">Mid-career</span></button>
+            <button class="opt-card" onclick="pick(this,'a-stage')"><span class="opt-icon"><svg width="22" height="22" viewBox="68.0 163.0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M90.9502 169.938L81.1252 163.938C80.4502 163.525 79.5877 163.525 78.9127 163.938L69.0877 169.938C68.7502 170.125 68.6002 170.538 68.6752 170.875C68.7877 171.25 69.1252 171.513 69.5002 171.513H70.4752V184.675H70.0252C69.5752 184.675 69.1627 185.05 69.1627 185.538C69.1627 186.025 69.5377 186.4 70.0252 186.4H76.9627C77.4127 186.4 77.8252 186.025 77.8252 185.538C77.8252 185.05 77.4502 184.675 76.9627 184.675H76.4752V171.513H83.4877V184.675H82.9252C82.4752 184.675 82.0627 185.05 82.0627 185.538C82.0627 186.025 82.4377 186.4 82.9252 186.4H89.8627C90.3127 186.4 90.7252 186.025 90.7252 185.538C90.7252 185.05 90.3502 184.675 89.8627 184.675H89.4877V171.513H90.5002C90.8752 171.513 91.2127 171.25 91.3252 170.913C91.4002 170.538 91.2502 170.125 90.9502 169.938ZM79.7752 165.4C79.9252 165.325 80.1127 165.325 80.2252 165.4L87.5002 169.825H72.5002L79.7752 165.4ZM74.7877 184.675H72.1627V171.513H74.7877V184.675ZM87.8002 184.675H85.1752V171.513H87.8002V184.675Z" fill="#ffffff"/></svg></span><span class="opt-label">Gallery represented</span></button>
           </div>
           <div class="step-actions"><button class="btn-back" onclick="aBack(2)">&#x2190;</button><button class="btn-next" onclick="aNext(2)">Continue</button></div>
         </div>
@@ -614,10 +656,10 @@ main{
           <div class="step-counter">03 / 04</div>
           <div class="step-title">Average artwork price?</div>
           <div class="options">
-            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B5;</span><span class="opt-label">Under $1K</span></button>
-            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B3;</span><span class="opt-label">$1K – $3K</span></button>
-            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F4B0;</span><span class="opt-label">$3K – $10K</span></button>
-            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon">&#x1F48E;</span><span class="opt-label">$10K+</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon"><svg width="22" height="22" viewBox="66 114 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M87.1117 116.913H81.4117V116.875C81.4117 115.788 80.5117 114.925 79.4617 114.925H76.5742C75.4867 114.925 74.6242 115.825 74.6242 116.875V116.913H68.8867C67.6492 116.913 66.6367 117.925 66.6367 119.163V128.838C66.6367 130.075 67.6492 131.088 68.8867 131.088H74.5867V131.125C74.5867 132.213 75.4867 133.075 76.5367 133.075H79.4242C80.5117 133.075 81.3742 132.175 81.3742 131.125V131.088H87.0742C88.3117 131.088 89.3242 130.075 89.3242 128.838V119.163C89.3242 117.925 88.3492 116.913 87.1117 116.913ZM87.6742 119.163V120.475C87.5617 120.513 87.4492 120.513 87.3367 120.513C86.5492 120.513 85.9117 119.875 85.9117 119.088C85.9117 118.9 85.9492 118.75 85.9867 118.6H87.1117C87.4117 118.6 87.6742 118.863 87.6742 119.163ZM68.8867 118.6H70.0117C70.0867 118.75 70.0867 118.938 70.0867 119.088C70.0867 119.875 69.4492 120.513 68.6617 120.513C68.5492 120.513 68.4367 120.513 68.3242 120.475V119.163C68.3242 118.863 68.5867 118.6 68.8867 118.6ZM68.3242 128.838V127.525C68.4367 127.488 68.5492 127.488 68.6617 127.488C69.4492 127.488 70.0867 128.125 70.0867 128.913C70.0867 129.1 70.0492 129.25 70.0117 129.4H68.8867C68.5867 129.4 68.3242 129.138 68.3242 128.838ZM71.7367 129.4C71.7742 129.25 71.7742 129.063 71.7742 128.913C71.7742 127.188 70.3867 125.8 68.6617 125.8C68.5492 125.8 68.4367 125.8 68.3242 125.838V122.238C68.4367 122.238 68.5492 122.275 68.6617 122.275C70.3867 122.275 71.7742 120.888 71.7742 119.163C71.7742 119.013 71.7742 118.825 71.7367 118.675H74.5867V129.475H71.7367V129.4ZM79.7242 131.125C79.7242 131.275 79.6117 131.425 79.4242 131.425H76.5367C76.3867 131.425 76.2367 131.313 76.2367 131.125V116.875C76.2367 116.725 76.3492 116.575 76.5367 116.575H79.4242C79.5742 116.575 79.7242 116.688 79.7242 116.875V131.125ZM81.4117 118.6H84.2617C84.2242 118.75 84.2242 118.938 84.2242 119.088C84.2242 120.813 85.6117 122.2 87.3367 122.2C87.4492 122.2 87.5617 122.2 87.6742 122.163V125.763C87.5617 125.763 87.4492 125.725 87.3367 125.725C85.6117 125.725 84.2242 127.113 84.2242 128.838C84.2242 128.988 84.2242 129.175 84.2617 129.325H81.4117V118.6V118.6ZM87.1117 129.4H85.9867C85.9117 129.25 85.9117 129.063 85.9117 128.913C85.9117 128.125 86.5492 127.488 87.3367 127.488C87.4492 127.488 87.5617 127.488 87.6742 127.525V128.838C87.6742 129.138 87.4117 129.4 87.1117 129.4Z" fill="#ffffff"/></svg></span><span class="opt-label">Under $1K</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon"><svg width="22" height="22" viewBox="138 116 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M159.001 116.163H141.001C139.726 116.163 138.676 117.213 138.676 118.488V129.475C138.676 130.75 139.726 131.8 141.001 131.8H159.001C160.276 131.8 161.326 130.75 161.326 129.475V118.488C161.326 117.213 160.276 116.163 159.001 116.163ZM141.001 117.85H159.001C159.376 117.85 159.676 118.15 159.676 118.525V120.55H140.326V118.525C140.326 118.15 140.626 117.85 141.001 117.85ZM159.676 122.2V123.625H140.326V122.2H159.676ZM159.001 130.15H141.001C140.626 130.15 140.326 129.85 140.326 129.475V125.313H159.638V129.475C159.676 129.85 159.376 130.15 159.001 130.15Z" fill="#ffffff"/></svg></span><span class="opt-label">$1K – $3K</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon"><svg width="22" height="22" viewBox="66 164 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.2118 179.75L88.0493 176.825C87.7493 176.113 87.0743 175.625 86.2868 175.625H84.4118L82.6118 170.863C82.3493 170.15 81.6368 169.663 80.8493 169.663H75.1493C74.3618 169.663 73.6493 170.15 73.3868 170.863L71.5868 175.625H69.7118C68.9243 175.625 68.2493 176.075 67.9493 176.825L66.7868 179.75C66.5618 180.313 66.6368 180.988 66.9743 181.513C67.3118 182.038 67.9118 182.338 68.5118 182.338H77.2493C77.5118 182.338 77.7743 182.188 77.9618 181.963C77.9993 181.925 77.9993 181.888 78.0368 181.813C78.0743 181.85 78.0743 181.925 78.1118 181.963C78.2618 182.188 78.5243 182.338 78.8243 182.338H87.5243C88.1618 182.338 88.7243 182.038 89.0618 181.513C89.3993 180.988 89.4368 180.35 89.2118 179.75ZM74.9618 171.463C74.9993 171.388 75.0743 171.35 75.1493 171.35H80.8493C80.9243 171.35 80.9993 171.388 81.0368 171.463L82.6118 175.663H80.7743H75.2618H73.4243L74.9618 171.463ZM68.5493 180.65C68.4743 180.65 68.4368 180.613 68.3993 180.575C68.3618 180.538 68.3618 180.463 68.3618 180.388L69.5243 177.463C69.5618 177.388 69.6368 177.35 69.7118 177.35H74.6993L76.0118 180.65H68.5493V180.65ZM77.9993 181.138L76.4993 177.35H79.4993L77.9993 181.138ZM87.6368 180.575C87.5993 180.613 87.5618 180.65 87.4868 180.65H80.0243L81.3368 177.35H86.3243C86.3993 177.35 86.4743 177.388 86.5118 177.463L87.6743 180.388C87.6743 180.463 87.6368 180.538 87.6368 180.575Z" fill="#ffffff"/></svg></span><span class="opt-label">$3K – $10K</span></button>
+            <button class="opt-card" onclick="pick(this,'a-price')"><span class="opt-icon"><svg width="22" height="22" viewBox="138 164 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M161.212 173.075L157.949 165.613C157.799 165.238 157.499 164.975 157.162 164.825C157.087 164.788 157.049 164.75 156.974 164.713C156.862 164.675 156.749 164.675 156.599 164.675C156.562 164.675 156.524 164.675 156.524 164.675H143.512C142.912 164.675 142.349 165.05 142.087 165.613L138.787 173.075C138.562 173.6 138.637 174.2 138.974 174.65L148.762 186.725C149.024 187.063 149.399 187.288 149.812 187.325C149.887 187.325 149.924 187.363 149.999 187.363C150.487 187.363 150.937 187.138 151.237 186.763L161.024 174.725L161.062 174.688C161.362 174.2 161.437 173.6 161.212 173.075ZM159.449 173.263H154.987L156.899 167.488L159.449 173.263ZM153.674 171.838L151.124 166.325H155.512L153.674 171.838ZM149.999 167.938L152.474 173.263H147.524L149.999 167.938ZM146.249 171.95L144.149 166.325H148.874L146.249 171.95ZM152.699 174.95L149.999 183.65L147.337 174.95H152.699ZM148.124 183.275L141.374 174.95H145.574L148.124 183.275ZM154.462 174.95H158.624L151.874 183.238L154.462 174.95ZM142.912 167.863L144.974 173.225H140.549L142.912 167.863Z" fill="#ffffff"/></svg></span><span class="opt-label">$10K+</span></button>
           </div>
           <div class="step-actions"><button class="btn-back" onclick="aBack(3)">&#x2190;</button><button class="btn-next" onclick="aNext(3)">Continue</button></div>
         </div>
@@ -625,10 +667,10 @@ main{
           <div class="step-counter">04 / 04</div>
           <div class="step-title">What matters most?</div>
           <div class="options">
-            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4B8;</span><span class="opt-label">Selling more work</span></button>
-            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F91D;</span><span class="opt-label">Building collectors</span></button>
-            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x267B;&#xFE0F;</span><span class="opt-label">Resale + royalties</span></button>
-            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon">&#x1F4CA;</span><span class="opt-label">Analytics + growth</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="64 167 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.2118 179.75L88.0493 176.825C87.7493 176.113 87.0743 175.625 86.2868 175.625H84.4118L82.6118 170.863C82.3493 170.15 81.6368 169.663 80.8493 169.663H75.1493C74.3618 169.663 73.6493 170.15 73.3868 170.863L71.5868 175.625H69.7118C68.9243 175.625 68.2493 176.075 67.9493 176.825L66.7868 179.75C66.5618 180.313 66.6368 180.988 66.9743 181.513C67.3118 182.038 67.9118 182.338 68.5118 182.338H77.2493C77.5118 182.338 77.7743 182.188 77.9618 181.963C77.9993 181.925 77.9993 181.888 78.0368 181.813C78.0743 181.85 78.0743 181.925 78.1118 181.963C78.2618 182.188 78.5243 182.338 78.8243 182.338H87.5243C88.1618 182.338 88.7243 182.038 89.0618 181.513C89.3993 180.988 89.4368 180.35 89.2118 179.75ZM74.9618 171.463C74.9993 171.388 75.0743 171.35 75.1493 171.35H80.8493C80.9243 171.35 80.9993 171.388 81.0368 171.463L82.6118 175.663H80.7743H75.2618H73.4243L74.9618 171.463ZM68.5493 180.65C68.4743 180.65 68.4368 180.613 68.3993 180.575C68.3618 180.538 68.3618 180.463 68.3618 180.388L69.5243 177.463C69.5618 177.388 69.6368 177.35 69.7118 177.35H74.6993L76.0118 180.65H68.5493V180.65ZM77.9993 181.138L76.4993 177.35H79.4993L77.9993 181.138ZM87.6368 180.575C87.5993 180.613 87.5618 180.65 87.4868 180.65H80.0243L81.3368 177.35H86.3243C86.3993 177.35 86.4743 177.388 86.5118 177.463L87.6743 180.388C87.6743 180.463 87.6368 180.538 87.6368 180.575Z" fill="#ffffff"/></svg></span><span class="opt-label">Selling more work</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="74 160 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M96.875 176.32H95.9975C95.7013 176.32 95.45 175.975 95.45 175.57V169.9C95.45 169.484 95.72 169.12 96.0275 169.12H96.875C97.0739 169.12 97.2647 169.041 97.4053 168.9C97.546 168.76 97.625 168.569 97.625 168.37C97.625 168.171 97.546 167.98 97.4053 167.84C97.2647 167.699 97.0739 167.62 96.875 167.62H96.0275C95.6608 167.625 95.3022 167.728 94.9894 167.92C94.6766 168.111 94.4212 168.383 94.25 168.707H89.3412L88.625 168.081C87.9878 167.51 87.2217 167.102 86.3923 166.892C85.5629 166.681 84.6948 166.675 83.8625 166.874C81.7625 167.406 80.375 169.097 79.8913 169.795H79.1413C79.1497 169.238 78.9411 168.7 78.5597 168.294C78.1782 167.888 77.6539 167.646 77.0975 167.62H75.125C74.9261 167.62 74.7353 167.699 74.5947 167.84C74.454 167.98 74.375 168.171 74.375 168.37C74.375 168.569 74.454 168.76 74.5947 168.9C74.7353 169.041 74.9261 169.12 75.125 169.12H77.09C77.3863 169.12 77.6375 169.461 77.6375 169.87V175.536C77.6375 175.952 77.3675 176.32 77.06 176.32H75.125C74.9261 176.32 74.7353 176.399 74.5947 176.54C74.454 176.68 74.375 176.871 74.375 177.07C74.375 177.269 74.454 177.46 74.5947 177.6C74.7353 177.741 74.9261 177.82 75.125 177.82H77.06C77.4246 177.812 77.7805 177.708 78.091 177.516C78.4015 177.325 78.6554 177.055 78.8263 176.732H79.0887C79.3738 176.733 79.654 176.807 79.9025 176.946C79.8835 177.048 79.8857 177.152 79.9089 177.253C79.9321 177.353 79.9759 177.448 80.0375 177.531L80.9037 178.69C81.0057 178.822 81.1478 178.918 81.3088 178.964L82.4562 179.271L82.97 180.366C83.016 180.464 83.0827 180.551 83.1656 180.621C83.2484 180.691 83.3455 180.742 83.45 180.771L84.6575 181.101L85.4412 182.346C85.5401 182.503 85.6938 182.618 85.8725 182.669L87.9613 183.25C88.0271 183.269 88.0952 183.279 88.1637 183.28C88.2866 183.28 88.4076 183.25 88.5162 183.193C88.6247 183.135 88.7175 183.052 88.7863 182.95L92.705 177.13C92.7394 177.079 92.7858 177.037 92.84 177.009C92.8943 176.98 92.9548 176.965 93.0163 176.965H94.3925C94.5729 177.225 94.8126 177.438 95.0917 177.586C95.3708 177.735 95.6813 177.815 95.9975 177.82H96.875C97.0739 177.82 97.2647 177.741 97.4053 177.6C97.546 177.46 97.625 177.269 97.625 177.07C97.625 176.871 97.546 176.68 97.4053 176.54C97.2647 176.399 97.0739 176.32 96.875 176.32ZM81.1025 170.665C81.5038 170.099 82.6025 168.737 84.23 168.325C84.8275 168.187 85.4494 168.195 86.0429 168.35C86.6364 168.504 87.1839 168.799 87.6388 169.21L89.1725 170.545C89.3592 170.688 89.4829 170.898 89.5175 171.13C89.5204 171.188 89.5113 171.247 89.4906 171.302C89.47 171.357 89.4383 171.407 89.3975 171.449L88.76 172.131C88.598 172.307 88.3764 172.415 88.1386 172.436C87.9008 172.457 87.6638 172.388 87.4738 172.244L87.3237 172.131C86.8596 171.78 86.284 171.609 85.7035 171.65C85.123 171.691 84.5769 171.94 84.1663 172.352L80.855 175.776C80.3477 175.431 79.7508 175.242 79.1375 175.232V171.295H79.8875C80.1255 171.294 80.3598 171.236 80.571 171.127C80.7823 171.017 80.9645 170.859 81.1025 170.665ZM91.4637 176.29L87.845 181.66L86.555 181.285L85.7712 180.04C85.6715 179.882 85.5164 179.767 85.3363 179.717L84.1812 179.402L83.6637 178.304C83.6178 178.206 83.551 178.118 83.4682 178.049C83.3853 177.979 83.2883 177.928 83.1838 177.899L81.95 177.569L81.62 177.13L85.2275 173.38C85.3838 173.226 85.5902 173.133 85.8091 173.119C86.028 173.105 86.2448 173.169 86.42 173.301L86.57 173.414C87.0567 173.781 87.6624 173.955 88.2699 173.902C88.8774 173.848 89.4435 173.572 89.8588 173.125L90.5 172.472C90.6783 172.283 90.8164 172.059 90.906 171.815C90.9956 171.571 91.0348 171.311 91.0212 171.051C91.0056 170.756 90.9263 170.469 90.7887 170.207H93.95V175.457H93.0163C92.7091 175.458 92.4069 175.535 92.1361 175.68C91.8654 175.825 91.6345 176.035 91.4637 176.29Z" fill="#ffffff"/></svg></span><span class="opt-label">Building collectors</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="138.0 164.0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M161.212 173.075L157.949 165.613C157.799 165.238 157.499 164.975 157.162 164.825C157.087 164.788 157.049 164.75 156.974 164.713C156.862 164.675 156.749 164.675 156.599 164.675C156.562 164.675 156.524 164.675 156.524 164.675H143.512C142.912 164.675 142.349 165.05 142.087 165.613L138.787 173.075C138.562 173.6 138.637 174.2 138.974 174.65L148.762 186.725C149.024 187.063 149.399 187.288 149.812 187.325C149.887 187.325 149.924 187.363 149.999 187.363C150.487 187.363 150.937 187.138 151.237 186.763L161.024 174.725L161.062 174.688C161.362 174.2 161.437 173.6 161.212 173.075ZM159.449 173.263H154.987L156.899 167.488L159.449 173.263ZM153.674 171.838L151.124 166.325H155.512L153.674 171.838ZM149.999 167.938L152.474 173.263H147.524L149.999 167.938ZM146.249 171.95L144.149 166.325H148.874L146.249 171.95ZM152.699 174.95L149.999 183.65L147.337 174.95H152.699ZM148.124 183.275L141.374 174.95H145.574L148.124 183.275ZM154.462 174.95H158.624L151.874 183.238L154.462 174.95ZM142.912 167.863L144.974 173.225H140.549L142.912 167.863Z" fill="#ffffff"/></svg></span><span class="opt-label">Resale + royalties</span></button>
+            <button class="opt-card" onclick="pick(this,'a-priority')"><span class="opt-icon"><svg width="22" height="22" viewBox="64 167 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M89.2118 179.75L88.0493 176.825C87.7493 176.113 87.0743 175.625 86.2868 175.625H84.4118L82.6118 170.863C82.3493 170.15 81.6368 169.663 80.8493 169.663H75.1493C74.3618 169.663 73.6493 170.15 73.3868 170.863L71.5868 175.625H69.7118C68.9243 175.625 68.2493 176.075 67.9493 176.825L66.7868 179.75C66.5618 180.313 66.6368 180.988 66.9743 181.513C67.3118 182.038 67.9118 182.338 68.5118 182.338H77.2493C77.5118 182.338 77.7743 182.188 77.9618 181.963C77.9993 181.925 77.9993 181.888 78.0368 181.813C78.0743 181.85 78.0743 181.925 78.1118 181.963C78.2618 182.188 78.5243 182.338 78.8243 182.338H87.5243C88.1618 182.338 88.7243 182.038 89.0618 181.513C89.3993 180.988 89.4368 180.35 89.2118 179.75ZM74.9618 171.463C74.9993 171.388 75.0743 171.35 75.1493 171.35H80.8493C80.9243 171.35 80.9993 171.388 81.0368 171.463L82.6118 175.663H80.7743H75.2618H73.4243L74.9618 171.463ZM68.5493 180.65C68.4743 180.65 68.4368 180.613 68.3993 180.575C68.3618 180.538 68.3618 180.463 68.3618 180.388L69.5243 177.463C69.5618 177.388 69.6368 177.35 69.7118 177.35H74.6993L76.0118 180.65H68.5493V180.65ZM77.9993 181.138L76.4993 177.35H79.4993L77.9993 181.138ZM87.6368 180.575C87.5993 180.613 87.5618 180.65 87.4868 180.65H80.0243L81.3368 177.35H86.3243C86.3993 177.35 86.4743 177.388 86.5118 177.463L87.6743 180.388C87.6743 180.463 87.6368 180.538 87.6368 180.575Z" fill="#ffffff"/></svg></span><span class="opt-label">Analytics + growth</span></button>
           </div>
           <div class="consent-row" id="consent-row-a">
             <button class="consent-toggle" id="a-consent" onclick="toggleConsent('a')" aria-label="I agree to the terms"></button>
@@ -637,9 +679,9 @@ main{
           <div class="step-actions"><button class="btn-back" onclick="aBack(4)">&#x2190;</button><button class="btn-next" id="a-reserve-btn" onclick="submitForm('artist')">Submit</button></div>
         </div>
         <div class="success-screen" id="a-success">
-          <div class="success-icon">&#x2736;</div>
-          <div class="success-title">Welcome to Grails.</div>
-          <div class="success-body">You're in. We'll reach out before launch. Every collector you refer moves you higher.</div>
+          <div class="success-icon">&#x2713;</div>
+          <div class="success-title">Artist Registered.</div>
+          <div class="success-body">We'll be in touch before launch. Share your link to grow your position.</div>
           <div class="referral-box">
             <div class="referral-label">Your referral link</div>
             <div class="referral-url" id="a-ref-url"></div>
@@ -699,8 +741,8 @@ main{
           <div class="step-actions"><button class="btn-back" onclick="gBack(4)">&#x2190;</button><button class="btn-next" id="g-reserve-btn" onclick="submitGallery()">Submit</button></div>
         </div>
         <div class="success-screen" id="g-success">
-          <div class="success-icon">&#x2736;</div>
-          <div class="success-title">Gallery registered.</div>
+          <div class="success-icon">&#x2713;</div>
+          <div class="success-title">Gallery Registered.</div>
           <div class="success-body">We'll be in touch before launch. Share your link to grow your position.</div>
           <div class="referral-box">
             <div class="referral-label">Your referral link</div>
@@ -719,36 +761,8 @@ main{
 <script>
 
 
-/* MODAL VANTA */
-var _modalVanta = null;
-(function(){
-  var _open = window.openModal;
-  window.openModal = function(){
-    _open();
-    if(!_modalVanta && window.VANTA){
-      _modalVanta = VANTA.FOG({
-        el: '#modalVanta',
-        mouseControls: false,
-        touchControls: false,
-        gyroControls: false,
-        minHeight: 200,
-        minWidth: 200,
-        highlightColor: 0x0,
-        midtoneColor: 0x555566,
-        lowlightColor: 0x0,
-        baseColor: 0x0,
-        blurFactor: 0.90,
-        speed: 1.80,
-        zoom: 0.60,
-      });
-    }
-  };
-  var _close = window.closeModal;
-  window.closeModal = function(){
-    _close();
-    if(_modalVanta){ _modalVanta.destroy(); _modalVanta = null; }
-  };
-})();
+/* MODAL — plain dark background, no shader */
+(function(){})();
 
 /* MENU */
 var _menuOpen=false;
@@ -839,11 +853,19 @@ function setRole(r){
   if(r==='gallery') renderDots('g',1,4);
   // Update modal subtitle copy per role
   var sub = document.querySelector('.modal-sub');
+  var title = document.querySelector('.modal-title');
   if(sub){
     if(r==='gallery'){
       sub.textContent = 'Connect with collectors and sell with verified provenance and low fees.';
     } else {
       sub.textContent = 'Be among the first to collect or sell on Grails.';
+    }
+  }
+  if(title){
+    if(r==='artist'||r==='gallery'){
+      title.textContent = 'Apply for Access';
+    } else {
+      title.textContent = 'Join the Waitlist';
     }
   }
 }
@@ -908,7 +930,7 @@ async function submitForm(r){
   try{
     var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation'},
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
       body:JSON.stringify(payload)
     });
     var data=await res.json();
@@ -1069,6 +1091,135 @@ document.addEventListener('keydown',function(e){
 });
 
 
+// ── Logo Screensaver (DVD-style bounce + solitaire trail) ──────────────
+(function() {
+  var IDLE_MS = 120000; // 2 minutes
+  var TRAIL_INTERVAL = 55; // ms between ghost drops
+  var GHOST_MAX = 28; // max simultaneous ghosts
+  var SPEED = 2.8; // px per frame
+
+  var saver = document.getElementById('logoScreensaver');
+  var bouncer = document.getElementById('bouncingLogo');
+  var idleTimer = null;
+  var rafId = null;
+  var trailTimer = null;
+  var active = false;
+  var ghosts = [];
+
+  // Copy src from real logo once DOM ready
+  var srcLogo = document.getElementById('grailsLogo');
+  if (srcLogo) bouncer.src = srcLogo.src;
+
+  var pos = { x: 0, y: 0 };
+  var vel = { x: SPEED, y: SPEED };
+  var logoW = 0, logoH = 0;
+
+  function startSaver() {
+    if (active) return;
+    active = true;
+
+    // Get rendered logo dimensions
+    var real = document.getElementById('grailsLogo');
+    var rect = real ? real.getBoundingClientRect() : null;
+    logoW = rect ? rect.width  : 100;
+    logoH = rect ? rect.height : 44;
+    bouncer.style.width  = logoW + 'px';
+    bouncer.style.height = logoH + 'px';
+
+    // Random start position
+    pos.x = Math.random() * (window.innerWidth  - logoW);
+    pos.y = Math.random() * (window.innerHeight - logoH);
+
+    // Random direction
+    vel.x = (Math.random() < 0.5 ? 1 : -1) * SPEED;
+    vel.y = (Math.random() < 0.5 ? 1 : -1) * SPEED;
+
+    saver.classList.add('active');
+    rafId = requestAnimationFrame(tick);
+
+    // Drop trail ghosts on interval
+    trailTimer = setInterval(dropGhost, TRAIL_INTERVAL);
+  }
+
+  function stopSaver() {
+    if (!active) return;
+    active = false;
+    saver.classList.remove('active');
+    cancelAnimationFrame(rafId);
+    clearInterval(trailTimer);
+    // Remove all ghosts
+    ghosts.forEach(function(g) { if (g.parentNode) g.parentNode.removeChild(g); });
+    ghosts = [];
+  }
+
+  function tick() {
+    if (!active) return;
+
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+
+    pos.x += vel.x;
+    pos.y += vel.y;
+
+    // Bounce X
+    if (pos.x <= 0) { pos.x = 0; vel.x = Math.abs(vel.x); }
+    if (pos.x + logoW >= vw) { pos.x = vw - logoW; vel.x = -Math.abs(vel.x); }
+
+    // Bounce Y
+    if (pos.y <= 0) { pos.y = 0; vel.y = Math.abs(vel.y); }
+    if (pos.y + logoH >= vh) { pos.y = vh - logoH; vel.y = -Math.abs(vel.y); }
+
+    bouncer.style.left = pos.x + 'px';
+    bouncer.style.top  = pos.y + 'px';
+
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function dropGhost() {
+    if (!active) return;
+    if (ghosts.length >= GHOST_MAX) {
+      var old = ghosts.shift();
+      if (old && old.parentNode) old.parentNode.removeChild(old);
+    }
+    var g = document.createElement('img');
+    g.src = bouncer.src;
+    g.className = 'logo-ghost';
+    g.style.left   = pos.x + 'px';
+    g.style.top    = pos.y + 'px';
+    g.style.width  = logoW + 'px';
+    g.style.height = logoH + 'px';
+    saver.appendChild(g);
+    ghosts.push(g);
+    // Remove ghost after animation ends
+    g.addEventListener('animationend', function() {
+      if (g.parentNode) g.parentNode.removeChild(g);
+      var idx = ghosts.indexOf(g);
+      if (idx > -1) ghosts.splice(idx, 1);
+    });
+  }
+
+  function resetIdle() {
+    if (active) stopSaver();
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(startSaver, IDLE_MS);
+  }
+
+  // Listen for any user activity
+  ['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(function(ev) {
+    document.addEventListener(ev, resetIdle, { passive: true });
+  });
+
+  // Shift+S to toggle screensaver (dev/test shortcut)
+  document.addEventListener('keydown', function(e) {
+    if (e.shiftKey && e.key === 'S') {
+      if (active) { stopSaver(); clearTimeout(idleTimer); idleTimer = setTimeout(startSaver, IDLE_MS); }
+      else { clearTimeout(idleTimer); startSaver(); }
+    }
+  });
+
+  // Kick off idle timer on load
+  idleTimer = setTimeout(startSaver, IDLE_MS);
+})();
 
 
 /* ── Field-watch: activate step-1 Continue when inputs are filled ── */
@@ -1156,7 +1307,7 @@ function submitGallery(){
     try{
       var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Authorization':'Bearer sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation'},
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
         body:JSON.stringify(payload)
       });
       var data=await res.json();
@@ -1169,6 +1320,8 @@ function submitGallery(){
     document.getElementById('g-ref-url').textContent=refUrl;
   })();
 }
+
+
 
 
 </script>
@@ -1208,25 +1361,11 @@ function submitGallery(){
 </div>
 
 
-
-<script>
-VANTA.FOG({
-  el: "#vanta-bg",
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 200,
-  minWidth: 200,
-  highlightColor: 0x0,
-  midtoneColor: 0x555566,
-  lowlightColor: 0x0,
-  baseColor: 0x0,
-  blurFactor: 0.90,
-  speed: 1.80,
-  zoom: 0.60,
-});
-
-</script></div>
+<!-- Logo screensaver -->
+<div id="logoScreensaver">
+  <img id="bouncingLogo" src="" alt="">
+</div>
+</div>
 
 
 <!-- ── Terms drawer ── -->
@@ -1252,7 +1391,7 @@ var VERT = [
   'attribute vec4 position;',
   'attribute vec2 uv;',
   'varying vec2 vUv;',
-  'void main(){vUv=uv;gl_Position=position}'
+  'void main(){vUv=uv;gl_Position=position;}'
 ].join('\n');
 
 var FRAG = [
@@ -1291,7 +1430,8 @@ function hexToRgb(h){
   var r=parseInt(h.slice(1,3),16)/255;
   var g=parseInt(h.slice(3,5),16)/255;
   var b=parseInt(h.slice(5,7),16)/255;
-  return [r,g,b]}
+  return [r,g,b];
+}
 
 function startShader(canvas, isModal){
   var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
@@ -1302,8 +1442,10 @@ function startShader(canvas, isModal){
     gl.shaderSource(s, src);
     gl.compileShader(s);
     if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
-      console.warn('Shader error:', gl.getShaderInfoLog(s))}
-    return s}
+      console.warn('Shader error:', gl.getShaderInfoLog(s));
+    }
+    return s;
+  }
 
   var prog = gl.createProgram();
   gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, VERT));
@@ -1311,6 +1453,7 @@ function startShader(canvas, isModal){
   gl.linkProgram(prog);
   gl.useProgram(prog);
 
+  // Position buffer
   var pb = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, pb);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,-1,-1,1,1,1,1,-1,-1,1,-1]), gl.STATIC_DRAW);
@@ -1318,6 +1461,7 @@ function startShader(canvas, isModal){
   gl.enableVertexAttribArray(aPos);
   gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
 
+  // UV buffer
   var ub = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, ub);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0,0,0,1,1,0,1,0,0,1,1,1]), gl.STATIC_DRAW);
@@ -1325,7 +1469,8 @@ function startShader(canvas, isModal){
   gl.enableVertexAttribArray(aUv);
   gl.vertexAttribPointer(aUv,2,gl.FLOAT,false,0,0);
 
-  var u = function(n){ return gl.getUniformLocation(prog,n)};
+  // Uniforms — exact values from codepen
+  var u = function(n){ return gl.getUniformLocation(prog,n); };
   gl.uniform1f(u('scale'), 0.4);
   gl.uniform1f(u('ax'), 5.0);
   gl.uniform1f(u('ay'), 7.0);
@@ -1350,26 +1495,38 @@ function startShader(canvas, isModal){
     canvas.width  = w * dpr;
     canvas.height = h * dpr;
     gl.viewport(0,0,canvas.width,canvas.height);
-    gl.uniform2f(uRes, canvas.width, canvas.height)}
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
 
   function render(){
     rafId = requestAnimationFrame(render);
     gl.uniform1f(uTime, (performance.now() - start) * 0.001);
-    gl.drawArrays(gl.TRIANGLES, 0, 6)}
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
 
   resize();
   if(!isModal) window.addEventListener('resize', resize);
   render();
-  return { _cancel: function(){ cancelAnimationFrame(rafId)}}}
+
+  var handle = { _id: rafId };
+  // Keep rafId updated
+  var _origRender = render;
+  handle._cancel = function(){ cancelAnimationFrame(rafId); };
+  return handle;
+}
 
 window.startShader = startShader;
 
+// Init page bg — wrapped for safety
 function initBg(){
   var bg = document.getElementById('bg-canvas');
-  if(bg) startShader(bg, false)}
+  if(bg) startShader(bg, false);
+}
 if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', initBg)} else {
-  initBg()}
+  document.addEventListener('DOMContentLoaded', initBg);
+} else {
+  initBg();
+}
 
 })();
 </script>
