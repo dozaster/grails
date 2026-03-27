@@ -173,7 +173,7 @@ footer a:hover{color:var(--black)}
 .modal-overlay.open{opacity:1;pointer-events:all}
 .modal{
   position:relative;background:#0b0b0a;border:1px solid rgba(255,255,255,.25);border-radius:22px;
-  width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;overflow-x:visible;
+  width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;
   padding:36px 30px 40px;transform:translateY(28px) scale(.96);
   transition:transform .45s cubic-bezier(.16,1,.3,1);scrollbar-width:none;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 40px 80px rgba(0,0,0,.8)}
@@ -905,7 +905,8 @@ function aBack(s){goStep('a',s,s-1,4)}
 /* SUBMIT */
 async function submitForm(r){
   var p=r==='artist'?'a':'c',last=r==='artist'?4:3,pk=r==='artist'?'a-priority':'c-priority';
-  if(!sel[pk]){shake(p+'-step-'+last);return}
+  if(!sel[pk]){shake(p+'-step-'+last);return;}
+  if(!document.getElementById(p+'-consent').classList.contains('on')){document.getElementById('consent-row-'+p).style.outline='2px solid rgba(255,80,80,.7)';document.getElementById('consent-row-'+p).scrollIntoView({behavior:'smooth',block:'nearest'});return;}
   var full_name=document.getElementById(p+'-name').value.trim();
   var email=document.getElementById(p+'-email').value.trim();
   var social=document.getElementById(p+'-social')?document.getElementById(p+'-social').value.trim():'';
