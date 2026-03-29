@@ -586,10 +586,7 @@ async function handleSubmit() {
   try {
     await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/contact_messages', {
       method: 'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'apikey':        'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr'
-      },
+      headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Prefer':'return=representation'},
       body: JSON.stringify({ full_name: name, email: email, message: msg, source_page: 'contact', terms_accepted_at: new Date().toISOString() })
     })} catch(e) { console.warn('Contact submit error:', e)}
 
@@ -957,7 +954,7 @@ async function submitForm(r){
   try{
     var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+      headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Prefer':'return=representation'},
       body:JSON.stringify(payload)
     });
     var data=await res.json();
@@ -1143,7 +1140,7 @@ function submitGallery(){
     try{
       var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+        headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Prefer':'return=representation'},
         body:JSON.stringify(payload)
       });
       var data=await res.json();
