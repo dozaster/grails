@@ -591,7 +591,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
           <div class="step-actions"><button class="btn-back" onclick="cBack(3)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="btn-next" id="c-reserve-btn" onclick="submitForm('collector')">Reserve My Spot</button></div>
         </div>
         <div class="success-screen" id="c-success">
-          <div class="success-icon">&#x2713;</div>
+          <div class="success-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5L9 16.5L18 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="success-title">You're on the list.</div>
           <div class="success-body">We'll be in touch before launch. Share your link — every referral moves you up.</div>
           <div class="referral-box">
@@ -657,7 +657,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
           <div class="step-actions"><button class="btn-back" onclick="aBack(4)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="btn-next" id="a-reserve-btn" onclick="submitForm('artist')">Submit</button></div>
         </div>
         <div class="success-screen" id="a-success">
-          <div class="success-icon">&#x2713;</div>
+          <div class="success-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5L9 16.5L18 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="success-title">Artist Registered.</div>
           <div class="success-body">We'll be in touch before launch. Share your link to grow your position.</div>
           <div class="referral-box">
@@ -719,7 +719,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
           <div class="step-actions"><button class="btn-back" onclick="gBack(4)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="btn-next" id="g-reserve-btn" onclick="submitGallery()">Submit</button></div>
         </div>
         <div class="success-screen" id="g-success">
-          <div class="success-icon">&#x2713;</div>
+          <div class="success-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5L9 16.5L18 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="success-title">Gallery Registered.</div>
           <div class="success-body">We'll be in touch before launch. Share your link to grow your position.</div>
           <div class="referral-box">
@@ -889,7 +889,7 @@ async function submitForm(r){
   try{
     var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_z_x0mb17zRFA8o5ZS-bGKw_S4cKglKO','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
       body:JSON.stringify(payload)
     });
     var data=await res.json();
@@ -904,7 +904,7 @@ async function submitForm(r){
 function copyRef(urlId,btnId){
   navigator.clipboard.writeText(document.getElementById(urlId).textContent).then(function(){
     var btn=document.getElementById(btnId),orig=btn.textContent;
-    btn.textContent='&#x2713; Copied!';btn.classList.add('copied');
+    btn.textContent='<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5L9 16.5L18 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!';btn.classList.add('copied');
     setTimeout(function(){btn.textContent=orig;btn.classList.remove('copied')},2500)})}
 function shareX(urlId){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('Just joined the Grails waitlist — a new marketplace for original art →')+'&url='+encodeURIComponent(document.getElementById(urlId).textContent),'_blank')}
@@ -1082,7 +1082,7 @@ function submitGallery(){
     try{
       var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNraWppZnJuaW5ueWVucnZjanh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMzE2MDMsImV4cCI6MjA4NzkwNzYwM30.m09VT0kl2DdIt92Pxx33GisscyObrG5NPtfPlnqaZaI','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_z_x0mb17zRFA8o5ZS-bGKw_S4cKglKO','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
         body:JSON.stringify(payload)
       });
       var data=await res.json();
