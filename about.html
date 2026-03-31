@@ -128,25 +128,25 @@ footer a:hover{color:var(--black)}
   .about-row{
     flex:none}
   .fee-num{
-    font-size:clamp(32px,10vw,52px)}
+    font-size:clamp(32px,10vw,52px)overflow:visible;line-height:1}
 }.page-content{gap:24px;padding-bottom:32px}}
 
 .about-row{flex-shrink:0}
 .about-headline{
   font-size:clamp(15px,1.4vw,18px);font-weight:600;letter-spacing:-.01em;
-  line-height:1.5;color:var(--black);margin:0 0 clamp(10px,1.5vh,16px)}
+  line-height:1.5;color:#000!important;margin:0 0 clamp(10px,1.5vh,16px)}
 .about-body{display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);max-width:420px}
 .about-body p{
   font-size:clamp(14px,1.1vw,16px);line-height:1.7;
   color:#444;margin:0}
 .about-body p strong{color:var(--black)}
 .fees-row{display:flex;flex-direction:column;justify-content:flex-end;margin-top:auto;padding-top:clamp(16px,2vh,32px)}
-.fees-header{font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:clamp(12px,2vh,24px)}
+.fees-header{font-size:13px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:clamp(12px,2vh,24px)}
 .fees-grid{display:flex;gap:0;width:100%}
 .fee-cell{flex:1;min-width:0}
 .fee-num{font-size:clamp(40px,7vw,110px);font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--black);display:flex;align-items:baseline;gap:.1em;white-space:nowrap}
 .fee-num.highlight{color:var(--purple)}
-.fee-sup{font-size:.38em;font-weight:500;align-self:flex-start;padding-top:.12em}
+.fee-
 .fee-plus{font-size:.34em;font-weight:400;color:var(--muted);align-self:flex-start;padding-top:.16em}
 .fee-label{font-size:clamp(10px,1vw,13px);font-weight:500;color:var(--muted);margin-top:8px;line-height:1.3}
 .fee-label.highlight{color:var(--purple)}
@@ -391,8 +391,8 @@ footer a:hover{color:var(--black)}
 .social-link:hover{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.07)}
 .social-link svg{width:16px;height:16px;fill:currentColor}
 .menu-bottom{margin-top:auto;display:flex;flex-direction:column;gap:0}
-.menu-footer{margin-top:20px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.75;opacity:0;transition:opacity .4s .38s}
-.menu-footer{opacity:1}
+.menu-footer{vertical-align:baseline;margin-top:20px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.75;opacity:0;transition:opacity .4s .38s}
+.menu-footer{vertical-align:baseline;opacity:1}
 @media(max-width:600px){.menu-panel{width:100%;border-left:none}}
 
 
