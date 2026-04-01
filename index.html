@@ -884,11 +884,10 @@ async function submitForm(r){
   try{
     var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':'sb_publishable_z_x0mb17zRFA8o5ZS-bGKw_S4cKglKO','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+      headers:{'Content-Type':'application/json','apikey':'sb_publishable_z_x0mb17zRFA8o5ZS-bGKw_S4cKglKO','X-Client-Info':'grails-waitlist'},
       body:JSON.stringify(payload)
     });
     var data=await res.json();
-    if(data&&data[0])referral_code=data[0].referral_code;
   }catch(e){console.warn('Submit error:',e);}
   if(!referral_code)referral_code='grails-'+Math.random().toString(36).slice(2,10);
   var refUrl=location.origin+'/?ref='+referral_code;
@@ -1132,11 +1131,10 @@ function submitGallery(){
     try{
       var res=await fetch('https://skijifrninnyenrvcjxt.supabase.co/rest/v1/waitlist',{
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':'sb_publishable_z_x0mb17zRFA8o5ZS-bGKw_S4cKglKO','Prefer':'return=representation','X-Client-Info':'grails-waitlist'},
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_z_x0mb17zRFA8o5ZS-bGKw_S4cKglKO','X-Client-Info':'grails-waitlist'},
         body:JSON.stringify(payload)
       });
       var data=await res.json();
-      if(data&&data[0])referral_code=data[0].referral_code;
     }catch(e){console.warn('Gallery submit error:',e);}
     if(!referral_code)referral_code='grails-'+Math.random().toString(36).slice(2,10);
     var refUrl=location.origin+'/?ref='+referral_code;
