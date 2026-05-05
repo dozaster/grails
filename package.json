@@ -1,14 +1,13 @@
 {
   "name": "grails",
   "version": "1.0.0",
-  "description": "Grails — A New Art Marketplace",
-  "private": true,
+  "description": "Grails — Avant Arte Resale Marketplace",
+  "main": "index.js",
   "scripts": {
-    "deploy": "vercel --prod",
-    "build": "echo 'static site, no build needed'"
+    "dev": "vercel dev"
   },
-  "devDependencies": {
-    "@types/node": "^20.19.35",
-    "vercel": "^37.0.0"
+  "dependencies": {
+    "stripe": "^14.0.0",
+    "@supabase/supabase-js": "^2.0.0"
   }
 }
