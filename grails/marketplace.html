@@ -445,7 +445,12 @@ var VTITLES={marketplace:'Marketplace',collection:'Collection',inbox:'Inbox',fav
 var user=null,catalogue=[],listings=[],offers=[],cWork=null,cTab='listed',sellStep=1,sellData={};
 var expiry='72h',fSale=true,fArtist_='all',sElements=null,cardEl=null,authCb=null,tt=null;
 function showView(n){var el=document.getElementById((VIEWS||{})[n]);if(!el)return;document.getElementById('vDetail').style.display='none';Object.keys(VIEWS).forEach(function(k){var v=document.getElementById(VIEWS[k]);if(v)v.style.display='none'});el.style.display='';document.getElementById('topTitle').textContent=(VTITLES||{})[n]||n;document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active')});var ni=document.querySelectorAll('.nav-item');var idx=Object.keys(VIEWS).indexOf(n);if(ni[idx])ni[idx].classList.add('active');if(n==='marketplace'){document.getElementById('vMarket').style.display=''}}
-function openClaim(){if(!user){openAuth(function(){openClaim()});return}document.getElementById('claimContent').innerHTML='<h2 class="stitle">Claim Artwork</h2><p class="ssub">Own an Avant Arte work? Claim it to your collection and enable resale.</p><div class="popts"><div class="popt" onclick="toast_('Invoice upload coming soon','error')"><div class="picon">📄</div><div><div class="ptitle">Upload Invoice <span class="prec">Recommended</span></div><div class="pdesc">Your Avant Arte order confirmation</div></div></div><div class="popt" onclick="toast_('Gmail integration coming soon','error')"><div class="picon">📧</div><div><div class="ptitle">Connect Gmail</div><div class="pdesc">Auto-find your Avant Arte receipts</div></div></div></div>';openO('oClaim')}
+function openClaim(){
+  if(!user){openAuth(function(){openClaim()});return}
+  var el=document.getElementById("claimContent");
+  el.innerHTML="<h2 class=\"stitle\">Claim Artwork</h2><p class=\"ssub\">Own an Avant Arte work? Claim it to your collection.</p><div class=\"popts\"><div class=\"popt\" onclick=\"toast_(&quot;Invoice coming soon&quot;,&quot;error&quot;)\"><div class=\"picon\">&#128196;</div><div><div class=\"ptitle\">Upload Invoice</div><div class=\"pdesc\">Your Avant Arte order confirmation</div></div></div><div class=\"popt\" onclick=\"toast_(&quot;Gmail coming soon&quot;,&quot;error&quot;)\"><div class=\"picon\">&#128140;</div><div><div class=\"ptitle\">Connect Gmail</div><div class=\"pdesc\">Auto-find your receipts</div></div></div></div>";
+  openO("oClaim");
+}
 function fArtist(a,el){fArtist_=a;document.querySelectorAll('.chip').forEach(function(c){if(c.id!=='fSaleBtn')c.classList.remove('a')});el.classList.add('a');renderGrid()}
 function toggleSale(el){fSale=!fSale;el.classList.toggle('a',fSale);renderGrid()}
 function openAuth(cb){authCb=cb||null;openO('oAuth')}
@@ -488,7 +493,7 @@ const CAT = [
     editionSize:150,medium:'7-colour silkscreen on Somerset Tub Sized Radiant White paper',
     dimensions:'65 × 50 cm',retail:60000,featured:true,
     imgUrl:'https://d2jbyygvpz5a4r.cloudfront.net/unsafe/1200x1200/smart/https://d3gvqjkxh6x6s9.cloudfront.net/uploads/products/2024/10/24/lost-keys/piet-parra-lost-keys-avant-arte-2.jpg',
-    description:'Inspired by Parra's father's beach scenes. Ed. 150, signed and numbered. Released Oct 2024.',
+    description:'Inspired by Parra\'s father\'s beach scenes. Ed. 150, signed and numbered. Released Oct 2024.',
     tags:['signed','limited','sold-out']
   },
   {
@@ -564,10 +569,12 @@ function upStats(){
 
 // ── FILTERS ────────────────────────────────────────────────
 function buildChips(){
-  const artists=[...new Set(catalogue.map(w=>w.artist))].sort();
-  document.getElementById('artistChips').innerHTML=artists.map(a=>
-    `<button class="chip" onclick="fArtist('${a}',this)" style="margin-right:7px">${a.split(' ').pop()}</button>`
-  ).join('');
+  var artists=[...new Set(catalogue.map(w=>w.artist))].sort();
+  var chips='';
+  artists.forEach(function(a){
+    chips+='<button class="chip" data-artist="'+a+'" onclick="fArtist(this.dataset.artist,this)" style="margin-right:7px">'+a.split(' ').pop()+'</button>';
+  });
+  document.getElementById('artistChips').innerHTML=chips;
 }
 function fArtist(a,el){
   fArtist_=a;
@@ -582,7 +589,7 @@ function renderGrid(){
   let works=catalogue;
   if(fArtist_!=='all') works=works.filter(w=>w.artist===fArtist_);
   if(fSale) works=works.filter(w=>listings.some(l=>(l.cid||l.catalogue_id)===w.id&&l.status!=='SOLD'));
-  if(!works.length){grid.innerHTML=`<div style="grid-column:1/-1"><div class="empty"><div class="empty-icon">◎</div><h3>No works found</h3><p>${fSale?'Try turning off "For Sale Only"':'Check back soon.'}</p></div></div>`;return}
+  if(!works.length){grid.innerHTML='<div style="grid-column:1/-1"><div class="empty"><div class="empty-icon">&#9678;</div><h3>No works found</h3><p>'+(fSale?'Try turning off "For Sale Only".':'Check back soon.')+'</p></div></div>';return}
   grid.innerHTML=works.map(w=>{
     const wl=listings.filter(l=>(l.cid||l.catalogue_id)===w.id&&l.status!=='SOLD');
     const wo=offers.filter(o=>(o.cid||o.catalogue_id)===w.id&&o.status==='PENDING');
@@ -625,9 +632,9 @@ function openDetail(wid){
   const m=META[wid]||{claimed:0,watching:0};
   const low=wl.length?Math.min(...wl.map(l=>l.pence||l.ask_price_pence)):null;
 
-  document.getElementById('dImg').innerHTML = w.imgUrl
-    ? `<img src="${w.imgUrl}" alt="${w.title}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r)" onerror="this.outerHTML='<span style=\'font-size:80px\'>${w.emoji||\'◎\'}</span>'">`
-    : `<span style="font-size:80px">${w.emoji||'◎'}</span>`;
+  var dImg=document.getElementById('dImg');
+  if(w.imgUrl){var img=document.createElement('img');img.src=w.imgUrl;img.alt=w.title;img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:var(--r)';img.onerror=function(){dImg.innerHTML='<span style="font-size:80px">'+(w.emoji||'◎')+'</span>';};dImg.innerHTML='';dImg.appendChild(img);}else{dImg.innerHTML='<span style="font-size:80px">'+(w.emoji||'◎')+'</span>';}
+  
   document.getElementById('dSub').textContent=`${w.artist}, ${w.year}`;
   document.getElementById('dTitle').textContent=w.title;
   document.getElementById('dMedium').textContent=w.medium;
