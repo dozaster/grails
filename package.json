@@ -1,10 +1,8 @@
 {
   "name": "grails",
   "version": "1.0.0",
-  "description": "Grails — Avant Arte Resale Marketplace",
-  "main": "index.js",
   "scripts": {
-    "dev": "vercel dev"
+    "build": "echo 'static site'"
   },
   "dependencies": {
     "stripe": "^14.0.0",
