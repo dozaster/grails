@@ -439,6 +439,11 @@ body{font-family:'Inter',sans-serif;background:#f4f4f4;color:#111;height:100%;di
 </div>
 
 <script>
+// Hoist these before any onclick handlers fire
+// VIEWS declared at top --'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
+// VTITLES declared at top --'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
+var user=null,catalogue=[],listings=[],offers=[],cWork=null,cTab='listed',sellStep=1,sellData={};
+var expiry='72h',fSale=true,fArtist_='all',sElements=null,cardEl=null,authCb=null,tt=null;
 // ── CONFIG ──────────────────────────────────────────────────
 const SB_URL = 'https://skijifrninnyenrvcjxt.supabase.co';
 const SB_KEY = 'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr';
@@ -449,10 +454,6 @@ const db     = createClient(SB_URL, SB_KEY);
 const stripe = Stripe(SK);
 
 // ── STATE ───────────────────────────────────────────────────
-var user = null, catalogue = [], listings = [], offers = [];
-var cWork = null, cTab = 'listed', sellStep = 1, sellData = {};
-var expiry = '72h', fSale = true, fArtist_ = 'all';
-var sElements, cardEl;
 
 // ── SEED ────────────────────────────────────────────────────
 const CAT = [
@@ -853,7 +854,6 @@ function openClaim(){
 }
 
 // ── AUTH ────────────────────────────────────────────────────
-var authCb=null;
 function openAuth(cb){authCb=cb||null;openO('oAuth')}
 function aSocial(p){toast_(`${p} auth — wire Privy App ID to enable`,'error')}
 async function aEmail(){
@@ -875,8 +875,8 @@ function upUser(){
 }
 
 // ── VIEWS ───────────────────────────────────────────────────
-var VIEWS={marketplace:'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
-var VTITLES={marketplace:'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
+// VIEWS declared at top --'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
+// VTITLES declared at top --'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
 function showView(n){
   document.getElementById('vDetail').style.display='none';
   Object.values(VIEWS).forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'});
@@ -896,7 +896,6 @@ function fmtExp(s){if(!s)return'—';const h=Math.round((new Date(s)-Date.now())
 function openO(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
 function co(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
 function cob(e,id){if(e.target===document.getElementById(id))co(id)}
-let tt;
 function toast_(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3000)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')['oOffer','oSell','oClaim','oAuth'].forEach(co)});
 
