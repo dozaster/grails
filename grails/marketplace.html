@@ -457,37 +457,75 @@ const stripe = Stripe(SK);
 
 // ── SEED ────────────────────────────────────────────────────
 const CAT = [
-  {id:'aa-001',artist:'Jonas Wood',title:'Untitled (Plant)',year:2022,editionSize:75,medium:'Archival pigment print',dimensions:'70 × 56 cm',retail:85000,emoji:'🌿',featured:true},
-  {id:'aa-002',artist:'Hurvin Anderson',title:'Pool Study',year:2023,editionSize:50,medium:'Archival pigment print',dimensions:'60 × 80 cm',retail:120000,emoji:'🌊',featured:true},
-  {id:'aa-003',artist:'Henry Taylor',title:'Untitled Figure',year:2022,editionSize:100,medium:'Screenprint',dimensions:'50 × 40 cm',retail:65000,emoji:'🎨',featured:true},
-  {id:'aa-004',artist:'Cecily Brown',title:'Summer Study',year:2023,editionSize:60,medium:'Etching',dimensions:'45 × 55 cm',retail:95000,emoji:'🌸',featured:true},
-  {id:'aa-005',artist:'Lynette Yiadom-Boakye',title:'Evening Passage',year:2023,editionSize:75,medium:'Lithograph',dimensions:'65 × 50 cm',retail:110000,emoji:'🌙',featured:true},
+  {
+    id:'aa-001',artist:'Ai Weiwei',title:'Middle Finger in Red',year:2023,
+    editionSize:1285,medium:'2-colour silkscreen on 410gsm Somerset paper',
+    dimensions:'60 × 60 cm',retail:41000,featured:true,
+    imgUrl:'https://d2jbyygvpz5a4r.cloudfront.net/unsafe/1200x1200/smart/https://d3gvqjkxh6x6s9.cloudfront.net/uploads/products/2023/03/30/middle-finger-in-red/ai-weiwei-middle-finger-in-red-avant-arte-2.jpg',
+    description:'Signed and numbered. Released to support the Design Museum London. Sold out in 24 hours.',
+    tags:['sold-out','viral','signed']
+  },
+  {
+    id:'aa-002',artist:'Ai Weiwei',title:'Guardian',year:2024,
+    editionSize:1601,medium:'2-colour silkscreen with metallic glitter base on 410gsm Somerset paper',
+    dimensions:'57 × 57 cm',retail:71500,featured:true,
+    imgUrl:'https://d2jbyygvpz5a4r.cloudfront.net/unsafe/1200x1200/smart/https://d3gvqjkxh6x6s9.cloudfront.net/uploads/products/2024/02/15/guardian/ai-weiwei-guardian-avant-arte-2.jpg',
+    description:'A satirical self-portrait as a Chinese Door God. Released on Chinese New Year 2024. Time-limited 24hr drop.',
+    tags:['time-limited','signed','sold-out']
+  },
+  {
+    id:'aa-003',artist:'Piet Parra',title:'Lost Keys',year:2024,
+    editionSize:150,medium:'7-colour silkscreen on Somerset Tub Sized Radiant White paper',
+    dimensions:'65 × 50 cm',retail:60000,featured:true,
+    imgUrl:'https://d2jbyygvpz5a4r.cloudfront.net/unsafe/1200x1200/smart/https://d3gvqjkxh6x6s9.cloudfront.net/uploads/products/2024/10/24/lost-keys/piet-parra-lost-keys-avant-arte-2.jpg',
+    description:'Inspired by Parra's father's beach scenes. Ed. 150, signed and numbered. Released Oct 2024.',
+    tags:['signed','limited','sold-out']
+  },
+  {
+    id:'aa-004',artist:'Piet Parra',title:'Four Walls',year:2024,
+    editionSize:150,medium:'4-colour silkscreen on Somerset Tub Sized Radiant White paper',
+    dimensions:'65 × 50 cm',retail:60000,featured:true,
+    imgUrl:'https://d2jbyygvpz5a4r.cloudfront.net/unsafe/1200x1200/smart/https://d3gvqjkxh6x6s9.cloudfront.net/uploads/products/2024/10/24/four-walls/piet-parra-four-walls-avant-arte-2.jpg',
+    description:'Depicting an after-hours gathering. Companion to Lost Keys. Ed. 150, signed and numbered.',
+    tags:['signed','limited','sold-out']
+  },
+  {
+    id:'aa-005',artist:'Ai Weiwei',title:'Free Speech',year:2023,
+    editionSize:500,medium:'11-colour silkscreen with phosphorescent details on 410gsm Somerset paper',
+    dimensions:'60 × 60 cm',retail:62000,featured:true,
+    imgUrl:'https://d2jbyygvpz5a4r.cloudfront.net/unsafe/1200x1200/smart/https://d3gvqjkxh6x6s9.cloudfront.net/uploads/products/2023/05/02/free-speech/ai-weiwei-free-speech-avant-arte-1.jpg',
+    description:'Overlays the Twitter bird on barbed wire. Phosphorescent details glow in the dark. Ed. 500, signed.',
+    tags:['signed','sold-out','glow']
+  },
 ];
 const PH = {
-  'aa-001':[90000,95000,88000,105000,115000,108000],
-  'aa-002':[125000,130000,118000,140000,155000,148000],
-  'aa-003':[68000,72000,70000,78000,82000,79000],
-  'aa-004':[98000,95000,102000,108000,115000,112000],
-  'aa-005':[112000,118000,125000,130000,122000,135000],
+  'aa-001':[41000,55000,62000,70000,78000,85000],  // Middle Finger in Red — strong secondary
+  'aa-002':[71500,82000,90000,95000,88000,102000], // Guardian — Chinese NY demand spike
+  'aa-003':[60000,75000,85000,95000,105000,115000],// Lost Keys — scarce ed.150, appreciating
+  'aa-004':[60000,70000,78000,88000,82000,95000],  // Four Walls — companion piece
+  'aa-005':[62000,72000,80000,85000,90000,88000],  // Free Speech — steady demand
 };
 const META = {
-  'aa-001':{claimed:3,watching:12},
-  'aa-002':{claimed:5,watching:28},
-  'aa-003':{claimed:8,watching:19},
-  'aa-004':{claimed:2,watching:9},
-  'aa-005':{claimed:6,watching:45},
+  'aa-001':{claimed:12,watching:89},  // Ai Weiwei Middle Finger — 1285 ed, high interest
+  'aa-002':{claimed:8,watching:64},   // Guardian — 1601 ed
+  'aa-003':{claimed:6,watching:38},   // Lost Keys — only 150 ed, very scarce
+  'aa-004':{claimed:5,watching:31},   // Four Walls — companion
+  'aa-005':{claimed:9,watching:52},   // Free Speech — 500 ed
 };
 const SEED_L = [
-  {id:'l-001',cid:'aa-001',sid:'u-1',sname:'artlover.eth',edn:42,hidden:false,pence:108000,cond:'MINT'},
-  {id:'l-002',cid:'aa-001',sid:'u-2',sname:'crypto_whale',edn:67,hidden:false,pence:115000,cond:'VERY_GOOD'},
-  {id:'l-003',cid:'aa-002',sid:'u-3',sname:'modernist_99',edn:null,hidden:true,pence:148000,cond:'MINT'},
-  {id:'l-004',cid:'aa-003',sid:'u-4',sname:'streetart_nyc',edn:156,hidden:false,pence:79000,cond:'GOOD'},
+  {id:'l-001',cid:'aa-001',sid:'u-1',sname:'artlover.eth',edn:412,hidden:false,pence:85000,cond:'MINT'},
+  {id:'l-002',cid:'aa-001',sid:'u-2',sname:'crypto_whale',edn:887,hidden:false,pence:92000,cond:'VERY_GOOD'},
+  {id:'l-003',cid:'aa-002',sid:'u-3',sname:'modernist_99',edn:null,hidden:true,pence:102000,cond:'MINT'},
+  {id:'l-004',cid:'aa-003',sid:'u-4',sname:'streetart_nyc',edn:89,hidden:false,pence:115000,cond:'MINT'},
+  {id:'l-005',cid:'aa-005',sid:'u-5',sname:'edition_hunter',edn:null,hidden:true,pence:88000,cond:'VERY_GOOD'},
 ];
 const SEED_O = [
-  {id:'o-001',cid:'aa-001',bname:'collector.eth',pence:102000,exp:new Date(Date.now()+7*864e5).toISOString(),status:'PENDING'},
-  {id:'o-002',cid:'aa-001',bname:'artlover.eth',pence:98000,exp:new Date(Date.now()+5*864e5).toISOString(),status:'PENDING'},
-  {id:'o-003',cid:'aa-002',bname:'moonlover61',pence:140000,exp:new Date(Date.now()+3*864e5).toISOString(),status:'PENDING'},
-  {id:'o-004',cid:'aa-003',bname:'modernist_99',pence:75000,exp:new Date(Date.now()+9*864e5).toISOString(),status:'PENDING'},
+  {id:'o-001',cid:'aa-001',bname:'collector.eth',pence:80000,exp:new Date(Date.now()+7*864e5).toISOString(),status:'PENDING'},
+  {id:'o-002',cid:'aa-001',bname:'artlover.eth',pence:75000,exp:new Date(Date.now()+5*864e5).toISOString(),status:'PENDING'},
+  {id:'o-003',cid:'aa-002',bname:'moonlover61',pence:95000,exp:new Date(Date.now()+3*864e5).toISOString(),status:'PENDING'},
+  {id:'o-004',cid:'aa-003',bname:'modernist_99',pence:108000,exp:new Date(Date.now()+9*864e5).toISOString(),status:'PENDING'},
+  {id:'o-005',cid:'aa-004',bname:'artwhale_99',pence:88000,exp:new Date(Date.now()+4*864e5).toISOString(),status:'PENDING'},
+  {id:'o-006',cid:'aa-005',bname:'prints_london',pence:82000,exp:new Date(Date.now()+6*864e5).toISOString(),status:'PENDING'},
 ];
 
 // ── INIT ────────────────────────────────────────────────────
@@ -543,7 +581,7 @@ function renderGrid(){
     const isL=wl.length>0;
     return`<div class="card" onclick="openDetail('${w.id}')">
       <div class="card-img">
-        <span>${w.emoji||'◎'}</span>
+        ${w.imgUrl ? `<img src="${w.imgUrl}" alt="${w.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="display:none">${w.emoji||'◎'}</span>` : `<span>${w.emoji||'◎'}</span>`}
         <div class="top-badges">
           ${isL?'<span class="bdg listed">Listed</span>':''}
           ${w.editionSize<=50?'<span class="bdg limited">Limited Edition</span>':'<span class="bdg edition">Edition</span>'}
@@ -577,7 +615,9 @@ function openDetail(wid){
   const m=META[wid]||{claimed:0,watching:0};
   const low=wl.length?Math.min(...wl.map(l=>l.pence||l.ask_price_pence)):null;
 
-  document.getElementById('dImg').innerHTML=`<span style="font-size:80px">${w.emoji||'◎'}</span>`;
+  document.getElementById('dImg').innerHTML = w.imgUrl
+    ? `<img src="${w.imgUrl}" alt="${w.title}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r)" onerror="this.outerHTML='<span style=\'font-size:80px\'>${w.emoji||\'◎\'}</span>'">`
+    : `<span style="font-size:80px">${w.emoji||'◎'}</span>`;
   document.getElementById('dSub').textContent=`${w.artist}, ${w.year}`;
   document.getElementById('dTitle').textContent=w.title;
   document.getElementById('dMedium').textContent=w.medium;
