@@ -439,11 +439,21 @@ body{font-family:'Inter',sans-serif;background:#f4f4f4;color:#111;height:100%;di
 </div>
 
 <script>
-// Hoist these before any onclick handlers fire
-// VIEWS declared at top --'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
-// VTITLES declared at top --'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
+// All globals hoisted before onclick handlers
+var VIEWS={marketplace:'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
+var VTITLES={marketplace:'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
 var user=null,catalogue=[],listings=[],offers=[],cWork=null,cTab='listed',sellStep=1,sellData={};
 var expiry='72h',fSale=true,fArtist_='all',sElements=null,cardEl=null,authCb=null,tt=null;
+function showView(n){var el=document.getElementById((VIEWS||{})[n]);if(!el)return;document.getElementById('vDetail').style.display='none';Object.keys(VIEWS).forEach(function(k){var v=document.getElementById(VIEWS[k]);if(v)v.style.display='none'});el.style.display='';document.getElementById('topTitle').textContent=(VTITLES||{})[n]||n;document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active')});var ni=document.querySelectorAll('.nav-item');var idx=Object.keys(VIEWS).indexOf(n);if(ni[idx])ni[idx].classList.add('active');if(n==='marketplace'){document.getElementById('vMarket').style.display=''}}
+function openClaim(){if(!user){openAuth(function(){openClaim()});return}document.getElementById('claimContent').innerHTML='<h2 class="stitle">Claim Artwork</h2><p class="ssub">Own an Avant Arte work? Claim it to your collection and enable resale.</p><div class="popts"><div class="popt" onclick="toast_('Invoice upload coming soon','error')"><div class="picon">📄</div><div><div class="ptitle">Upload Invoice <span class="prec">Recommended</span></div><div class="pdesc">Your Avant Arte order confirmation</div></div></div><div class="popt" onclick="toast_('Gmail integration coming soon','error')"><div class="picon">📧</div><div><div class="ptitle">Connect Gmail</div><div class="pdesc">Auto-find your Avant Arte receipts</div></div></div></div>';openO('oClaim')}
+function fArtist(a,el){fArtist_=a;document.querySelectorAll('.chip').forEach(function(c){if(c.id!=='fSaleBtn')c.classList.remove('a')});el.classList.add('a');renderGrid()}
+function toggleSale(el){fSale=!fSale;el.classList.toggle('a',fSale);renderGrid()}
+function openAuth(cb){authCb=cb||null;openO('oAuth')}
+function openSell(){if(!user){openAuth(function(){openSell()});return}sellStep=1;sellData={};rSell();openO('oSell')}
+function openO(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function co(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+function cob(e,id){if(e.target===document.getElementById(id))co(id)}
+function toast_(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show')},3000)}
 // ── CONFIG ──────────────────────────────────────────────────
 const SB_URL = 'https://skijifrninnyenrvcjxt.supabase.co';
 const SB_KEY = 'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr';
