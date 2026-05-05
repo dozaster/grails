@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-font-smoothing:antialiased;height:100%}
@@ -442,17 +442,17 @@ body{font-family:'Inter',sans-serif;background:#f4f4f4;color:#111;height:100%;di
 // ── CONFIG ──────────────────────────────────────────────────
 const SB_URL = 'https://skijifrninnyenrvcjxt.supabase.co';
 const SB_KEY = 'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr';
-const SK     = 'pk_test_51TTZ3GDad7Taj4fmEiKheE8ttI6RMTS4ax2qM1gosvqAgxbDemLXTRuA3HNvfcYs5eo39OJq3Sq0BcgBsU87mAPH00QeqyapsM';
+const SK     = 'pk_test_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY';
 
 const { createClient } = supabase;
 const db     = createClient(SB_URL, SB_KEY);
 const stripe = Stripe(SK);
 
 // ── STATE ───────────────────────────────────────────────────
-let user = null, catalogue = [], listings = [], offers = [];
-let cWork = null, cTab = 'listed', sellStep = 1, sellData = {};
-let expiry = '72h', fSale = true, fArtist_ = 'all';
-let sElements, cardEl;
+var user = null, catalogue = [], listings = [], offers = [];
+var cWork = null, cTab = 'listed', sellStep = 1, sellData = {};
+var expiry = '72h', fSale = true, fArtist_ = 'all';
+var sElements, cardEl;
 
 // ── SEED ────────────────────────────────────────────────────
 const CAT = [
@@ -853,7 +853,7 @@ function openClaim(){
 }
 
 // ── AUTH ────────────────────────────────────────────────────
-let authCb=null;
+var authCb=null;
 function openAuth(cb){authCb=cb||null;openO('oAuth')}
 function aSocial(p){toast_(`${p} auth — wire Privy App ID to enable`,'error')}
 async function aEmail(){
@@ -875,8 +875,8 @@ function upUser(){
 }
 
 // ── VIEWS ───────────────────────────────────────────────────
-const VIEWS={marketplace:'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
-const VTITLES={marketplace:'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
+var VIEWS={marketplace:'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
+var VTITLES={marketplace:'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
 function showView(n){
   document.getElementById('vDetail').style.display='none';
   Object.values(VIEWS).forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'});
