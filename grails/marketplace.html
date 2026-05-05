@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Grails — Resale Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;height:100%}
+body{font-family:'Inter',sans-serif;background:#f4f4f4;color:#111;height:100%;display:flex}
+:root{
+  --bg:#f4f4f4;--white:#fff;--sidebar:#111;--sw:220px;
+  --border:#e5e5e5;--border-d:#d0d0d0;--muted:#888;--muted2:#555;
+  --accent:#c4a882;--green:#16a34a;--green-bg:#dcfce7;
+  --blue:#2563eb;--blue-bg:#eff6ff;--red:#dc2626;--orange:#ea580c;
+  --shadow:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);--r:10px;
+}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:2px}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sw);flex-shrink:0;background:var(--sidebar);display:flex;flex-direction:column;overflow-y:auto;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.logo{padding:22px 22px 14px;font-size:19px;font-weight:700;color:#fff;letter-spacing:-.3px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:6px}
+.logo span{color:var(--accent)}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 22px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-item.active{color:#fff;background:rgba(255,255,255,.1)}
+.nav-item svg{width:15px;height:15px;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;min-width:16px;text-align:center}
+.sidebar-footer{margin-top:auto;padding:16px 22px;border-top:1px solid rgba(255,255,255,.08)}
+.sidebar-user{display:flex;align-items:center;gap:10px;cursor:pointer;padding-top:12px}
+.s-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#111;flex-shrink:0}
+.s-name{font-size:13px;font-weight:600;color:#fff}
+.s-sub{font-size:11px;color:rgba(255,255,255,.38)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;overflow-y:auto}
+.topbar{position:sticky;top:0;z-index:50;background:var(--white);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:12px;flex-shrink:0}
+.topbar-title{font-size:14px;font-weight:600}
+.topbar-right{display:flex;gap:8px}
+.tbtn{padding:6px 14px;border-radius:7px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--muted2);transition:all .15s}
+.tbtn:hover{border-color:var(--border-d);color:#111}
+.tbtn.p{background:#111;border-color:#111;color:#fff;font-weight:600}
+.tbtn.p:hover{background:#333}
+
+/* ── PAGE ── */
+.page{padding:24px 28px;flex:1}
+.ph{margin-bottom:20px}
+.ph h1{font-size:20px;font-weight:700;margin-bottom:3px}
+.ph p{font-size:13px;color:var(--muted)}
+
+/* ── STAT CARDS ── */
+.stats{display:flex;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.sc{flex:1;min-width:130px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.sc-val{font-size:22px;font-weight:700}
+.sc-lbl{font-size:11px;color:var(--muted);font-weight:500;margin-top:2px}
+.sc-d{font-size:11px;color:var(--green);font-weight:500;margin-top:3px}
+
+/* ── FILTERS ── */
+.filters{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
+.chip{padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;color:var(--muted2);cursor:pointer;background:#fff;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:var(--border-d);color:#111}
+.chip.a{background:#111;border-color:#111;color:#fff}
+.chip-right{margin-left:auto}
+
+/* ── GRID ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:box-shadow .18s,border-color .18s;box-shadow:var(--shadow)}
+.card:hover{box-shadow:var(--shadow-md);border-color:var(--border-d)}
+.card-img{width:100%;aspect-ratio:1;background:#ebebeb;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.top-badges{position:absolute;top:10px;left:10px;display:flex;gap:5px;flex-wrap:wrap}
+.bot-badges{position:absolute;bottom:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-end}
+.bdg{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:.01em}
+.bdg.listed{background:var(--green);color:#fff}
+.bdg.edition{background:#111;color:#fff}
+.bdg.limited{background:#111;color:#fff}
+.bdg.sold{background:#888;color:#fff}
+.bdg.unclaimed{background:var(--orange);color:#fff}
+.bdg.best{background:var(--blue);color:#fff}
+.bdg.highest{background:var(--green);color:#fff}
+.bdg-num{background:rgba(0,0,0,.52);color:#fff;backdrop-filter:blur(3px);font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px}
+.bdg-cnt{background:rgba(0,0,0,.52);color:#fff;backdrop-filter:blur(3px);font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px}
+.card-body{padding:13px 15px 15px}
+.card-artist{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:2px}
+.card-title{font-size:14px;font-weight:700;margin-bottom:2px;line-height:1.3}
+.card-ed{font-size:12px;color:var(--muted);margin-bottom:11px}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-price{font-size:15px;font-weight:700}
+.card-price.open{font-size:12px;color:var(--muted);font-weight:400}
+.card-offers{font-size:11px;color:var(--green);font-weight:500;display:flex;align-items:center;gap:4px;margin-top:2px}
+.pulse{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-sm{padding:6px 13px;border-radius:7px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s;border:1px solid #111;background:#111;color:#fff}
+.btn-sm:hover{background:#333}
+.btn-sm.o{background:#fff;border-color:var(--border-d);color:#111}
+.btn-sm.o:hover{border-color:#111}
+.btn-sm.g{background:var(--green);border-color:var(--green);color:#fff}
+.btn-sm.r{background:#fff;border-color:#fca5a5;color:var(--red)}
+
+/* ── DETAIL ── */
+.detail{display:none;flex-direction:column;flex:1}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted2);cursor:pointer;padding:20px 28px 0;font-weight:500;transition:color .15s}
+.back:hover{color:#111}
+.back svg{width:13px;height:13px}
+.detail-wrap{display:flex;gap:28px;padding:18px 28px 28px;flex:1}
+.detail-left{flex:0 0 400px}
+.detail-img-box{width:100%;aspect-ratio:1;background:#ebebeb;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:80px;border:1px solid var(--border);overflow:hidden}
+.detail-right{flex:1;min-width:0}
+.d-eyebrow{font-size:13px;color:var(--muted);margin-bottom:3px}
+.d-title{font-size:24px;font-weight:700;margin-bottom:3px;line-height:1.2}
+.d-sub{font-size:14px;color:var(--muted2);margin-bottom:12px}
+.d-badges{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.pricebox{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.pricebox-from{font-size:12px;color:var(--muted);margin-bottom:1px}
+.pricebox-val{font-size:28px;font-weight:700;margin-bottom:2px}
+.pricebox-avail{font-size:13px;color:var(--muted2)}
+.pricebox-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.pricebox-lbl{font-size:11px;color:var(--muted);margin-bottom:2px}
+.pricebox-val2{font-size:13px;font-weight:600}
+.watching{display:flex;align-items:center;gap:10px;background:#f9f9f9;border:1px solid var(--border);border-radius:9px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--muted2)}
+.w-avatars{display:flex}
+.w-av{width:24px;height:24px;border-radius:50%;background:var(--border-d);border:2px solid #fff;margin-left:-6px;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.w-avatars .w-av:first-child{margin-left:0}
+.w-count{font-weight:600;color:#111}
+
+/* ── WORK TABS ── */
+.wtabs{display:flex;border:1px solid var(--border);border-radius:9px;background:var(--bg);padding:3px;gap:2px;margin-bottom:14px}
+.wtab{flex:1;padding:7px 10px;text-align:center;font-size:13px;font-weight:500;border-radius:7px;cursor:pointer;transition:all .15s;color:var(--muted2);font-family:'Inter',sans-serif;border:none;background:transparent}
+.wtab.a{background:#fff;color:#111;font-weight:600;box-shadow:var(--shadow)}
+
+/* ── LISTINGS CARD ── */
+.lcard{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.lcard-head{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border)}
+.lcard-title{font-size:13px;font-weight:700}
+.lcard-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.sort-grp{display:flex;gap:4px}
+.sort-btn{padding:4px 11px;border-radius:14px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--muted2);transition:all .15s}
+.sort-btn.a{background:#111;border-color:#111;color:#fff}
+.lrow{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);transition:background .15s}
+.lrow:last-child{border-bottom:none}
+.lrow:hover{background:#fafafa}
+.lrow.best-row{background:#f0fdf4}
+.lavatar{width:34px;height:34px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--muted2);flex-shrink:0;border:1px solid var(--border)}
+.linfo{flex:1;min-width:0}
+.lname{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.led{display:inline-block;font-size:11px;color:var(--muted2);background:#f0f0f0;padding:2px 7px;border-radius:3px;margin-top:2px;font-weight:500}
+.lright{display:flex;align-items:center;gap:10px}
+.lprice-val{font-size:15px;font-weight:700;text-align:right}
+.lprice-ship{font-size:11px;color:var(--muted);text-align:right}
+.lactions{display:flex;gap:5px}
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+.empty-icon{font-size:28px;margin-bottom:10px;opacity:.35}
+.empty h3{font-size:14px;font-weight:600;color:var(--muted2);margin-bottom:3px}
+.empty p{font-size:12px;line-height:1.5}
+
+/* ── OVERLAY / SHEET ── */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+@media(min-width:600px){.overlay{align-items:center}}
+.overlay.open{opacity:1;pointer-events:all}
+.sheet{width:100%;max-width:480px;background:#fff;border-radius:14px 14px 0 0;padding:22px 22px 36px;transform:translateY(28px);transition:transform .28s cubic-bezier(.4,0,.2,1);max-height:88vh;overflow-y:auto;position:relative}
+@media(min-width:600px){.sheet{border-radius:14px;transform:translateY(14px)}}
+.overlay.open .sheet{transform:translateY(0)}
+.handle{width:30px;height:3px;background:var(--border-d);border-radius:2px;margin:0 auto 18px}
+.sclose{position:absolute;top:16px;right:16px;width:26px;height:26px;border-radius:50%;background:#f0f0f0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted2);transition:background .15s}
+.sclose:hover{background:var(--border-d)}
+.stitle{font-size:17px;font-weight:700;margin-bottom:3px}
+.ssub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+
+/* ── FORM ── */
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:11px;font-weight:600;color:var(--muted2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{width:100%;padding:10px 12px;background:#fff;border:1px solid var(--border-d);border-radius:8px;color:#111;font-size:14px;font-family:'Inter',sans-serif;transition:border-color .15s;outline:none}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:#111}
+.fld select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.fld textarea{resize:vertical;min-height:60px}
+.fld-hint{font-size:11px;color:var(--muted);margin-top:3px}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#stripe-element{padding:10px 12px;background:#fff;border:1px solid var(--border-d);border-radius:8px;margin-bottom:4px}
+#stripe-error{font-size:12px;color:var(--red);margin-top:3px;min-height:14px}
+
+/* ── PILLS / EXPIRY / CONDITION ── */
+.pills{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
+.pill{padding:5px 12px;border:1px solid var(--border-d);border-radius:16px;font-size:12px;color:var(--muted2);cursor:pointer;background:#fff;font-family:'Inter',sans-serif;transition:all .15s}
+.pill:hover,.pill.a{border-color:#111;color:#111;background:#f5f5f5}
+.pill small{display:block;font-size:10px;color:var(--muted)}
+.expiry-row{display:flex;gap:7px;margin-bottom:12px}
+.eopt{flex:1;text-align:center;padding:7px;border:1px solid var(--border-d);border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted2);font-family:'Inter',sans-serif;transition:all .15s}
+.eopt strong{display:block;font-size:13px;font-weight:700;color:inherit;margin-bottom:1px}
+.eopt:hover,.eopt.a{border-color:#111;color:#111;background:#f5f5f5}
+.cond-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.copt{padding:9px;text-align:center;border:1px solid var(--border-d);border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted2);font-family:'Inter',sans-serif;transition:all .15s}
+.copt strong{display:block;font-size:13px;font-weight:600;color:#111;margin-bottom:1px}
+.copt:hover,.copt.a{border-color:#111;background:#f5f5f5}
+
+/* ── BUTTONS ── */
+.btn-full{width:100%;padding:12px;border-radius:9px;font-size:14px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .18s;margin-top:6px;border:none}
+.btn-full.d{background:#111;color:#fff}
+.btn-full.d:hover{background:#333}
+.btn-full.gh{background:#fff;color:#111;border:1px solid var(--border-d);margin-top:8px}
+.btn-full.gh:hover{border-color:#111}
+.btn-full:disabled{opacity:.4;cursor:not-allowed}
+.btn-full.ld{position:relative;color:transparent}
+.btn-full.ld::after{content:'';position:absolute;top:50%;left:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.btn-full.ld.gh::after{border:2px solid rgba(0,0,0,.15);border-top-color:#111}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── STEPS ── */
+.steps{display:flex;gap:5px;margin-bottom:18px}
+.step{height:4px;border-radius:2px;background:var(--border-d);transition:all .2s;flex:1}
+.step.done{background:var(--green)}
+.step.cur{background:#111}
+
+/* ── PROOF OPTS ── */
+.popts{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.popt{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border-d);border-radius:9px;cursor:pointer;transition:all .15s}
+.popt:hover,.popt.a{border-color:#111;background:#fafafa}
+.picon{font-size:20px;width:34px;text-align:center;flex-shrink:0}
+.ptitle{font-size:13px;font-weight:600}
+.pdesc{font-size:11px;color:var(--muted);margin-top:1px}
+.prec{font-size:10px;background:var(--green-bg);color:var(--green);padding:1px 6px;border-radius:3px;font-weight:600;margin-left:5px}
+
+/* ── AUTH SHEET ── */
+.abtn{width:100%;padding:10px;border:1px solid var(--border-d);border-radius:8px;background:#fff;color:#111;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:7px;transition:all .15s}
+.abtn:hover{background:#fafafa;box-shadow:var(--shadow)}
+.adiv{text-align:center;font-size:11px;color:var(--muted);margin:8px 0;position:relative}
+.adiv::before,.adiv::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
+.adiv::before{left:0}.adiv::after{right:0}
+.arow{display:flex;gap:7px;margin-top:7px}
+.arow input{flex:1;padding:10px 12px;border:1px solid var(--border-d);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.arow input:focus{border-color:#111}
+.arow button{padding:10px 15px;background:#111;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer}
+
+/* ── SUCCESS ── */
+.success{text-align:center;padding:14px 0}
+.s-icon{font-size:44px;margin-bottom:12px}
+.s-title{font-size:19px;font-weight:700;margin-bottom:5px}
+.s-body{font-size:13px;color:var(--muted2);line-height:1.6;max-width:280px;margin:0 auto}
+.s-token{margin-top:14px;padding:11px 14px;background:#f9f9f9;border:1px solid var(--border);border-radius:9px;font-size:12px;color:var(--muted2)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(52px);background:#111;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;transition:transform .25s;white-space:nowrap;box-shadow:var(--shadow-md)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+
+/* ── INBOX ── */
+.nlist{display:flex;flex-direction:column}
+.nrow{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.nrow:last-child{border-bottom:none}
+.ndot{width:8px;height:8px;border-radius:50%;background:var(--blue);margin-top:4px;flex-shrink:0}
+.ndot.r{background:transparent;border:1px solid var(--border-d)}
+.nbody{flex:1}
+.ntitle{font-size:13px;font-weight:600;margin-bottom:2px}
+.nsub{font-size:12px;color:var(--muted)}
+.ntime{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .grid{grid-template-columns:1fr 1fr}
+  .detail-wrap{flex-direction:column}
+  .detail-left{flex:none;width:100%}
+  .page{padding:14px}
+  .topbar{padding:0 14px}
+}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">Grails<span>.</span></div>
+  <nav>
+    <div class="nav-item active" onclick="showView('marketplace')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+      Marketplace
+    </div>
+    <div class="nav-item" onclick="showView('collection')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 3V2M11 3V2"/></svg>
+      Collection
+    </div>
+    <div class="nav-item" onclick="openClaim()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>
+      Claim Artwork
+    </div>
+    <div class="nav-item" onclick="showView('favorites')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 13S2 9 2 5.5A3.5 3.5 0 018 3a3.5 3.5 0 016 2.5C14 9 8 13 8 13z"/></svg>
+      Favorites
+    </div>
+    <div class="nav-item" onclick="showView('inbox')" id="navInbox">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg>
+      Inbox
+      <span class="nav-badge" id="inboxBadge" style="display:none">2</span>
+    </div>
+    <div class="nav-item" onclick="showView('settings')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg>
+      Settings
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user" onclick="openAuth()">
+      <div class="s-avatar" id="sAvatar">?</div>
+      <div>
+        <div class="s-name" id="sName">Sign in</div>
+        <div class="s-sub" id="sSub">View profile →</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="topTitle">Marketplace</span>
+    <div class="topbar-right">
+      <button class="tbtn" id="topAuth" onclick="openAuth()">Sign in</button>
+      <button class="tbtn p" onclick="openSell()">+ List Work</button>
+    </div>
+  </div>
+
+  <!-- MARKETPLACE -->
+  <div id="vMarket" class="page">
+    <div class="stats" id="statsRow">
+      <div class="sc"><div class="sc-val" id="sWorks">5</div><div class="sc-lbl">Featured Works</div></div>
+      <div class="sc"><div class="sc-val" id="sListings">—</div><div class="sc-lbl">For Sale</div><div class="sc-d">Active listings</div></div>
+      <div class="sc"><div class="sc-val" id="sOffers">—</div><div class="sc-lbl">Open Offers</div><div class="sc-d">Across all editions</div></div>
+      <div class="sc"><div class="sc-val" id="sClaimed">24</div><div class="sc-lbl">Editions Claimed</div></div>
+    </div>
+    <div class="filters">
+      <button class="chip a" onclick="fArtist('all',this)">All Artists</button>
+      <span id="artistChips"></span>
+      <button class="chip a chip-right" id="fSaleBtn" onclick="toggleSale(this)">For Sale Only</button>
+    </div>
+    <div class="grid" id="worksGrid"></div>
+  </div>
+
+  <!-- DETAIL -->
+  <div id="vDetail" class="detail">
+    <div class="back" onclick="goBack()">
+      <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 2L3 6.5 8 11"/></svg>
+      Back to Marketplace
+    </div>
+    <div class="detail-wrap">
+      <div class="detail-left">
+        <div class="detail-img-box" id="dImg"></div>
+      </div>
+      <div class="detail-right">
+        <div class="d-eyebrow" id="dSub"></div>
+        <h1 class="d-title" id="dTitle"></h1>
+        <div class="d-sub" id="dMedium"></div>
+        <div class="d-badges" id="dBadges"></div>
+        <div class="pricebox" id="dPriceBox"></div>
+        <div class="watching" id="dWatching"></div>
+        <div class="wtabs">
+          <button class="wtab a" onclick="wTab('listed',this)" id="tabL">Listed (0)</button>
+          <button class="wtab" onclick="wTab('offers',this)" id="tabO">Offers (0)</button>
+          <button class="wtab" onclick="wTab('claimed',this)" id="tabC">All Claimed (0)</button>
+        </div>
+        <div id="wTabContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLECTION -->
+  <div id="vCollection" class="page" style="display:none">
+    <div class="ph"><h1>Collection</h1><p>Your claimed works and listings</p></div>
+    <div class="empty"><div class="empty-icon">◎</div><h3>No works claimed yet</h3><p>Claim your Avant Arte works to build your collection.</p><br><button class="btn-sm" style="margin-top:8px" onclick="openClaim()">+ Claim Artwork</button></div>
+  </div>
+
+  <!-- INBOX -->
+  <div id="vInbox" class="page" style="display:none">
+    <div class="ph"><h1>Inbox</h1><p>Offers, bids and notifications</p></div>
+    <div class="lcard">
+      <div class="nlist" style="padding:0 16px">
+        <div class="nrow"><div class="ndot"></div><div class="nbody"><div class="ntitle">New listing: Jonas Wood — Untitled (Plant) #42</div><div class="nsub">Listed at £950 · Edition of 75</div><div class="ntime">2 hours ago</div></div><div><button class="btn-sm o" onclick="goBack();showView('marketplace')">View</button></div></div>
+        <div class="nrow"><div class="ndot"></div><div class="nbody"><div class="ntitle">Offer received on Pool Study</div><div class="nsub">£1,200 · Expires in 3 days</div><div class="ntime">Yesterday</div></div><div><button class="btn-sm g">Accept</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAVORITES -->
+  <div id="vFavorites" class="page" style="display:none">
+    <div class="ph"><h1>Favorites</h1></div>
+    <div class="empty"><div class="empty-icon">♡</div><h3>No favorites yet</h3><p>Save works you're watching.</p></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="vSettings" class="page" style="display:none">
+    <div class="ph"><h1>Settings</h1></div>
+    <div class="empty"><div class="empty-icon">⚙</div><h3>Coming soon</h3></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- OFFER OVERLAY -->
+<div class="overlay" id="oOffer" onclick="cob(event,'oOffer')">
+  <div class="sheet"><div class="handle"></div><button class="sclose" onclick="co('oOffer')">✕</button><div id="offerContent"></div></div>
+</div>
+<!-- SELL OVERLAY -->
+<div class="overlay" id="oSell" onclick="cob(event,'oSell')">
+  <div class="sheet"><div class="handle"></div><button class="sclose" onclick="co('oSell')">✕</button><div id="sellContent"></div></div>
+</div>
+<!-- CLAIM OVERLAY -->
+<div class="overlay" id="oClaim" onclick="cob(event,'oClaim')">
+  <div class="sheet"><div class="handle"></div><button class="sclose" onclick="co('oClaim')">✕</button><div id="claimContent"></div></div>
+</div>
+<!-- AUTH OVERLAY -->
+<div class="overlay" id="oAuth" onclick="cob(event,'oAuth')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sclose" onclick="co('oAuth')">✕</button>
+    <h2 class="stitle">Sign in to Grails</h2>
+    <p class="ssub">Make offers, list works, and track your collection.</p>
+    <button class="abtn" onclick="aSocial('google')">
+      <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+      Continue with Google
+    </button>
+    <button class="abtn" onclick="aSocial('apple')">
+      <svg width="16" height="16" viewBox="0 0 814 1000" fill="#111"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-42.4-150.3-109.7C74.5 754.4 0 683 0 532c0-225.6 146.9-344.5 291.4-344.5 73.6 0 134.8 48.5 180.9 48.5 43.7 0 112.2-51.8 192.9-51.8 31.1 0 108.2 2.6 168.6 79.8zm-159.8-121.2c-7.1 36.2-21.4 72.4-46.4 101.9-22.3 26.9-57.5 48.5-90.8 48.5-2.6 0-5.1-.3-7.7-.6-1.3-35.8 13-72.4 36.5-100.1 24.2-29.2 61.8-51.4 108.4-49.7z"/></svg>
+      Continue with Apple
+    </button>
+    <div class="adiv">or email</div>
+    <div class="arow">
+      <input type="email" id="authEmail" placeholder="your@email.com">
+      <button onclick="aEmail()">Go</button>
+    </div>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">A wallet is created silently. No crypto knowledge needed.</p>
+  </div>
+</div>
+
+<script>
+// Hoist these before any onclick handlers fire
+// VIEWS declared at top --'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
+// VTITLES declared at top --'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
+var user=null,catalogue=[],listings=[],offers=[],cWork=null,cTab='listed',sellStep=1,sellData={};
+var expiry='72h',fSale=true,fArtist_='all',sElements=null,cardEl=null,authCb=null,tt=null;
+// ── CONFIG ──────────────────────────────────────────────────
+const SB_URL = 'https://skijifrninnyenrvcjxt.supabase.co';
+const SB_KEY = 'sb_publishable_iYX6ywYo94TAJs9xX3ltjw_n6faAwKr';
+const SK     = 'pk_test_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY';
+
+const { createClient } = supabase;
+const db     = createClient(SB_URL, SB_KEY);
+const stripe = Stripe(SK);
+
+// ── STATE ───────────────────────────────────────────────────
+
+// ── SEED ────────────────────────────────────────────────────
+const CAT = [
+  {id:'aa-001',artist:'Jonas Wood',title:'Untitled (Plant)',year:2022,editionSize:75,medium:'Archival pigment print',dimensions:'70 × 56 cm',retail:85000,emoji:'🌿',featured:true},
+  {id:'aa-002',artist:'Hurvin Anderson',title:'Pool Study',year:2023,editionSize:50,medium:'Archival pigment print',dimensions:'60 × 80 cm',retail:120000,emoji:'🌊',featured:true},
+  {id:'aa-003',artist:'Henry Taylor',title:'Untitled Figure',year:2022,editionSize:100,medium:'Screenprint',dimensions:'50 × 40 cm',retail:65000,emoji:'🎨',featured:true},
+  {id:'aa-004',artist:'Cecily Brown',title:'Summer Study',year:2023,editionSize:60,medium:'Etching',dimensions:'45 × 55 cm',retail:95000,emoji:'🌸',featured:true},
+  {id:'aa-005',artist:'Lynette Yiadom-Boakye',title:'Evening Passage',year:2023,editionSize:75,medium:'Lithograph',dimensions:'65 × 50 cm',retail:110000,emoji:'🌙',featured:true},
+];
+const PH = {
+  'aa-001':[90000,95000,88000,105000,115000,108000],
+  'aa-002':[125000,130000,118000,140000,155000,148000],
+  'aa-003':[68000,72000,70000,78000,82000,79000],
+  'aa-004':[98000,95000,102000,108000,115000,112000],
+  'aa-005':[112000,118000,125000,130000,122000,135000],
+};
+const META = {
+  'aa-001':{claimed:3,watching:12},
+  'aa-002':{claimed:5,watching:28},
+  'aa-003':{claimed:8,watching:19},
+  'aa-004':{claimed:2,watching:9},
+  'aa-005':{claimed:6,watching:45},
+};
+const SEED_L = [
+  {id:'l-001',cid:'aa-001',sid:'u-1',sname:'artlover.eth',edn:42,hidden:false,pence:108000,cond:'MINT'},
+  {id:'l-002',cid:'aa-001',sid:'u-2',sname:'crypto_whale',edn:67,hidden:false,pence:115000,cond:'VERY_GOOD'},
+  {id:'l-003',cid:'aa-002',sid:'u-3',sname:'modernist_99',edn:null,hidden:true,pence:148000,cond:'MINT'},
+  {id:'l-004',cid:'aa-003',sid:'u-4',sname:'streetart_nyc',edn:156,hidden:false,pence:79000,cond:'GOOD'},
+];
+const SEED_O = [
+  {id:'o-001',cid:'aa-001',bname:'collector.eth',pence:102000,exp:new Date(Date.now()+7*864e5).toISOString(),status:'PENDING'},
+  {id:'o-002',cid:'aa-001',bname:'artlover.eth',pence:98000,exp:new Date(Date.now()+5*864e5).toISOString(),status:'PENDING'},
+  {id:'o-003',cid:'aa-002',bname:'moonlover61',pence:140000,exp:new Date(Date.now()+3*864e5).toISOString(),status:'PENDING'},
+  {id:'o-004',cid:'aa-003',bname:'modernist_99',pence:75000,exp:new Date(Date.now()+9*864e5).toISOString(),status:'PENDING'},
+];
+
+// ── INIT ────────────────────────────────────────────────────
+async function init(){
+  catalogue = CAT.filter(w=>w.featured);
+  listings  = [...SEED_L];
+  offers    = [...SEED_O];
+  try {
+    const {data:dc} = await db.from('aa_catalogue').select('*').eq('featured',true).eq('is_active',true);
+    if(dc?.length) catalogue=dc;
+    const {data:dl} = await db.from('listings').select('*').eq('status','ACTIVE');
+    if(dl?.length) listings=dl;
+    const {data:do_} = await db.from('offers').select('*').eq('status','PENDING');
+    if(do_?.length) offers=do_;
+  } catch(e){console.log('Using seed data')}
+  upStats(); buildChips(); renderGrid();
+}
+
+function upStats(){
+  document.getElementById('sWorks').textContent   = catalogue.length;
+  document.getElementById('sListings').textContent= listings.filter(l=>l.status!=='SOLD'&&l.pence).length;
+  document.getElementById('sOffers').textContent  = offers.filter(o=>o.status==='PENDING').length;
+  const cl = Object.values(META).reduce((a,b)=>a+b.claimed,0);
+  document.getElementById('sClaimed').textContent = cl;
+}
+
+// ── FILTERS ────────────────────────────────────────────────
+function buildChips(){
+  const artists=[...new Set(catalogue.map(w=>w.artist))].sort();
+  document.getElementById('artistChips').innerHTML=artists.map(a=>
+    `<button class="chip" onclick="fArtist('${a}',this)" style="margin-right:7px">${a.split(' ').pop()}</button>`
+  ).join('');
+}
+function fArtist(a,el){
+  fArtist_=a;
+  document.querySelectorAll('.chip').forEach(c=>{if(c.id!=='fSaleBtn')c.classList.remove('a')});
+  el.classList.add('a'); renderGrid();
+}
+function toggleSale(el){ fSale=!fSale; el.classList.toggle('a',fSale); renderGrid(); }
+
+// ── GRID ────────────────────────────────────────────────────
+function renderGrid(){
+  const grid=document.getElementById('worksGrid');
+  let works=catalogue;
+  if(fArtist_!=='all') works=works.filter(w=>w.artist===fArtist_);
+  if(fSale) works=works.filter(w=>listings.some(l=>(l.cid||l.catalogue_id)===w.id&&l.status!=='SOLD'));
+  if(!works.length){grid.innerHTML=`<div style="grid-column:1/-1"><div class="empty"><div class="empty-icon">◎</div><h3>No works found</h3><p>${fSale?'Try turning off "For Sale Only"':'Check back soon.'}</p></div></div>`;return}
+  grid.innerHTML=works.map(w=>{
+    const wl=listings.filter(l=>(l.cid||l.catalogue_id)===w.id&&l.status!=='SOLD');
+    const wo=offers.filter(o=>(o.cid||o.catalogue_id)===w.id&&o.status==='PENDING');
+    const m=META[w.id]||{claimed:0,watching:0};
+    const low=wl.length?Math.min(...wl.map(l=>l.pence||l.ask_price_pence)):null;
+    const isL=wl.length>0;
+    return`<div class="card" onclick="openDetail('${w.id}')">
+      <div class="card-img">
+        <span>${w.emoji||'◎'}</span>
+        <div class="top-badges">
+          ${isL?'<span class="bdg listed">Listed</span>':''}
+          ${w.editionSize<=50?'<span class="bdg limited">Limited Edition</span>':'<span class="bdg edition">Edition</span>'}
+        </div>
+        <div class="bot-badges">
+          <span class="bdg-num">Ed. of ${w.editionSize}</span>
+          ${m.claimed?`<span class="bdg-cnt">${m.claimed} claimed</span>`:''}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-artist">${w.artist}</div>
+        <div class="card-title">${w.title}</div>
+        <div class="card-ed">${w.year} · ${w.medium}</div>
+        <div class="card-foot">
+          <div>
+            ${low?`<div class="card-price">From £${fmt(low)}</div>`:`<div class="card-price open">Open to offers</div>`}
+            ${wo.length?`<div class="card-offers"><span class="pulse"></span>${wo.length} offer${wo.length>1?'s':''}</div>`:''}
+          </div>
+          <button class="btn-sm" onclick="event.stopPropagation();openOffer('${w.id}')">${isL?'Buy / Offer':'Make Offer'}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── DETAIL ─────────────────────────────────────────────────
+function openDetail(wid){
+  const w=catalogue.find(x=>x.id===wid); cWork=w; cTab='listed';
+  const wl=listings.filter(l=>(l.cid||l.catalogue_id)===wid&&l.status!=='SOLD');
+  const wo=offers.filter(o=>(o.cid||o.catalogue_id)===wid&&o.status==='PENDING');
+  const m=META[wid]||{claimed:0,watching:0};
+  const low=wl.length?Math.min(...wl.map(l=>l.pence||l.ask_price_pence)):null;
+
+  document.getElementById('dImg').innerHTML=`<span style="font-size:80px">${w.emoji||'◎'}</span>`;
+  document.getElementById('dSub').textContent=`${w.artist}, ${w.year}`;
+  document.getElementById('dTitle').textContent=w.title;
+  document.getElementById('dMedium').textContent=w.medium;
+  document.getElementById('dBadges').innerHTML=`<span class="bdg edition">Edition of ${w.editionSize}</span><span style="font-size:13px;color:var(--muted2)">${m.claimed} claimed</span>`;
+  document.getElementById('dPriceBox').innerHTML=`
+    <div class="pricebox-from">From</div>
+    <div class="pricebox-val">${low?'£'+fmt(low):'Open to offers'}</div>
+    <div class="pricebox-avail">${wl.length} edition${wl.length!==1?'s':''} available</div>
+    <div class="pricebox-grid">
+      <div><div class="pricebox-lbl">Dimensions</div><div class="pricebox-val2">${w.dimensions}</div></div>
+      <div><div class="pricebox-lbl">Medium</div><div class="pricebox-val2">${w.medium}</div></div>
+    </div>`;
+  document.getElementById('dWatching').innerHTML=`
+    <div class="w-avatars">${['A','B','C','D','E'].map(i=>`<div class="w-av">${i}</div>`).join('')}</div>
+    <span><span class="w-count">${m.watching} collectors</span> watching</span>`;
+  document.getElementById('tabL').textContent=`Listed (${wl.length})`;
+  document.getElementById('tabO').textContent=`Offers (${wo.length})`;
+  document.getElementById('tabC').textContent=`All Claimed (${m.claimed})`;
+  document.querySelectorAll('.wtab').forEach(t=>t.classList.remove('a'));
+  document.getElementById('tabL').classList.add('a');
+  renderWTab('listed',wid);
+
+  document.getElementById('vMarket').style.display='none';
+  document.getElementById('vDetail').style.display='flex';
+  document.getElementById('topTitle').textContent=w.title;
+}
+function goBack(){
+  document.getElementById('vDetail').style.display='none';
+  document.getElementById('vMarket').style.display='';
+  document.getElementById('topTitle').textContent='Marketplace';
+}
+function wTab(tab,el){
+  cTab=tab;
+  document.querySelectorAll('.wtab').forEach(t=>t.classList.remove('a'));
+  el.classList.add('a');
+  renderWTab(tab,cWork.id);
+}
+function renderWTab(tab,wid){
+  const el=document.getElementById('wTabContent');
+  const wl=listings.filter(l=>(l.cid||l.catalogue_id)===wid&&l.status!=='SOLD');
+  const wo=offers.filter(o=>(o.cid||o.catalogue_id)===wid&&o.status==='PENDING');
+  const m=META[wid]||{claimed:0};
+
+  if(tab==='listed'){
+    if(!wl.length){el.innerHTML=`<div class="lcard"><div class="empty"><div class="empty-icon">◎</div><h3>No listings yet</h3><p>Be the first to list this work.</p></div></div>`;return}
+    const sorted=[...wl].sort((a,b)=>(a.pence||a.ask_price_pence)-(b.pence||b.ask_price_pence));
+    el.innerHTML=`<div class="lcard">
+      <div class="lcard-head">
+        <div><div class="lcard-title">Best Available Prices</div><div class="lcard-sub">Sorted by lowest price first</div></div>
+        <div class="sort-grp"><button class="sort-btn a">Best Price</button><button class="sort-btn">Nearest</button></div>
+      </div>
+      ${sorted.map((l,i)=>{
+        const p=l.pence||l.ask_price_pence;
+        const ed=l.hidden||l.edition_hidden?'Edition Hidden':`Edition #${l.edn||l.edition_number}`;
+        return`<div class="lrow ${i===0?'best-row':''}">
+          <div class="lavatar">${(l.sname||l.seller_name||'?')[0]}</div>
+          <div class="linfo">
+            <div class="lname">${l.sname||l.seller_name||'Anonymous'} ${i===0?'<span class="bdg best">Best Price</span>':''}</div>
+            <span class="led">${ed}</span>
+          </div>
+          <div class="lright">
+            <div><div class="lprice-val">£${fmt(p)}</div><div class="lprice-ship">+ shipping</div></div>
+            <div class="lactions">
+              <button class="btn-sm" onclick="openOffer('${wid}','${l.id}','${p}')">Buy Now</button>
+              <button class="btn-sm o" onclick="openOffer('${wid}')">Make Offer</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  } else if(tab==='offers'){
+    el.innerHTML=`<div class="lcard">
+      <div class="lcard-head">
+        <div><div class="lcard-title">Buy Now Offers</div><div class="lcard-sub">Open offers to purchase any edition from current owners</div></div>
+        <button class="btn-sm" onclick="openOffer('${wid}')">Submit Offer</button>
+      </div>
+      ${wo.length?wo.map((o,i)=>`
+        <div class="lrow">
+          <div class="lavatar">${(o.bname||o.buyer_name||'?')[0]}</div>
+          <div class="linfo">
+            <div class="lname">${o.bname||o.buyer_name||'Anonymous'}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">Expires in ${fmtExp(o.exp||o.expires_at)}</div>
+          </div>
+          <div class="lright">
+            <div><div class="lprice-val">£${fmt(o.pence||o.amount_pence)}</div>${i===0?'<div style="font-size:11px;font-weight:600;color:var(--green)">HIGHEST OFFER</div>':''}</div>
+            <div class="lactions">
+              <button class="btn-sm g" onclick="acceptOffer('${o.id}')">Accept</button>
+            </div>
+          </div>
+        </div>`).join('')
+        :`<div class="empty"><div class="empty-icon">◎</div><h3>No open offers</h3><p>Submit the first offer on this edition.</p></div>`}
+    </div>`;
+  } else {
+    const items=[{n:'moonlover61',h:true,p:null},{n:'artlover.eth',h:true,p:148000},{n:'modernist_99',h:false,e:221,p:null}].slice(0,m.claimed||3);
+    el.innerHTML=`<div class="lcard">
+      <div class="lcard-head">
+        <div><div class="lcard-title">Claimed Editions</div><div class="lcard-sub">All editions currently claimed</div></div>
+        <button class="btn-sm" onclick="openClaim()">+ Claim Edition</button>
+      </div>
+      ${items.map(c=>`
+        <div class="lrow">
+          <div class="lavatar">${c.n[0]}</div>
+          <div class="linfo"><div class="lname">${c.n}</div><span class="led">${c.h?'Edition Hidden':`Edition #${c.e}`}</span></div>
+          <div class="lright">
+            ${c.p?`<div><div class="lprice-val">£${fmt(c.p)}</div><div class="lprice-ship">+ shipping</div></div>`:''}
+            <button class="btn-sm o">View</button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }
+}
+
+// ── OFFER FLOW ──────────────────────────────────────────────
+function openOffer(wid,lid,buyNow){
+  if(!user){openAuth(()=>openOffer(wid,lid,buyNow));return}
+  const w=catalogue.find(x=>x.id===wid);
+  const h=PH[wid]||[];
+  const avg=h.length?Math.round(h.reduce((a,b)=>a+b,0)/h.length):0;
+  const hi=h.length?Math.max(...h):0;
+  expiry='72h';
+  const isBuy=!!buyNow;
+  const sug=avg?[
+    {lbl:`£${fmt(Math.round(avg*.85))}`,sub:'Below avg',v:Math.round(avg*.85)},
+    {lbl:`£${fmt(avg)}`,sub:'Avg price',v:avg},
+    {lbl:`£${fmt(hi)}`,sub:'Recent high',v:hi},
+  ]:[];
+  document.getElementById('offerContent').innerHTML=`
+    <h2 class="stitle">${isBuy?'Buy Now':'Make an Offer'}</h2>
+    <p class="ssub">${w.artist} — ${w.title}<br>Edition of ${w.editionSize}</p>
+    ${sug.length&&!isBuy?`<div style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px">Price Guide</div>
+    <div class="pills">${sug.map((s,i)=>`<div class="pill ${i===1?'a':''}" onclick="setPill(this,${s.v})">${s.lbl}<small>${s.sub}</small></div>`).join('')}</div>`:''}
+    <div class="fld">
+      <label>${isBuy?'Purchase Price':'Your Offer (£)'}</label>
+      <input type="number" id="offerAmt" min="10" placeholder="e.g. 850"
+        value="${isBuy?Math.round(buyNow/100):(avg?Math.round(avg/100):'')}"
+        ${isBuy?'readonly':''} oninput="upHint()">
+      <div class="fld-hint" id="offerHint">Card authorised now · charged only if accepted</div>
+    </div>
+    ${!isBuy?`<div style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px">Expires In</div>
+    <div class="expiry-row">
+      <div class="eopt" onclick="setExp('24h',this)"><strong>24h</strong>1 day</div>
+      <div class="eopt a" onclick="setExp('72h',this)"><strong>72h</strong>3 days</div>
+      <div class="eopt" onclick="setExp('7d',this)"><strong>7d</strong>1 week</div>
+    </div>`:''}
+    <div class="fld">
+      <label>Card Details</label>
+      <div id="stripe-element"></div>
+      <div id="stripe-error"></div>
+      <div class="fld-hint" style="margin-top:5px">${isBuy?'Charged on seller confirmation.':'No charge until a seller accepts.'}</div>
+    </div>
+    <button class="btn-full d" id="offerBtn" onclick="doOffer('${wid}','${lid||''}','${isBuy}')">
+      ${isBuy?'Confirm Purchase':'Submit Offer'}
+    </button>`;
+  openO('oOffer');
+  initStripe('stripe-element');
+  if(avg&&!isBuy) upHint();
+}
+function setPill(el,v){document.querySelectorAll('.pill').forEach(p=>p.classList.remove('a'));el.classList.add('a');document.getElementById('offerAmt').value=Math.round(v/100);upHint()}
+function setExp(v,el){expiry=v;document.querySelectorAll('.eopt').forEach(e=>e.classList.remove('a'));el.classList.add('a')}
+function upHint(){const v=parseFloat(document.getElementById('offerAmt')?.value);const h=document.getElementById('offerHint');if(h&&v){const f=Math.round(v*.12);h.textContent=`+£${f} platform fee = £${(v+f).toFixed(0)} total`}}
+function initStripe(id){
+  sElements=stripe.elements({appearance:{theme:'stripe',variables:{colorPrimary:'#111',fontFamily:'Inter,sans-serif',borderRadius:'8px'}}});
+  cardEl=sElements.create('card',{style:{base:{color:'#111',fontFamily:'Inter,sans-serif',fontSize:'14px','::placeholder':{color:'#aaa'}}}});
+  const el=document.getElementById(id);
+  if(el) cardEl.mount('#'+id);
+}
+async function doOffer(wid,lid,isBuy){
+  const amt=parseFloat(document.getElementById('offerAmt')?.value);
+  if(!amt||amt<10){toast_('Enter a valid amount','error');return}
+  const btn=document.getElementById('offerBtn');
+  btn.classList.add('ld');btn.disabled=true;
+  try{
+    const {paymentMethod,error}=await stripe.createPaymentMethod({type:'card',card:cardEl});
+    if(error){document.getElementById('stripe-error').textContent=error.message;btn.classList.remove('ld');btn.disabled=false;return}
+    const pence=Math.round(amt*100);
+    let piId='pi_pending';
+    try{
+      const r=await fetch('/api/create-offer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount_pence:pence,payment_method_id:paymentMethod.id,catalogue_id:wid,buyer_id:user.id})});
+      if(r.ok){const d=await r.json();piId=d.payment_intent_id||piId}
+    }catch(e){}
+    const payload={catalogue_id:wid,listing_id:lid||null,buyer_id:user.id,amount_pence:pence,expires_at:expDate(expiry).toISOString(),status:'PENDING',stripe_payment_method_id:paymentMethod.id,stripe_payment_intent_id:piId};
+    try{const {data}=await db.from('offers').insert([payload]).select().single();if(data)offers.push(data);else offers.push({...payload,id:'o-'+Date.now(),cid:wid,pence,bname:user.email?.split('@')[0]||'You',exp:payload.expires_at})}
+    catch(e){offers.push({...payload,id:'o-'+Date.now(),cid:wid,pence,bname:user.email?.split('@')[0]||'You',exp:payload.expires_at})}
+    upStats();
+    if(cWork?.id===wid){const wo=offers.filter(o=>(o.cid||o.catalogue_id)===wid&&o.status==='PENDING');document.getElementById('tabO').textContent=`Offers (${wo.length})`}
+    const w=catalogue.find(x=>x.id===wid);
+    document.getElementById('offerContent').innerHTML=`<div class="success"><div class="s-icon">◎</div><div class="s-title">${isBuy==='true'?'Purchase Submitted':'Offer Live'}</div><div class="s-body">Your ${isBuy==='true'?'purchase':'offer'} of <strong>£${amt.toLocaleString()}</strong> on <em>${w?.title}</em> is ${isBuy==='true'?'pending seller confirmation':'visible to all sellers of this edition'}.</div><div class="s-token">◈ An Origin Token will be issued to your wallet if accepted.</div><button class="btn-full d" style="margin-top:14px" onclick="co('oOffer')">Done</button></div>`;
+    renderGrid();toast_(isBuy==='true'?'Purchase submitted ✓':'Offer submitted ✓','success');
+  }catch(e){console.error(e);toast_('Something went wrong','error');btn.classList.remove('ld');btn.disabled=false}
+}
+async function acceptOffer(oid){
+  if(!user){openAuth();return}
+  if(!confirm('Accept this offer? Payment captured and transfer initiated.')) return;
+  try{await db.from('offers').update({status:'ACCEPTED'}).eq('id',oid);const o=offers.find(x=>x.id===oid);if(o)o.status='ACCEPTED';toast_('Offer accepted! Payout incoming.','success');if(cWork)renderWTab(cTab,cWork.id);upStats()}
+  catch(e){toast_('Error accepting offer','error')}
+}
+
+// ── SELL FLOW ───────────────────────────────────────────────
+function openSell(){if(!user){openAuth(()=>openSell());return}sellStep=1;sellData={};rSell();openO('oSell')}
+function rSell(){
+  const el=document.getElementById('sellContent');
+  const dots=[1,2,3,4].map(i=>`<div class="step ${i<sellStep?'done':i===sellStep?'cur':''}"></div>`).join('');
+  if(sellStep===1){
+    el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Select Work</h2><p class="ssub">Choose a featured Avant Arte edition to list.</p>
+    <input type="text" style="width:100%;padding:10px 12px;border:1px solid var(--border-d);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;margin-bottom:10px" placeholder="Search…" oninput="fSellCat(this.value)">
+    <div id="sellCatList" style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto">
+      ${catalogue.map(w=>`<div class="popt ${sellData.wid===w.id?'a':''}" onclick="pickWork('${w.id}',this)"><div class="picon">${w.emoji||'◎'}</div><div><div class="ptitle">${w.title}</div><div class="pdesc">${w.artist} · Ed. of ${w.editionSize}</div></div></div>`).join('')}
+    </div>
+    <button class="btn-full d" style="margin-top:12px" onclick="sellStep++;rSell()" ${!sellData.wid?'disabled':''} id="sn1">Continue</button>`;
+  } else if(sellStep===2){
+    el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Verify Ownership</h2><p class="ssub">Prove you own this work.</p>
+    <div class="popts">
+      <div class="popt ${sellData.proof==='invoice'?'a':''}" onclick="pickProof('invoice',this)"><div class="picon">📄</div><div><div class="ptitle">Upload Invoice <span class="prec">Recommended</span></div><div class="pdesc">Avant Arte order confirmation PDF or screenshot</div></div></div>
+      <div class="popt ${sellData.proof==='email'?'a':''}" onclick="pickProof('email',this)"><div class="picon">📧</div><div><div class="ptitle">Connect Gmail</div><div class="pdesc">Read-only scan for your Avant Arte receipts</div></div></div>
+      <div class="popt ${sellData.proof==='skip'?'a':''}" onclick="pickProof('skip',this)"><div class="picon">⚡</div><div><div class="ptitle">Skip for now</div><div class="pdesc">Listed as unverified — badged accordingly</div></div></div>
+    </div>
+    ${sellData.proof==='invoice'?`<div class="fld"><label>Upload Invoice</label><input type="file" accept=".pdf,.jpg,.jpeg,.png" style="padding:6px" onchange="sellData.uploaded=true"><div class="fld-hint">PDF, JPG or PNG</div></div>`:''}
+    <div style="display:flex;gap:7px"><button class="btn-full gh" style="margin-top:0;flex:0 0 42px" onclick="sellStep--;rSell()">←</button><button class="btn-full d" style="margin-top:0;flex:1" onclick="sellStep++;rSell()" ${!sellData.proof?'disabled':''}>Continue</button></div>`;
+  } else if(sellStep===3){
+    const w=catalogue.find(x=>x.id===sellData.wid);
+    const h=PH[sellData.wid]||[];
+    const avg=h.length?Math.round(h.reduce((a,b)=>a+b,0)/h.length):0;
+    el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Price & Condition</h2><p class="ssub">${w.artist} — ${w.title}</p>
+    <div class="fld-row">
+      <div class="fld"><label>Edition Number</label><input type="number" placeholder="e.g. 42" min="1" max="${w.editionSize}" value="${sellData.edn||''}" oninput="sellData.edn=this.value"></div>
+      <div class="fld"><label>Ask Price (£)</label><input type="number" placeholder="Optional" min="50" value="${sellData.price||''}" oninput="sellData.price=this.value"></div>
+    </div>
+    ${avg?`<div class="fld-hint" style="margin-top:-8px;margin-bottom:10px">Avg resale: £${fmt(avg)} · Retail: £${fmt(w.retail)}</div>`:''}
+    <div class="fld"><label>Condition</label></div>
+    <div class="cond-row">
+      ${[['MINT','Mint','Pristine'],['VERY_GOOD','Very Good','Light handling'],['GOOD','Good','Some wear'],['FAIR','Fair','Visible wear']].map(([v,l,d])=>
+        `<div class="copt ${sellData.cond===v?'a':''}" onclick="sellData.cond='${v}';rSell()"><strong>${l}</strong>${d}</div>`
+      ).join('')}
+    </div>
+    <div class="fld"><label>Notes (optional)</label><textarea placeholder="Framing, storage…" oninput="sellData.notes=this.value">${sellData.notes||''}</textarea></div>
+    <div style="display:flex;gap:7px"><button class="btn-full gh" style="margin-top:0;flex:0 0 42px" onclick="sellStep--;rSell()">←</button><button class="btn-full d" style="margin-top:0;flex:1" onclick="sellStep++;rSell()" ${!sellData.cond||!sellData.edn?'disabled':''}>Continue</button></div>`;
+  } else if(sellStep===4){
+    const w=catalogue.find(x=>x.id===sellData.wid);
+    el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Confirm Listing</h2>
+    <div style="background:#f9f9f9;border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:14px">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px"><span style="font-size:30px">${w.emoji||'◎'}</span><div><div style="font-size:10px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.1em">${w.artist}</div><div style="font-size:14px;font-weight:700">${w.title}</div><div style="font-size:12px;color:var(--muted)">Ed. #${sellData.edn} of ${w.editionSize}</div></div></div>
+      ${[['Condition',sellData.cond?.replace('_',' ')],['Ask Price',sellData.price?'£'+Number(sellData.price).toLocaleString():'Open to offers'],['Proof',sellData.proof==='invoice'?'Invoice uploaded':sellData.proof==='email'?'Email verified':'Unverified'],['Seller fee','Zero']].map(([k,v])=>
+        `<div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-top:1px solid var(--border)"><span style="color:var(--muted)">${k}</span><span style="font-weight:600;color:${k==='Seller fee'?'var(--green)':'#111'}">${v}</span></div>`
+      ).join('')}
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">By listing, you confirm ownership and agree to ship within 5 business days of acceptance.</div>
+    <div style="display:flex;gap:7px"><button class="btn-full gh" style="margin-top:0;flex:0 0 42px" onclick="sellStep--;rSell()">←</button><button class="btn-full d" style="margin-top:0;flex:1" id="listBtn" onclick="doList()">Publish Listing</button></div>`;
+  }
+}
+function pickWork(wid,el){sellData.wid=wid;document.querySelectorAll('#sellCatList .popt').forEach(e=>e.classList.remove('a'));el.classList.add('a');const b=document.getElementById('sn1');if(b)b.disabled=false}
+function fSellCat(q){document.getElementById('sellCatList').innerHTML=catalogue.filter(w=>w.artist.toLowerCase().includes(q.toLowerCase())||w.title.toLowerCase().includes(q.toLowerCase())).map(w=>`<div class="popt ${sellData.wid===w.id?'a':''}" onclick="pickWork('${w.id}',this)"><div class="picon">${w.emoji||'◎'}</div><div><div class="ptitle">${w.title}</div><div class="pdesc">${w.artist}</div></div></div>`).join('')}
+function pickProof(t,el){if(t==='email'){toast_('Gmail integration coming soon','error');return}sellData.proof=t;document.querySelectorAll('#sellContent .popt').forEach(e=>e.classList.remove('a'));el.classList.add('a');rSell()}
+async function doList(){
+  const btn=document.getElementById('listBtn');
+  btn.classList.add('ld');btn.disabled=true;
+  const p={catalogue_id:sellData.wid,seller_id:user.id,edition_number:parseInt(sellData.edn)||1,ask_price_pence:sellData.price?Math.round(parseFloat(sellData.price)*100):null,open_to_offers:true,condition_grade:sellData.cond,condition_notes:sellData.notes||null,photos:[],status:'ACTIVE',proof_type:sellData.proof==='invoice'?'INVOICE_UPLOAD':'UNVERIFIED',verification_status:sellData.proof==='skip'?'UNVERIFIED':'PENDING_REVIEW',cid:sellData.wid,sname:user.email?.split('@')[0]||'You',edn:parseInt(sellData.edn)||1,pence:sellData.price?Math.round(parseFloat(sellData.price)*100):null};
+  try{const {data}=await db.from('listings').insert([p]).select().single();listings.push(data||{...p,id:'l-'+Date.now()})}
+  catch(e){listings.push({...p,id:'l-'+Date.now()})}
+  upStats();renderGrid();
+  document.getElementById('sellContent').innerHTML=`<div class="success"><div class="s-icon">✦</div><div class="s-title">Listing Live</div><div class="s-body">Your work is now visible to collectors. You'll be notified when offers arrive.</div><div class="s-token">◈ An Origin Token will mint to your buyer's wallet when sold.</div><button class="btn-full d" style="margin-top:14px" onclick="co('oSell')">Done</button></div>`;
+  toast_('Listing published ✓','success');
+}
+
+// ── CLAIM ───────────────────────────────────────────────────
+function openClaim(){
+  if(!user){openAuth(()=>openClaim());return}
+  document.getElementById('claimContent').innerHTML=`<h2 class="stitle">Claim Artwork</h2><p class="ssub">Own an Avant Arte work? Claim it to your collection and enable resale.</p>
+  <div class="popts">
+    <div class="popt" onclick="toast_('Invoice upload coming soon','error')"><div class="picon">📄</div><div><div class="ptitle">Upload Invoice <span class="prec">Recommended</span></div><div class="pdesc">Your Avant Arte order confirmation</div></div></div>
+    <div class="popt" onclick="toast_('Gmail integration coming soon','error')"><div class="picon">📧</div><div><div class="ptitle">Connect Gmail</div><div class="pdesc">Auto-find your Avant Arte receipts</div></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6">Claiming is free. It adds your edition to your collection and lets you receive offers.</p>`;
+  openO('oClaim');
+}
+
+// ── AUTH ────────────────────────────────────────────────────
+function openAuth(cb){authCb=cb||null;openO('oAuth')}
+function aSocial(p){toast_(`${p} auth — wire Privy App ID to enable`,'error')}
+async function aEmail(){
+  const email=document.getElementById('authEmail')?.value?.trim();
+  if(!email?.includes('@')){toast_('Enter a valid email','error');return}
+  user={id:'u_'+Math.random().toString(36).slice(2,8),email};
+  co('oAuth');upUser();toast_(`Signed in as ${email}`,'success');
+  if(authCb){authCb();authCb=null}
+}
+function upUser(){
+  if(!user)return;
+  const i=user.email[0].toUpperCase(),n=user.email.split('@')[0];
+  document.getElementById('sAvatar').textContent=i;
+  document.getElementById('sName').textContent=n;
+  document.getElementById('sSub').textContent='View profile →';
+  document.getElementById('topAuth').textContent=n;
+  document.getElementById('topAuth').onclick=()=>showView('collection');
+  document.getElementById('inboxBadge').style.display='inline-block';
+}
+
+// ── VIEWS ───────────────────────────────────────────────────
+// VIEWS declared at top --'vMarket',collection:'vCollection',inbox:'vInbox',favorites:'vFavorites',settings:'vSettings'};
+// VTITLES declared at top --'Marketplace',collection:'Collection',inbox:'Inbox',favorites:'Favorites',settings:'Settings'};
+function showView(n){
+  document.getElementById('vDetail').style.display='none';
+  Object.values(VIEWS).forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'});
+  const el=document.getElementById(VIEWS[n]);if(el)el.style.display='';
+  document.getElementById('topTitle').textContent=VTITLES[n]||n;
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  const ni=document.querySelectorAll('.nav-item');
+  const idx=Object.keys(VIEWS).indexOf(n);
+  if(ni[idx])ni[idx].classList.add('active');
+  if(n==='marketplace'){document.getElementById('vMarket').style.display=''}
+}
+
+// ── HELPERS ─────────────────────────────────────────────────
+function fmt(p){return(p/100).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function expDate(s){const d=new Date();if(s==='24h')d.setHours(d.getHours()+24);else if(s==='72h')d.setHours(d.getHours()+72);else d.setDate(d.getDate()+7);return d}
+function fmtExp(s){if(!s)return'—';const h=Math.round((new Date(s)-Date.now())/36e5);return h<24?h+'h':Math.round(h/24)+'d'}
+function openO(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function co(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+function cob(e,id){if(e.target===document.getElementById(id))co(id)}
+function toast_(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3000)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')['oOffer','oSell','oClaim','oAuth'].forEach(co)});
+
+init();
+</script>
+</body>
+</html>
