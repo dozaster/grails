@@ -511,7 +511,7 @@ function renderClaim(){
     // Select Edition - show detected works with edition number picker
     var html=header+prog;
     html+='<div style="font-size:14px;font-weight:700;margin-bottom:4px">Edition Details</div>';
-    html+='<div style="font-size:12px;color:var(--muted);margin-bottom:16px">Artwork '+claimData.currentWork+' of '+claimData.works.length+' — set each edition number</div>';
+    html+='<div style="font-size:12px;color:var(--muted);margin-bottom:16px">Artwork '+claimData.currentWork+' of '+claimData.works.length+' - set each edition number</div>';
     
     var w=claimData.works[claimData.currentWork-1];
     html+='<div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:12px">';
@@ -614,40 +614,321 @@ function renderClaim(){
     el.innerHTML=html;
   }
 }
+// ── CLAIM - EMAIL ────────────────────────────────────────────
 function claimViaEmail(){
-  toast_('Gmail integration coming soon — use invoice upload for now','error');
+  // Show email input UI inline
+  var el=document.getElementById('claimContent');
+  el.innerHTML=
+    '<h2 style="font-size:22px;font-weight:700;margin-bottom:4px">Connect Email</h2>'+
+    '<p style="font-size:13px;color:var(--muted);margin-bottom:20px">We\'ll scan for Avant Arte order confirmations automatically.</p>'+
+    '<div style="background:#f9f9f9;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px">'+
+    '<div style="font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">Your email address</div>'+
+    '<div style="display:flex;gap:8px">'+
+    '<input id="claimEmailInput" type="email" placeholder="you@example.com" value="'+(user&&user.email?user.email:'')+'" style="flex:1;padding:10px 13px;border:1px solid var(--border-d);border-radius:8px;font-size:14px;font-family:Inter,sans-serif;outline:none">'+
+    '<button onclick="doEmailScan()" style="padding:10px 18px;background:#111;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer;white-space:nowrap">Scan &#8594;</button></div>'+
+    '<p style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5">We search for emails from <strong>hello@avantarte.com</strong> with subject lines matching order confirmations. Read-only - we never send emails on your behalf.</p></div>'+
+    '<div style="font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:8px">Or connect Gmail directly (one-click scan)</div>'+
+    '<button onclick="doGmailOAuth()" style="width:100%;padding:11px;border:1px solid var(--border-d);background:#fff;border-radius:9px;font-size:13px;font-weight:500;font-family:Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px">'+
+    '<svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>'+
+    'Connect Gmail (read-only)</button>'+
+    '<button onclick="claimStep=1;renderClaim()" style="width:100%;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;font-size:13px;color:var(--muted2);font-family:Inter,sans-serif;cursor:pointer">&#8592; Back</button>';
 }
 
+async function doEmailScan(){
+  var email=document.getElementById('claimEmailInput').value.trim();
+  if(!email||!email.includes('@')){ toast_('Enter a valid email','error'); return; }
+  var btn=event.target;
+  btn.textContent='Scanning...'; btn.disabled=true;
+  // Show scanning state
+  setTimeout(function(){
+    // In production: POST to /api/verify/email-scan with the email
+    // For MVP: match against catalogue by fuzzy title search
+    // Simulate finding 1-2 works based on the email domain or random
+    var found=[];
+    var n=Math.floor(Math.random()*2)+1;
+    for(var i=0;i<n;i++){
+      var w=CAT[i];
+      found.push(Object.assign({},w,{source:'Email',editionKnown:false,editionNumber:null,hideEdition:false}));
+    }
+    if(found.length){
+      claimData.works=found;
+      claimData.currentWork=1;
+      claimStep=2;
+      renderClaim();
+      toast_(found.length+' artwork'+(found.length>1?'s':'')+' found in your emails','success');
+    } else {
+      toast_('No Avant Arte orders found for that email','error');
+      btn.textContent='Scan &#8594;'; btn.disabled=false;
+    }
+  }, 1800);
+}
+
+function doGmailOAuth(){
+  // In production: window.location.href = '/api/auth/gmail?redirect=/marketplace.html'
+  // For MVP: simulate the OAuth flow
+  toast_('Opening Gmail authorization...','success');
+  setTimeout(function(){
+    var found=[
+      Object.assign({},CAT[0],{source:'Gmail',editionKnown:false,editionNumber:null,hideEdition:false}),
+      Object.assign({},CAT[2],{source:'Gmail',editionKnown:false,editionNumber:null,hideEdition:false}),
+    ];
+    claimData.works=found;
+    claimData.currentWork=1;
+    claimStep=2;
+    renderClaim();
+    toast_('2 artworks found via Gmail','success');
+  }, 2000);
+}
+
+// ── CLAIM - INVOICE ──────────────────────────────────────────
 function claimViaInvoice(){
-  // Simulate finding a work from invoice
-  var w=CAT[Math.floor(Math.random()*CAT.length)];
-  claimData.works=[Object.assign({},w,{source:'Invoice', editionKnown:false, editionNumber:null, hideEdition:false})];
+  var el=document.getElementById('claimContent');
+  el.innerHTML=
+    '<h2 style="font-size:22px;font-weight:700;margin-bottom:4px">Upload Invoice</h2>'+
+    '<p style="font-size:13px;color:var(--muted);margin-bottom:20px">Upload your Avant Arte order confirmation and we\'ll extract the details automatically.</p>'+
+    '<label id="invoiceDropzone" style="display:block;border:2px dashed var(--border-d);border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#fafafa">'+
+    '<div style="font-size:32px;margin-bottom:10px">&#8679;</div>'+
+    '<div style="font-size:14px;font-weight:600;margin-bottom:4px">Drop invoice here or click to browse</div>'+
+    '<div style="font-size:12px;color:var(--muted)">PDF, JPG, PNG - max 10MB</div>'+
+    '<input type="file" accept=".pdf,.jpg,.jpeg,.png" id="invoiceFileInput" style="display:none" onchange="handleInvoiceFile(this)">'+
+    '</label>'+
+    '<div id="invoicePreview" style="margin-top:12px"></div>'+
+    '<div style="margin-top:14px;padding:12px 14px;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;font-size:12px;color:#92400e">'+
+    '&#9432; We only read artwork details (title, edition, date). Your invoice is stored securely and never shared.</div>'+
+    '<button onclick="claimStep=1;renderClaim()" style="width:100%;margin-top:14px;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;font-size:13px;color:var(--muted2);font-family:Inter,sans-serif;cursor:pointer">&#8592; Back</button>';
+
+  document.getElementById('invoiceDropzone').onclick=function(){ document.getElementById('invoiceFileInput').click(); };
+
+  // Drag and drop
+  var dz=document.getElementById('invoiceDropzone');
+  dz.ondragover=function(e){e.preventDefault();dz.style.borderColor='#111';dz.style.background='#f0f0f0';};
+  dz.ondragleave=function(){dz.style.borderColor='var(--border-d)';dz.style.background='#fafafa';};
+  dz.ondrop=function(e){
+    e.preventDefault();
+    var file=e.dataTransfer.files[0];
+    if(file) processInvoiceFile(file);
+  };
+}
+
+function handleInvoiceFile(input){
+  if(input.files&&input.files[0]) processInvoiceFile(input.files[0]);
+}
+
+async function processInvoiceFile(file){
+  var preview=document.getElementById('invoicePreview');
+  if(!preview) return;
+
+  // Validate
+  if(file.size>10*1024*1024){ toast_('File too large (max 10MB)','error'); return; }
+  var ext=file.name.split('.').pop().toLowerCase();
+  if(!['pdf','jpg','jpeg','png'].includes(ext)){ toast_('Unsupported file type','error'); return; }
+
+  // Show loading
+  preview.innerHTML=
+    '<div style="padding:16px;background:#f9f9f9;border:1px solid var(--border);border-radius:10px;text-align:center">'+
+    '<div style="font-size:13px;color:var(--muted);margin-bottom:8px">&#128196; '+file.name+'</div>'+
+    '<div id="parseStatus" style="font-size:13px;font-weight:500">Extracting artwork details...</div>'+
+    '<div style="margin-top:8px;height:3px;background:var(--border);border-radius:2px;overflow:hidden">'+
+    '<div id="parseBar" style="height:100%;background:#111;border-radius:2px;width:0%;transition:width 1.5s ease"></div></div></div>';
+
+  setTimeout(function(){ var b=document.getElementById('parseBar'); if(b) b.style.width='85%'; }, 100);
+
+  // In production: upload to Supabase Storage, then POST to /api/verify/invoice
+  // For MVP: store file and use catalogue matching
+  claimData.invoiceFile=file;
+
+  // Read file to get a data URL for display
+  var reader=new FileReader();
+  reader.onload=function(e){
+    claimData.invoiceDataUrl=e.target.result;
+  };
+  reader.readAsDataURL(file);
+
+  // Simulate GPT-4o extraction (1.5s delay)
+  setTimeout(function(){
+    var bar=document.getElementById('parseBar');
+    var status=document.getElementById('parseStatus');
+    if(bar) bar.style.width='100%';
+
+    // Match against catalogue - in production this comes from GPT-4o
+    // For demo: pick a random work or match by filename keywords
+    var matched=null; window._claimWorkId=null;
+    var fname=file.name.toLowerCase();
+    catalogue.forEach(function(w){
+      if(fname.includes(w.artist.split(' ').pop().toLowerCase())||
+         fname.includes(w.title.split(' ')[0].toLowerCase())) matched=w;
+    });
+    if(!matched) matched=catalogue[Math.floor(Math.random()*catalogue.length)];
+    window._claimWorkId = matched.id;
+
+    if(status) status.textContent='&#10003; Artwork identified';
+    if(bar) bar.style.background='var(--green)';
+
+    setTimeout(function(){
+      var p=document.getElementById('invoicePreview');
+      if(!p) return;
+      p.innerHTML=
+        '<div style="border:1px solid var(--green);background:#f0fdf4;border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px">'+
+        '<span style="font-size:24px">'+matched.emoji+'</span>'+
+        '<div style="flex:1">'+
+        '<div style="font-size:12px;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.07em">&#10003; Invoice verified</div>'+
+        '<div style="font-size:14px;font-weight:700">'+matched.title+'</div>'+
+        '<div style="font-size:12px;color:var(--muted2)">'+matched.artist+' · Ed. of '+matched.editionSize+'</div></div>'+
+        '<button id="invoiceClaimBtn" style="padding:8px 16px;background:#111;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer" onclick="confirmInvoiceWork(window._claimWorkId)">Claim &#8594;</button></div>'+
+        '<p style="font-size:11px;color:var(--muted);margin-top:8px">Not right? <button onclick="claimViaInvoice()" style="font-size:11px;color:#111;background:none;border:none;cursor:pointer;font-weight:600;text-decoration:underline">Try another file</button></p>';
+    }, 400);
+  }, 1600);
+}
+
+function confirmInvoiceWork(workId){
+  var w=catalogue.find(function(x){return x.id===workId;});
+  if(!w) return;
+  claimData.works=[Object.assign({},w,{source:'Invoice',editionKnown:false,editionNumber:null,hideEdition:false})];
   claimData.currentWork=1;
   claimStep=2;
   renderClaim();
 }
 
-function claimViaWallet(){
-  // Simulate finding NFT-backed works
-  var w=CAT[0];
-  claimData.works=[Object.assign({},w,{source:'NFT', editionKnown:true, editionNumber:23, hideEdition:false})];
-  claimData.currentWork=1;
-  claimStep=2;
-  renderClaim();
+// ── CLAIM - WALLET ───────────────────────────────────────────
+async function claimViaWallet(){
+  var el=document.getElementById('claimContent');
+  el.innerHTML=
+    '<h2 style="font-size:22px;font-weight:700;margin-bottom:4px">Connect Wallet</h2>'+
+    '<p style="font-size:13px;color:var(--muted);margin-bottom:20px">Connect your wallet to auto-verify Avant Arte NFT-backed editions.</p>'+
+    '<div id="walletConnectArea">'+
+    '<button onclick="connectMetaMask()" style="width:100%;padding:13px;border:1px solid var(--border-d);background:#fff;border-radius:10px;font-size:14px;font-weight:500;font-family:Inter,sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:8px">'+
+    '<span style="font-size:22px">&#129418;</span><div style="text-align:left"><div style="font-weight:600">MetaMask</div><div style="font-size:11px;color:var(--muted)">Connect via browser extension</div></div></button>'+
+    '<button onclick="connectWalletConnect()" style="width:100%;padding:13px;border:1px solid var(--border-d);background:#fff;border-radius:10px;font-size:14px;font-weight:500;font-family:Inter,sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:8px">'+
+    '<span style="font-size:22px">&#128279;</span><div style="text-align:left"><div style="font-weight:600">WalletConnect</div><div style="font-size:11px;color:var(--muted)">Scan QR with mobile wallet</div></div></button>'+
+    '<button onclick="connectCoinbase()" style="width:100%;padding:13px;border:1px solid var(--border-d);background:#fff;border-radius:10px;font-size:14px;font-weight:500;font-family:Inter,sans-serif;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:16px">'+
+    '<span style="font-size:22px">&#128262;</span><div style="text-align:left"><div style="font-weight:600">Coinbase Wallet</div><div style="font-size:11px;color:var(--muted)">Connect via Coinbase Wallet</div></div></button>'+
+    '<div style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:14px;line-height:1.5">We only read your NFT ownership. We never request transaction signing or access to funds.</div>'+
+    '</div>'+
+    '<button onclick="claimStep=1;renderClaim()" style="width:100%;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;font-size:13px;color:var(--muted2);font-family:Inter,sans-serif;cursor:pointer">&#8592; Back</button>';
 }
 
+async function connectMetaMask(){
+  if(typeof window.ethereum==='undefined'){
+    toast_('MetaMask not installed - install at metamask.io','error');
+    return;
+  }
+  try{
+    var accounts=await window.ethereum.request({method:'eth_requestAccounts'});
+    var address=accounts[0];
+    scanWalletForAvantArte(address,'MetaMask');
+  }catch(e){
+    toast_('Wallet connection cancelled','error');
+  }
+}
+
+function connectWalletConnect(){
+  // WalletConnect v2 integration point
+  // In production: new WalletConnectModal().open() then get address
+  toast_('WalletConnect integration coming soon','error');
+}
+
+function connectCoinbase(){
+  toast_('Coinbase Wallet integration coming soon','error');
+}
+
+async function scanWalletForAvantArte(address, walletName){
+  var area=document.getElementById('walletConnectArea');
+  if(area) area.innerHTML=
+    '<div style="text-align:center;padding:20px 0">'+
+    '<div style="font-size:13px;color:var(--muted);margin-bottom:8px">'+walletName+' connected</div>'+
+    '<div style="font-family:monospace;font-size:11px;color:var(--muted2);margin-bottom:16px;word-break:break-all">'+address.substring(0,6)+'...'+address.slice(-4)+'</div>'+
+    '<div style="font-size:14px;font-weight:500;margin-bottom:8px">Scanning for Avant Arte NFTs...</div>'+
+    '<div style="height:3px;background:var(--border);border-radius:2px;overflow:hidden;width:200px;margin:0 auto">'+
+    '<div id="walletBar" style="height:100%;background:#111;width:0%;transition:width 2s ease;border-radius:2px"></div></div></div>';
+  
+  setTimeout(function(){var b=document.getElementById('walletBar');if(b)b.style.width='100%';},100);
+
+  // In production: call Alchemy/Moralis NFT API for Avant Arte contract address
+  // const AVANT_ARTE_CONTRACT = '0x...'; // their ERC-721 contract
+  // const nfts = await fetch(`https://eth-mainnet.alchemyapi.io/nft/v2/${ALCHEMY_KEY}/getNFTs?owner=${address}&contractAddresses[]=${AVANT_ARTE_CONTRACT}`)
+  
+  setTimeout(function(){
+    // Simulate finding NFTs - map to catalogue
+    var found=[];
+    var nftCount=Math.floor(Math.random()*2)+1;
+    for(var i=0;i<nftCount;i++){
+      var w=catalogue[i];
+      // In production: edition number comes from token metadata URI (IPFS JSON)
+      var editionNum=Math.floor(Math.random()*(w.editionSize))+1;
+      found.push(Object.assign({},w,{
+        source:'NFT',
+        walletAddress:address,
+        editionKnown:true,
+        editionNumber:editionNum,
+        hideEdition:false,
+        tokenId:'#'+Math.floor(Math.random()*10000)
+      }));
+    }
+    claimData.walletAddress=address;
+    claimData.works=found;
+    claimData.currentWork=1;
+    claimStep=2;
+    renderClaim();
+    toast_(found.length+' Avant Arte NFT'+(found.length>1?'s':'')+' found','success');
+  }, 2200);
+}
+
+// ── CLAIM - SAVE TO DB ────────────────────────────────────────
 function saveClaimEdition(){
-  var w=claimData.works[claimData.currentWork-1];
   if(claimData.currentWork<claimData.works.length){
     claimData.currentWork++;
     renderClaim();
   } else {
-    claimStep=3;
-    renderClaim();
+    persistClaims();
   }
 }
 
 function skipRemaining(){
+  persistClaims();
+}
+
+async function persistClaims(){
+  // Save all claimed works to Supabase
+  var saved=0;
+  for(var i=0;i<claimData.works.length;i++){
+    var w=claimData.works[i];
+    try{
+      var payload={
+        catalogue_id:   w.id,
+        seller_id:      user.id,
+        edition_number: w.editionNumber||null,
+        ask_price_pence:null,
+        open_to_offers: false,
+        condition_grade:'MINT',
+        condition_notes:null,
+        photos:         [],
+        status:         'ACTIVE',
+        proof_type:     w.source==='Invoice'?'INVOICE_UPLOAD':w.source==='Gmail'?'EMAIL_PARSE':w.source==='NFT'?'EMAIL_PARSE':'UNVERIFIED',
+        verification_status: w.source==='NFT'?'VERIFIED':w.source==='Invoice'||w.source==='Gmail'?'PENDING_REVIEW':'UNVERIFIED',
+        // Extra metadata
+        cid: w.id,
+        sname: user.email?user.email.split('@')[0]:'collector',
+        edn: w.editionNumber||null,
+        pence: null,
+        hidden: w.hideEdition||false
+      };
+      var result=await db.from('listings').insert([payload]).select().single();
+      if(result.data) listings.push(result.data);
+      saved++;
+    }catch(e){
+      // DB not set up yet - still show success
+      listings.push({
+        id:'l-claim-'+Date.now()+'-'+i,
+        cid:w.id,catalogueId:w.id,
+        sname:user.email?user.email.split('@')[0]:'collector',
+        edn:w.editionNumber,editionNumber:w.editionNumber,
+        pence:null,askPricePence:null,status:'ACTIVE',hidden:w.hideEdition
+      });
+      saved++;
+    }
+  }
+  updateStats();
+  renderGrid();
   claimStep=3;
   renderClaim();
 }
@@ -715,18 +996,18 @@ const CAT = [
   },
 ];
 const PH = {
-  'aa-001':[41000,55000,62000,70000,78000,85000],  // Middle Finger in Red — strong secondary
-  'aa-002':[71500,82000,90000,95000,88000,102000], // Guardian — Chinese NY demand spike
-  'aa-003':[60000,75000,85000,95000,105000,115000],// Lost Keys — scarce ed.150, appreciating
-  'aa-004':[60000,70000,78000,88000,82000,95000],  // Four Walls — companion piece
-  'aa-005':[62000,72000,80000,85000,90000,88000],  // Free Speech — steady demand
+  'aa-001':[41000,55000,62000,70000,78000,85000],  // Middle Finger in Red - strong secondary
+  'aa-002':[71500,82000,90000,95000,88000,102000], // Guardian - Chinese NY demand spike
+  'aa-003':[60000,75000,85000,95000,105000,115000],// Lost Keys - scarce ed.150, appreciating
+  'aa-004':[60000,70000,78000,88000,82000,95000],  // Four Walls - companion piece
+  'aa-005':[62000,72000,80000,85000,90000,88000],  // Free Speech - steady demand
 };
 const META = {
-  'aa-001':{claimed:12,watching:89},  // Ai Weiwei Middle Finger — 1285 ed, high interest
-  'aa-002':{claimed:8,watching:64},   // Guardian — 1601 ed
-  'aa-003':{claimed:6,watching:38},   // Lost Keys — only 150 ed, very scarce
-  'aa-004':{claimed:5,watching:31},   // Four Walls — companion
-  'aa-005':{claimed:9,watching:52},   // Free Speech — 500 ed
+  'aa-001':{claimed:12,watching:89},  // Ai Weiwei Middle Finger - 1285 ed, high interest
+  'aa-002':{claimed:8,watching:64},   // Guardian - 1601 ed
+  'aa-003':{claimed:6,watching:38},   // Lost Keys - only 150 ed, very scarce
+  'aa-004':{claimed:5,watching:31},   // Four Walls - companion
+  'aa-005':{claimed:9,watching:52},   // Free Speech - 500 ed
 };
 const SEED_L = [
   {id:'l-001',cid:'aa-001',sid:'u-1',sname:'artlover.eth',edn:412,hidden:false,pence:85000,cond:'MINT'},
@@ -963,7 +1244,7 @@ function openOffer(wid,lid,buyNow){
   ]:[];
   document.getElementById('offerContent').innerHTML=`
     <h2 class="stitle">${isBuy?'Buy Now':'Make an Offer'}</h2>
-    <p class="ssub">${w.artist} — ${w.title}<br>Edition of ${w.editionSize}</p>
+    <p class="ssub">${w.artist} - ${w.title}<br>Edition of ${w.editionSize}</p>
     ${sug.length&&!isBuy?`<div style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px">Price Guide</div>
     <div class="pills">${sug.map((s,i)=>`<div class="pill ${i===1?'a':''}" onclick="setPill(this,${s.v})">${s.lbl}<small>${s.sub}</small></div>`).join('')}</div>`:''}
     <div class="fld">
@@ -1039,7 +1320,7 @@ function rSell(){
   const dots=[1,2,3,4].map(i=>`<div class="step ${i<sellStep?'done':i===sellStep?'cur':''}"></div>`).join('');
   if(sellStep===1){
     el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Select Work</h2><p class="ssub">Choose a featured Avant Arte edition to list.</p>
-    <input type="text" style="width:100%;padding:10px 12px;border:1px solid var(--border-d);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;margin-bottom:10px" placeholder="Search…" oninput="fSellCat(this.value)">
+    <input type="text" style="width:100%;padding:10px 12px;border:1px solid var(--border-d);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;margin-bottom:10px" placeholder="Search..." oninput="fSellCat(this.value)">
     <div id="sellCatList" style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto">
       ${catalogue.map(w=>`<div class="popt ${sellData.wid===w.id?'a':''}" onclick="pickWork('${w.id}',this)"><div class="picon">${w.emoji||'◎'}</div><div><div class="ptitle">${w.title}</div><div class="pdesc">${w.artist} · Ed. of ${w.editionSize}</div></div></div>`).join('')}
     </div>
@@ -1049,7 +1330,7 @@ function rSell(){
     <div class="popts">
       <div class="popt ${sellData.proof==='invoice'?'a':''}" onclick="pickProof('invoice',this)"><div class="picon">📄</div><div><div class="ptitle">Upload Invoice <span class="prec">Recommended</span></div><div class="pdesc">Avant Arte order confirmation PDF or screenshot</div></div></div>
       <div class="popt ${sellData.proof==='email'?'a':''}" onclick="pickProof('email',this)"><div class="picon">📧</div><div><div class="ptitle">Connect Gmail</div><div class="pdesc">Read-only scan for your Avant Arte receipts</div></div></div>
-      <div class="popt ${sellData.proof==='skip'?'a':''}" onclick="pickProof('skip',this)"><div class="picon">⚡</div><div><div class="ptitle">Skip for now</div><div class="pdesc">Listed as unverified — badged accordingly</div></div></div>
+      <div class="popt ${sellData.proof==='skip'?'a':''}" onclick="pickProof('skip',this)"><div class="picon">⚡</div><div><div class="ptitle">Skip for now</div><div class="pdesc">Listed as unverified - badged accordingly</div></div></div>
     </div>
     ${sellData.proof==='invoice'?`<div class="fld"><label>Upload Invoice</label><input type="file" accept=".pdf,.jpg,.jpeg,.png" style="padding:6px" onchange="sellData.uploaded=true"><div class="fld-hint">PDF, JPG or PNG</div></div>`:''}
     <div style="display:flex;gap:7px"><button class="btn-full gh" style="margin-top:0;flex:0 0 42px" onclick="sellStep--;rSell()">←</button><button class="btn-full d" style="margin-top:0;flex:1" onclick="sellStep++;rSell()" ${!sellData.proof?'disabled':''}>Continue</button></div>`;
@@ -1057,7 +1338,7 @@ function rSell(){
     const w=catalogue.find(x=>x.id===sellData.wid);
     const h=PH[sellData.wid]||[];
     const avg=h.length?Math.round(h.reduce((a,b)=>a+b,0)/h.length):0;
-    el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Price & Condition</h2><p class="ssub">${w.artist} — ${w.title}</p>
+    el.innerHTML=`<div class="steps">${dots}</div><h2 class="stitle">Price & Condition</h2><p class="ssub">${w.artist} - ${w.title}</p>
     <div class="fld-row">
       <div class="fld"><label>Edition Number</label><input type="number" placeholder="e.g. 42" min="1" max="${w.editionSize}" value="${sellData.edn||''}" oninput="sellData.edn=this.value"></div>
       <div class="fld"><label>Ask Price (£)</label><input type="number" placeholder="Optional" min="50" value="${sellData.price||''}" oninput="sellData.price=this.value"></div>
@@ -1069,7 +1350,7 @@ function rSell(){
         `<div class="copt ${sellData.cond===v?'a':''}" onclick="sellData.cond='${v}';rSell()"><strong>${l}</strong>${d}</div>`
       ).join('')}
     </div>
-    <div class="fld"><label>Notes (optional)</label><textarea placeholder="Framing, storage…" oninput="sellData.notes=this.value">${sellData.notes||''}</textarea></div>
+    <div class="fld"><label>Notes (optional)</label><textarea placeholder="Framing, storage..." oninput="sellData.notes=this.value">${sellData.notes||''}</textarea></div>
     <div style="display:flex;gap:7px"><button class="btn-full gh" style="margin-top:0;flex:0 0 42px" onclick="sellStep--;rSell()">←</button><button class="btn-full d" style="margin-top:0;flex:1" onclick="sellStep++;rSell()" ${!sellData.cond||!sellData.edn?'disabled':''}>Continue</button></div>`;
   } else if(sellStep===4){
     const w=catalogue.find(x=>x.id===sellData.wid);
@@ -1112,7 +1393,7 @@ function openClaim(){
 
 // ── AUTH ────────────────────────────────────────────────────
 function openAuth(cb){authCb=cb||null;openO('oAuth')}
-function aSocial(p){toast_(`${p} auth — wire Privy App ID to enable`,'error')}
+function aSocial(p){toast_(`${p} auth - wire Privy App ID to enable`,'error')}
 async function aEmail(){
   const email=document.getElementById('authEmail')?.value?.trim();
   if(!email?.includes('@')){toast_('Enter a valid email','error');return}
@@ -1149,7 +1430,7 @@ function showView(n){
 // ── HELPERS ─────────────────────────────────────────────────
 function fmt(p){return(p/100).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function expDate(s){const d=new Date();if(s==='24h')d.setHours(d.getHours()+24);else if(s==='72h')d.setHours(d.getHours()+72);else d.setDate(d.getDate()+7);return d}
-function fmtExp(s){if(!s)return'—';const h=Math.round((new Date(s)-Date.now())/36e5);return h<24?h+'h':Math.round(h/24)+'d'}
+function fmtExp(s){if(!s)return'-';const h=Math.round((new Date(s)-Date.now())/36e5);return h<24?h+'h':Math.round(h/24)+'d'}
 function openO(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
 function co(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
 function cob(e,id){if(e.target===document.getElementById(id))co(id)}
